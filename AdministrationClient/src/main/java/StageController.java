@@ -98,6 +98,13 @@ public class StageController {
         primaryStage.show();
     }
 
+    /**
+     * Show a popup of the screen for the user
+     * @param alertType The type of the pop up
+     * @param title The title of the pop up
+     * @param headerText The header of the pop up
+     * @param contentText The content of the pop up
+     */
     public static void showPopUp(Alert.AlertType alertType, String title, String headerText, String contentText) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
@@ -107,6 +114,13 @@ public class StageController {
         alert.showAndWait();
     }
 
+    /**
+     * Show a exception in a pop up
+     * @param title The title of the exception
+     * @param headerText The header text of the exception
+     * @param contentText The contect of the exception
+     * @param ex The exception itself
+     */
     public static void showException(String title, String headerText, String contentText, Exception ex) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
