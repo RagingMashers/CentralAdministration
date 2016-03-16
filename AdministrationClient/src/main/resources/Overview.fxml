@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.text.*?>
 <?import java.net.*?>
@@ -12,7 +13,7 @@
 <?import javafx.scene.control.Label?>
 <?import java.net.URL?>
 
-<GridPane alignment="CENTER" hgap="10" prefHeight="710.0" prefWidth="854.0" scaleShape="false" vgap="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="OverviewController">
+<GridPane alignment="CENTER" hgap="10" prefHeight="816.0" prefWidth="1242.0" scaleShape="false" vgap="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="OverviewController">
    <columnConstraints>
       <ColumnConstraints />
       <ColumnConstraints maxWidth="0.0" minWidth="0.0" prefWidth="0.0" />
@@ -20,8 +21,8 @@
       <ColumnConstraints />
       <ColumnConstraints />
       <ColumnConstraints />
-      <ColumnConstraints />
-      <ColumnConstraints />
+      <ColumnConstraints maxWidth="0.0" minWidth="0.0" prefWidth="0.0" />
+      <ColumnConstraints maxWidth="0.0" minWidth="0.0" prefWidth="0.0" />
    </columnConstraints>
    <rowConstraints>
       <RowConstraints />
@@ -39,7 +40,7 @@
       <URL value="@style.css" />
    </stylesheets>
    <children>
-      <JFXTabPane prefHeight="714.0" prefWidth="778.0" GridPane.rowIndex="1">
+      <JFXTabPane centerShape="false" prefHeight="736.0" prefWidth="1148.0" scaleShape="false" side="BOTTOM" GridPane.rowIndex="1">
          <tabs>
             <Tab text="Melding maken">
               <content>
@@ -51,19 +52,23 @@
                               <Label layoutX="14.0" layoutY="86.0" text="Slachtoffers" />
                               <Label layoutX="13.0" layoutY="145.0" text="Coordinaten" />
                               <Label layoutX="188.0" layoutY="145.0" text="X" />
-                              <JFXTextField layoutX="213.0" layoutY="138.0" maxWidth="90.0" minWidth="52.0" prefHeight="51.0" prefWidth="90.0" text="0" />
+                              <JFXTextField fx:id="mTFCoordinaatX" layoutX="213.0" layoutY="138.0" maxWidth="90.0" minWidth="52.0" prefHeight="51.0" prefWidth="90.0" text="0" />
                               <Label layoutX="303.0" layoutY="145.0" text="Y" />
-                              <JFXTextField layoutX="328.0" layoutY="138.0" maxWidth="90.0" minWidth="52.0" prefHeight="51.0" prefWidth="90.0" text="0" />
+                              <JFXTextField fx:id="mTFCoordinaatY" layoutX="328.0" layoutY="138.0" maxWidth="90.0" minWidth="52.0" prefHeight="51.0" prefWidth="90.0" text="0" />
                               <Label layoutX="14.0" layoutY="200.0" text="Gevaar niveau" />
-                              <JFXSlider layoutX="188.0" layoutY="203.0" max="10.0" prefHeight="25.0" prefWidth="258.0" />
+                              <JFXSlider fx:id="mSGevaarNiveau" layoutX="188.0" layoutY="203.0" max="10.0" prefHeight="25.0" prefWidth="258.0" />
                               <Label layoutX="14.0" layoutY="256.0" text="Radius" />
-                              <JFXTextField layoutX="184.0" layoutY="246.0" maxWidth="206.0" minWidth="206.0" prefHeight="51.0" prefWidth="206.0" />
+                              <JFXTextField fx:id="mTFRadius" layoutX="184.0" layoutY="246.0" maxWidth="206.0" minWidth="206.0" prefHeight="51.0" prefWidth="206.0" />
                               <Label layoutX="390.0" layoutY="256.0" text="Meter" />
-                              <JFXTextField layoutX="188.0" layoutY="24.0" maxWidth="268.0" minWidth="206.0" prefHeight="51.0" prefWidth="268.0" />
+                              <JFXTextField fx:id="mTFTitle" layoutX="188.0" layoutY="24.0" maxWidth="268.0" minWidth="206.0" prefHeight="51.0" prefWidth="268.0" />
+                              <JFXTextField fx:id="mTFSlachtoffers" layoutX="188.0" layoutY="75.0" maxWidth="268.0" minWidth="206.0" prefHeight="51.0" prefWidth="268.0" />
                            </children>
                         </AnchorPane>
-                        <JFXButton layoutX="562.0" layoutY="424.0" onMouseClicked="#createIncident" styleClass="button-raised" text="Meld" />
-                        <JFXTextArea disable="true" layoutX="21.0" layoutY="14.0" maxWidth="741.0" minWidth="741.0" prefHeight="130.0" prefWidth="741.0" style="-fx-background-color: white;" text="Om een melding te maken van een incident dient het onderstaande formulier ingevuld te worden." wrapText="true" />
+                        <JFXButton layoutX="480.0" layoutY="416.0" onMouseClicked="#createIncident" styleClass="button-raised" text="Meld incident" />
+                        <JFXTextArea layoutX="21.0" layoutY="14.0" maxWidth="741.0" minWidth="421.0" prefHeight="130.0" prefWidth="421.0" style="-fx-background-color: white;" text="Om een melding te maken van een incident dient het onderstaande formulier ingevuld te worden." wrapText="true" />
+                        <JFXListView fx:id="mLVGiftigeStoffen" layoutX="464.0" layoutY="52.0" prefHeight="350.0" prefWidth="248.0" />
+
+                        <Label layoutX="464.0" layoutY="14.0" text="Aanwezige giftige stoffen" />
                      </children>
                   </AnchorPane>
               </content>
@@ -74,7 +79,7 @@
                      <children>
                         <AnchorPane layoutY="83.0" prefHeight="512.0" prefWidth="332.0">
                            <children>
-                              <JFXListView layoutX="42.0" layoutY="83.0" prefHeight="418.0" prefWidth="248.0" />
+                              <JFXListView fx:id="cLVTeams" layoutX="42.0" layoutY="83.0" prefHeight="418.0" prefWidth="248.0" />
                               <Label layoutX="37.0" layoutY="25.0" text="Teams" />
                            </children>
                         </AnchorPane>
@@ -83,9 +88,9 @@
                               <Label layoutX="21.0" layoutY="14.0" text="Versturen van bericht" />
                               <Label layoutX="21.0" layoutY="62.0" text="Titel" />
                               <Label layoutX="21.0" layoutY="127.0" text="Inhoud" />
-                              <JFXTextArea layoutX="21.0" layoutY="182.0" maxWidth="467.0" minWidth="387.0" prefHeight="250.0" prefWidth="413.0" text="Beste hulpverlener,&#10;" wrapText="true" />
+                              <JFXTextArea fx:id="cTAInhoud" layoutX="21.0" layoutY="182.0" maxWidth="467.0" minWidth="387.0" prefHeight="250.0" prefWidth="413.0" text="Beste hulpverlener,&#10;" wrapText="true" />
                               <JFXButton layoutX="127.0" layoutY="444.0" onMouseClicked="#sendMessageToTeam" prefHeight="45.0" prefWidth="372.0" styleClass="button-raised" text="Verstuur" />
-                              <JFXTextField layoutX="92.0" layoutY="52.0" maxWidth="342.0" minWidth="342.0" prefHeight="51.0" prefWidth="342.0" />
+                              <JFXTextField fx:id="cTFTitel" layoutX="92.0" layoutY="52.0" maxWidth="342.0" minWidth="342.0" prefHeight="51.0" prefWidth="342.0" />
                            </children>
                         </AnchorPane>
                         <Label layoutX="40.0" layoutY="27.0" text="Selecteer eerst het team om er vervolgens een bericht naar te sturen" />
