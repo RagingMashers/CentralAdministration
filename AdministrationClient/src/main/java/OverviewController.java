@@ -23,7 +23,7 @@ public class OverviewController implements Initializable {
     @FXML
     private JFXTextField mTFCoordinaatX;
     @FXML
-    private JFXListView mLVGiftigeStoffen;
+    private JFXListView<String> mLVGiftigeStoffen;
 
 
     // Communicate with team
@@ -32,16 +32,16 @@ public class OverviewController implements Initializable {
     @FXML
     private JFXTextArea cTAInhoud;
     @FXML
-    private JFXListView cLVTeams;
+    private JFXListView<String> cLVTeams;
 
     // Sources
 
     public void createIncident() {
-        StageController.showException("Niet ondersteund", "Neem contact op met de administrator", "", new UnsupportedOperationException());
+        MessageBox.showException("Niet ondersteund", "Neem contact op met de administrator", "", new UnsupportedOperationException());
     }
 
     public void sendMessageToTeam(){
-        StageController.showException("Niet ondersteund", "Neem contact op met de administrator", "", new UnsupportedOperationException());
+        MessageBox.showException("Niet ondersteund", "Neem contact op met de administrator", "", new UnsupportedOperationException());
     }
 
     public void initialize(URL location, ResourceBundle resources) {
