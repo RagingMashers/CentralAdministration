@@ -9,7 +9,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class OverviewController implements Initializable {
-    // Creating incident
+
+    // CREATE INCIDENT TAB
     @FXML
     private JFXTextField mTFSlachtoffers;
     @FXML
@@ -26,7 +27,7 @@ public class OverviewController implements Initializable {
     private JFXListView<String> mLVGiftigeStoffen;
 
 
-    // Communicate with team
+    // COMMUNICATION WITH TEAM TAB
     @FXML
     private JFXTextField cTFTitel;
     @FXML
@@ -34,18 +35,26 @@ public class OverviewController implements Initializable {
     @FXML
     private JFXListView<String> cLVTeams;
 
-    // Sources
+    // SOURCES TAB
 
+    /**
+     * Author Frank Hartman
+     * Create a incident
+     */
     public void createIncident() {
         MessageBox.showException("Niet ondersteund", "Neem contact op met de administrator", "", new UnsupportedOperationException());
     }
 
+    /**
+     * Author Frank Hartman
+     * Send a message to a selected team
+     */
     public void sendMessageToTeam(){
         MessageBox.showException("Niet ondersteund", "Neem contact op met de administrator", "", new UnsupportedOperationException());
     }
 
     public void initialize(URL location, ResourceBundle resources) {
-        // Dummy data for the listview
+        // Dummy data for the listviews
         mLVGiftigeStoffen.getItems().add("Aluminum");
         mLVGiftigeStoffen.getItems().add("Chronium");
         mLVGiftigeStoffen.getItems().add("CO2");
