@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
 <?import javafx.scene.text.*?>
 <?import java.net.*?>
 <?import com.jfoenix.controls.*?>
@@ -11,7 +12,7 @@
 <?import javafx.scene.control.Label?>
 <?import java.net.URL?>
 
-<GridPane alignment="center"   hgap="10" scaleShape="false" vgap="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainController">
+<GridPane alignment="center" hgap="10" scaleShape="false" vgap="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainController">
    <columnConstraints>
       <ColumnConstraints />
       <ColumnConstraints />
@@ -27,17 +28,30 @@
    <children>
       <Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="825.0">
          <children>
-            <JFXButton layoutX="517.0" layoutY="207.0" prefHeight="143.0" prefWidth="278.0" styleClass="button-raised" text="Data analist" />
+            <JFXButton layoutX="578.0" layoutY="375.0" prefHeight="1.0" prefWidth="278.0" styleClass="button-raised" text="Bronnen filteren" />
             <JFXTextField alignment="CENTER" editable="false" layoutX="149.0" layoutY="32.0" maxWidth="685.0" minWidth="629.0" prefHeight="61.0" prefWidth="629.0" text="Welkom bij de centrale administratie van CIMS">
                <font>
                   <Font name="Calibri Bold" size="30.0" />
                </font>
             </JFXTextField>
-            <JFXButton layoutX="199.0" layoutY="207.0" onMouseClicked="#loadScene" prefHeight="143.0" prefWidth="282.0" styleClass="button-raised" text="Leiding gevende">
+            <JFXButton fx:id="btnBeheersen" disable="true" layoutX="352.0" layoutY="375.0" prefHeight="31.0" prefWidth="282.0" styleClass="button-raised" text="Incident beheersen">
                <font>
                   <Font size="51.0" />
                </font>
             </JFXButton>
+            <JFXListView fx:id="lvIncidenten" layoutX="83.0" layoutY="132.0" />
+            <Label layoutX="83.0" layoutY="93.0" text="Incidenten" />
+            <JFXButton fx:id="btnWijzigen" disable="true" layoutX="352.0" layoutY="433.0" prefHeight="31.0" prefWidth="282.0" styleClass="button-raised" text="Incident wijzigen">
+               <font>
+                  <Font size="51.0" />
+               </font>
+            </JFXButton>
+            <JFXButton layoutX="352.0" layoutY="492.0" prefHeight="31.0" prefWidth="282.0" styleClass="button-raised" text="Incident aanmaken">
+               <font>
+                  <Font size="51.0" />
+               </font>
+            </JFXButton>
+            <TextArea layoutX="352.0" layoutY="132.0" prefHeight="214.0" prefWidth="426.0" />
          </children>
       </Pane>
    </children>
