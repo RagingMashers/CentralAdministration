@@ -126,8 +126,6 @@ public class StageController {
             log.log(Level.WARNING, "The View was not recognised");
         }
 
-
-
         // Change the stage settings
         primaryStage.setTitle(title);
         primaryStage.setScene(root);
