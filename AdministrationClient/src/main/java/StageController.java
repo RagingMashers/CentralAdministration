@@ -14,7 +14,7 @@ import java.util.logging.Logger;
  * All of the views that are available for loading
  */
 
-enum View{mainScene, overviewScene}
+enum View{mainScene, overviewScene, incident, filter}
 
 
 public class StageController {
@@ -22,6 +22,13 @@ public class StageController {
     private static StageController singleton = new StageController();
     private static Scene main;
     private static Scene overview;
+    private static Scene incident;
+    private static Scene filter;
+
+    private static MainController mainController;
+    private static OverviewController overviewController;
+    private static IncidentController incidentController;
+    private static FilterController filterController;
     private static Stage primaryStage;
 
 
@@ -31,17 +38,36 @@ public class StageController {
      */
     private StageController() {
         try {
-            // Loading all of the fxml files
-            main = new Scene((Parent) FXMLLoader.load(getClass().getResource("Main.fxml")));
-            overview = new Scene((Parent)FXMLLoader.load(getClass().getResource("Overview.fxml")));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Main.fxml"));
+            // Load main
+            main = new Scene((Parent)fxmlLoader.load());
+            mainController = fxmlLoader.getController();
+
+            // Load overview
+            fxmlLoader = new FXMLLoader(getClass().getResource("Overview.fxml"));
+            overview = new Scene((Parent)fxmlLoader.load());
+            overviewController = fxmlLoader.getController();
+
+            // Load incident
+            fxmlLoader = new FXMLLoader(getClass().getResource("Incident.fxml"));
+            incident = new Scene((Parent)fxmlLoader.load());
+            incidentController = fxmlLoader.getController();
+
+            // Load filter
+            fxmlLoader = new FXMLLoader(getClass().getResource("Filter.fxml"));
+            filter = new Scene((Parent)fxmlLoader.load());
+            filterController = fxmlLoader.getController();
+
             log.log(Level.INFO, "Loaded all of the FXML files into the StageController");
+
         }
 
         catch (IOException e) {
             log.log(Level.WARNING, e.toString());
         }
-
     }
+
+
 
     /**
      * Author Frank Hartman
@@ -79,10 +105,19 @@ public class StageController {
         switch (view) {
             case mainScene:
                 root = main;
+                mainController.startController();
                 break;
             case overviewScene:
                 root = overview;
+                overviewController.startController();
                 break;
+            case incident:
+                root = incident;
+                incidentController.startController();
+                break;
+            case filter:
+                root = filter;
+                filterController.startController();
             default:
                 break;
         }

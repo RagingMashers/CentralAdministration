@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import java.net.*?>
 <?import com.jfoenix.controls.*?>
@@ -31,39 +33,8 @@
       <URL value="@style.css" />
    </stylesheets>
    <children>
-      <JFXTabPane centerShape="false" prefHeight="736.0" prefWidth="1148.0" scaleShape="false" side="BOTTOM" GridPane.rowIndex="1">
+      <JFXTabPane centerShape="false" prefHeight="700.0" prefWidth="1100.0" scaleShape="false" side="BOTTOM" GridPane.rowIndex="1">
          <tabs>
-            <Tab text="Melding maken">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <AnchorPane layoutY="164.0" prefHeight="438.0" prefWidth="516.0">
-                           <children>
-                              <Label layoutX="14.0" layoutY="34.0" text="Titel" />
-                              <Label layoutX="14.0" layoutY="86.0" text="Slachtoffers" />
-                              <Label layoutX="13.0" layoutY="145.0" text="Coordinaten" />
-                              <Label layoutX="188.0" layoutY="145.0" text="X" />
-                              <JFXTextField fx:id="mTFCoordinaatX" layoutX="213.0" layoutY="138.0" maxWidth="90.0" minWidth="52.0" prefHeight="51.0" prefWidth="90.0" text="0" />
-                              <Label layoutX="303.0" layoutY="145.0" text="Y" />
-                              <JFXTextField fx:id="mTFCoordinaatY" layoutX="328.0" layoutY="138.0" maxWidth="90.0" minWidth="52.0" prefHeight="51.0" prefWidth="90.0" text="0" />
-                              <Label layoutX="14.0" layoutY="200.0" text="Gevaar niveau" />
-                              <JFXSlider fx:id="mSGevaarNiveau" layoutX="188.0" layoutY="203.0" max="10.0" prefHeight="25.0" prefWidth="258.0" />
-                              <Label layoutX="14.0" layoutY="256.0" text="Radius" />
-                              <JFXTextField fx:id="mTFRadius" layoutX="184.0" layoutY="246.0" maxWidth="206.0" minWidth="206.0" prefHeight="51.0" prefWidth="206.0" />
-                              <Label layoutX="390.0" layoutY="256.0" text="Meter" />
-                              <JFXTextField fx:id="mTFTitle" layoutX="188.0" layoutY="24.0" maxWidth="268.0" minWidth="206.0" prefHeight="51.0" prefWidth="268.0" />
-                              <JFXTextField fx:id="mTFSlachtoffers" layoutX="188.0" layoutY="75.0" maxWidth="268.0" minWidth="206.0" prefHeight="51.0" prefWidth="268.0" />
-                           </children>
-                        </AnchorPane>
-                        <JFXButton layoutX="480.0" layoutY="416.0" onMouseClicked="#createIncident" styleClass="button-raised" text="Meld incident" />
-                        <JFXListView fx:id="mLVGiftigeStoffen" layoutX="464.0" layoutY="52.0" prefHeight="350.0" prefWidth="248.0" />
-
-                        <Label layoutX="464.0" layoutY="14.0" text="Aanwezige giftige stoffen" />
-                        <TextArea editable="false" layoutX="26.0" layoutY="14.0" prefHeight="158.0" prefWidth="414.0" text="Vul het onderstaande formulier in om een incident aan te maken." wrapText="true" />
-                     </children>
-                  </AnchorPane>
-              </content>
-            </Tab>
             <Tab text="Communicatie eenheden">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">

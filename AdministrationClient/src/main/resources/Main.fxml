@@ -26,27 +26,27 @@
       <RowConstraints />
    </rowConstraints>
    <children>
-      <Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="825.0">
+      <Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0">
          <children>
-            <JFXButton layoutX="578.0" layoutY="375.0" prefHeight="1.0" prefWidth="278.0" styleClass="button-raised" text="Bronnen filteren" />
+            <JFXButton layoutX="578.0" layoutY="375.0" onMouseClicked="#loadFilter" prefHeight="1.0" prefWidth="278.0" styleClass="button-raised" text="Bronnen filteren" />
             <JFXTextField alignment="CENTER" editable="false" layoutX="149.0" layoutY="32.0" maxWidth="685.0" minWidth="629.0" prefHeight="61.0" prefWidth="629.0" text="Welkom bij de centrale administratie van CIMS">
                <font>
                   <Font name="Calibri Bold" size="30.0" />
                </font>
             </JFXTextField>
-            <JFXButton fx:id="btnBeheersen" disable="true" layoutX="352.0" layoutY="375.0" prefHeight="31.0" prefWidth="282.0" styleClass="button-raised" text="Incident beheersen">
+            <JFXButton fx:id="btnBeheersen" onMouseClicked="#loadOverview" disable="true" layoutX="352.0" layoutY="375.0" prefHeight="31.0" prefWidth="282.0" styleClass="button-raised" text="Incident beheersen">
                <font>
                   <Font size="51.0" />
                </font>
             </JFXButton>
-            <JFXListView fx:id="lvIncidenten" layoutX="83.0" layoutY="132.0" />
+            <JFXListView fx:id="lvIncidenten" layoutX="83.0" layoutY="132.0" prefHeight="400.0" prefWidth="222.0" />
             <Label layoutX="83.0" layoutY="93.0" text="Incidenten" />
-            <JFXButton fx:id="btnWijzigen" disable="true" layoutX="352.0" layoutY="433.0" prefHeight="31.0" prefWidth="282.0" styleClass="button-raised" text="Incident wijzigen">
+            <JFXButton fx:id="btnWijzigen" onMouseClicked="#loadIncidentWijzigen" disable="true" layoutX="352.0" layoutY="433.0" prefHeight="31.0" prefWidth="282.0" styleClass="button-raised" text="Incident wijzigen">
                <font>
                   <Font size="51.0" />
                </font>
             </JFXButton>
-            <JFXButton layoutX="352.0" layoutY="492.0" prefHeight="31.0" prefWidth="282.0" styleClass="button-raised" text="Incident aanmaken">
+            <JFXButton layoutX="352.0" onMouseClicked="#loadIncidentAanmaken" layoutY="492.0" prefHeight="31.0" prefWidth="282.0" styleClass="button-raised" text="Incident aanmaken">
                <font>
                   <Font size="51.0" />
                </font>
