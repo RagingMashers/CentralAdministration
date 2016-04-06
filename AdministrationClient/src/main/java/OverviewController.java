@@ -2,9 +2,12 @@ import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -34,6 +37,8 @@ public class OverviewController implements IController{
     @FXML private VBox contentHolderR2;
     @FXML private VBox contentHolderR3;
 
+    @FXML private Menu menuBack;
+
     // FIELDS
 
 
@@ -53,6 +58,7 @@ public class OverviewController implements IController{
         cLVTeams.getItems().add("Politie 1");
         cLVTeams.getItems().add("Brandweer 4");
 
+        // Setting the panel settings
         contentHolderR1.setPrefHeight(totalContent.getPrefHeight());
         contentHolderR2.setPrefHeight(totalContent.getPrefHeight());
         contentHolderR3.setPrefHeight(totalContent.getPrefHeight());
@@ -61,8 +67,7 @@ public class OverviewController implements IController{
         contentHolderR2.setSpacing(spacing);
         contentHolderR3.setSpacing(spacing);
 
-
-
+        // Dummy data for the panels
         AddPanel("Label 1");
         AddPanel("Label 2");
         AddPanel("Label 3");
@@ -108,5 +113,10 @@ public class OverviewController implements IController{
         System.out.println(scrollPane.getHeight());
         System.out.println(scrollPane.getMaxHeight());
         System.out.println(scrollPane.getPrefHeight());
+    }
+
+    @Override
+    public void backToMenu() {
+        StageController.loadStage(View.mainScene, "main");
     }
 }

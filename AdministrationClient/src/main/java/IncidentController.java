@@ -130,4 +130,9 @@ public class IncidentController implements IController{
             MessageBox.showPopUp(Alert.AlertType.INFORMATION, "Incident wijzigen", "Je gaat nu een incident wijzigen", "");
         }
     }
+
+    @Override
+    public void backToMenu() {
+        StageController.loadStage(View.mainScene, "main");
+    }
 }
