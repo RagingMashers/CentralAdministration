@@ -1,3 +1,4 @@
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextField;
@@ -33,6 +34,8 @@ public class IncidentController implements IController{
     private JFXListView<String> mLVGiftigeStoffen;
     @FXML
     private JFXListView<String> mLVGiftigeStoffenTotaal;
+    @FXML
+    private JFXButton mBTNIncidentCreateUpdate;
 
     /**
      * Author Frank Hartman
@@ -82,8 +85,10 @@ public class IncidentController implements IController{
 
 
         if (IncidentHolder.getIncident().equals(""))
+        {
             MessageBox.showPopUp(Alert.AlertType.INFORMATION, "Incident aanmaken voltooid", "Het incident is aangemaakt", "");
             //Should add some code that calls the method that adds the incident data.
+        }
         else {
             MessageBox.showPopUp(Alert.AlertType.INFORMATION, "Incident wijzigen voltooid", "Het incident is gewijzigd", "");
             //Should add some code that calls the method that changes the incident data.
@@ -130,10 +135,13 @@ public class IncidentController implements IController{
 
     @Override
     public void startController() {
-        if (IncidentHolder.getIncident().equals(""))
+        if (IncidentHolder.getIncident().equals("")) {
             MessageBox.showPopUp(Alert.AlertType.INFORMATION, "Incident aanmaken", "Je gaat nu een incident aanmaken", "");
+            mBTNIncidentCreateUpdate.setText("Meld incident");
+        }
         else {
             MessageBox.showPopUp(Alert.AlertType.INFORMATION, "Incident wijzigen", "Je gaat nu een incident wijzigen", "");
+            mBTNIncidentCreateUpdate.setText("Wijzig incident");
             fillInputFields(IncidentHolder.getIncident());
         }
     }

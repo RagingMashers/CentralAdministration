@@ -29,7 +29,7 @@
                         <JFXTextField fx:id="mTFSlachtoffers" layoutX="188.0" layoutY="75.0" maxWidth="268.0" minWidth="206.0" prefHeight="51.0" prefWidth="268.0" />
                      </children>
                   </AnchorPane>
-                  <JFXButton layoutX="784.0" layoutY="410.0" styleClass="button-raised" text="Meld incident" OnAction="#createIncident"/>
+                  <JFXButton fx:id="mBTNIncidentCreateUpdate" layoutX="784.0" layoutY="410.0" styleClass="button-raised" text="Meld incident" onAction="#createIncident"/>
                   <JFXListView fx:id="mLVGiftigeStoffen" layoutX="464.0" layoutY="52.0" prefHeight="350.0" prefWidth="248.0" />
                   <JFXListView fx:id="mLVGiftigeStoffenTotaal" layoutX="736.0" layoutY="52.0" prefHeight="350.0" prefWidth="248.0" />
    
