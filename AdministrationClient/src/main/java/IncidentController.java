@@ -138,6 +138,11 @@ public class IncidentController implements IController{
         }
     }
 
+    @Override
+    public void backToMenu() {
+        StageController.loadStage(View.mainScene, "main");
+    }
+
     /**
      * Method for filling in the fields of an incident.
      * This will give the user feedback about the current status of the incident.

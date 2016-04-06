@@ -58,4 +58,9 @@ public class MainController implements IController{
     public void startController() {
 
     }
+
+    @Override
+    public void backToMenu() {
+
+    }
 }
