@@ -1,3 +1,5 @@
+import Panels.IPanel;
+import Panels.PanelFactory;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
@@ -9,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -67,24 +70,25 @@ public class OverviewController implements IController{
         contentHolderR2.setSpacing(spacing);
         contentHolderR3.setSpacing(spacing);
 
+        Image image = new Image(String.valueOf(getClass().getClassLoader().getResource("muppets.jpg")));
+
         // Dummy data for the panels
-        AddPanel("Label 1");
-        AddPanel("Label 2");
-        AddPanel("Label 3");
-        AddPanel("Label 4");
-        AddPanel("Label 5");
-        AddPanel("Label 6");
-        AddPanel("Label 7");
-        AddPanel("Label 8");
-        AddPanel("Label 9");
-        AddPanel("Label 10");
-        AddPanel("Label 11");
-        AddPanel("Label 12");
+        AddPanel("Label 1", image);
+        AddPanel("Label 2", image);
+        AddPanel("Label 3", image);
+        AddPanel("Label 1", image);
+        AddPanel("Label 2", image);
+        AddPanel("Label 3", image);
+        AddPanel("Label 1", image);
+        AddPanel("Label 2", image);
+        AddPanel("Label 3", image);
+
+
 
 
     }
 
-    void AddPanel(String title) {
+    void AddPanel(String title, Image image) {
         int row1Count = contentHolderR1.getChildren().toArray().length;
         VBox selectedVBox;
         if (contentHolderR2.getChildren().toArray().length < row1Count)
@@ -94,16 +98,8 @@ public class OverviewController implements IController{
         else
             selectedVBox = contentHolderR1;
 
-
-        Pane pane = new Pane();
-        pane.setPrefWidth(scrollPane.getWidth());
-        Random random = new Random();
-        pane.setPrefHeight(random.nextInt(300));
-
-        pane.setStyle("-fx-background-color: coral");
-
-        pane.getChildren().add(new Label(title));
-        selectedVBox.getChildren().add(pane);
+        IPanel panel = PanelFactory.getPanel(PanelFactory.Type.image, title, image, selectedVBox);
+        selectedVBox.getChildren().add(panel.getParentNode());
     }
 
 
