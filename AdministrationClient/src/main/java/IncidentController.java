@@ -80,8 +80,14 @@ public class IncidentController implements IController{
             return;
         }
 
-        MessageBox.showPopUp(Alert.AlertType.INFORMATION, "Incident aanmaken voltooid", "Het incident is aangemaakt", "");
 
+        if (IncidentHolder.getIncident().equals(""))
+            MessageBox.showPopUp(Alert.AlertType.INFORMATION, "Incident aanmaken voltooid", "Het incident is aangemaakt", "");
+            //Should add some code that calls the method that adds the incident data.
+        else {
+            MessageBox.showPopUp(Alert.AlertType.INFORMATION, "Incident wijzigen voltooid", "Het incident is gewijzigd", "");
+            //Should add some code that calls the method that changes the incident data.
+        }
 
 
     }
@@ -124,10 +130,45 @@ public class IncidentController implements IController{
 
     @Override
     public void startController() {
-        if (IncidentHolder.getIncident().equals(null))
+        if (IncidentHolder.getIncident().equals(""))
             MessageBox.showPopUp(Alert.AlertType.INFORMATION, "Incident aanmaken", "Je gaat nu een incident aanmaken", "");
         else {
             MessageBox.showPopUp(Alert.AlertType.INFORMATION, "Incident wijzigen", "Je gaat nu een incident wijzigen", "");
+            fillInputFields(IncidentHolder.getIncident());
         }
+    }
+
+    /**
+     * Method for filling in the fields of an incident.
+     * This will give the user feedback about the current status of the incident.
+     * @param incident The values of this incident will be displayed.
+     */
+    private void fillInputFields(String incident){
+        //Needs to be updated to pass the actual values.
+        mTFTitle.setText(incident);
+        mTFSlachtoffers.setText("10");
+        mTFCoordinaatX.setText("20");
+        mTFCoordinaatY.setText("16");
+        mSGevaarNiveau.setValue(5);
+        mTFRadius.setText("10500");
+
+//        mTFTitle.setText(incident.description);
+//        mTFSlachtoffers.setText(incident.victims;
+//        mTFCoordinaatX.setText(incident.longitude);
+//        mTFCoordinaatX.setText(incident.latitude);
+//        mSGevaarNiveau.setValue(incident.dangerLevel);
+//        mTFRadius.setText(incident.radius);
+
+//        for(Toxication toxic : incident.getToxications){
+//            if(!mLVGiftigeStoffen.getItems().contains(toxic)) {
+//                mLVGiftigeStoffen.getItems().add(toxic);
+//            }
+//        }
+
+//        for(Toxication toxic : allToxications){
+//            if(!mLVGiftigeStoffen.getItems().contains(toxic) && mLVGiftigeStoffenTotaal) {
+//                mLVGiftigeStoffenTotaal.getItems().add(toxic);
+//            }
+//        }
     }
 }
