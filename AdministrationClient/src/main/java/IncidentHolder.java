@@ -4,6 +4,7 @@
 public class IncidentHolder {
     private static IncidentHolder singleTon = new IncidentHolder();
     private static String incident;
+
     public IncidentHolder() {
         incident = "";
     }
