@@ -3,6 +3,8 @@ import Panels.PanelFactory;
 import SitaApi.ArrayOfTeam;
 import SitaApi.SitaApiSoap;
 import SitaApi.Team;
+import SitaApi.Media;
+import SitaApi.SitaApiSoap;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
@@ -13,6 +15,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.application.Platform;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 
 import javafx.scene.control.DatePicker;
@@ -21,8 +25,15 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import sun.misc.IOUtils;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.*;
+import java.net.URLConnection;
 import java.util.*;
 
 public class OverviewController implements IController{
@@ -43,6 +54,7 @@ public class OverviewController implements IController{
     @FXML private VBox contentHolderR1;
     @FXML private VBox contentHolderR2;
     @FXML private VBox contentHolderR3;
+    @FXML private VBox selectedSources;
 
     @FXML private Menu menuBack;
     @FXML private DatePicker endDate;
@@ -78,6 +90,7 @@ public class OverviewController implements IController{
         contentHolderR1.setSpacing(SPACING);
         contentHolderR2.setSpacing(SPACING);
         contentHolderR3.setSpacing(SPACING);
+        selectedSources.setSpacing(SPACING);
     }
 
     /**
@@ -89,6 +102,7 @@ public class OverviewController implements IController{
         VBox nextBox = getNextPanel();
         IPanel panel = PanelFactory.getPanel(PanelFactory.Type.image, title, image, nextBox);
         panels.add(panel);
+        getNextPanel().getChildren().add(panel.getParentNode());
     }
 
     /**
@@ -100,6 +114,7 @@ public class OverviewController implements IController{
         VBox nextBox = getNextPanel();
         IPanel panel = PanelFactory.getPanel(PanelFactory.Type.text, title, text, nextBox);
         panels.add(panel);
+        getNextPanel().getChildren().add(panel.getParentNode());
     }
 
     /**
@@ -133,6 +148,53 @@ public class OverviewController implements IController{
         return selectedVBox;
     }
 
+    private void postLoadSources(){
+        ApiManager api = ApiManager.getInstance();
+        SitaApiSoap port = api.getSitaPort();
+        String token = api.getSitaToken();
+
+        List<Object> sources = port.getMedia(token, 1, 10).getAnyType();
+
+        for (Object source :
+                sources) {
+            if(!(source instanceof Media)){
+                System.out.println("Error " + source + " is not of type Media");
+                continue;
+            }
+            Media m = (Media)source;
+
+            String url = "http://localhost:15012/MediaDownload.ashx?id="+m.getId();
+            System.out.println("Getting image :\""+url+"\"");
+            if(m.getMimeType().startsWith("image")){//its an image!
+                Image img = new Image(url);
+                Platform.runLater(()->addPanel(m.getSource(),img));
+            }else{
+                String result = httpGetString(url);
+                Platform.runLater(()->addPanel(m.getSource(),result));
+            }
+            System.out.println("Got :\""+url+"\"");
+        }
+    }
+
+    private String httpGetString(String urlt) {
+        try {
+            URL url = new URL(urlt);
+            URLConnection con = url.openConnection();
+            InputStream in = con.getInputStream();
+            String encoding = con.getContentEncoding();
+            encoding = encoding == null ? "UTF-8" : encoding;
+
+            java.util.Scanner s = new java.util.Scanner(in,encoding).useDelimiter("\\A");
+            String body = s.hasNext() ? s.next() : "";
+
+            System.out.println(body);
+            return body;
+        }catch (IOException ex){
+            System.out.println(ex);
+            return "ERROR";
+        }
+    }
+
 
     @Override
     public void startController() {
@@ -155,31 +217,29 @@ public class OverviewController implements IController{
         contentHolderR2.getChildren().clear();
         contentHolderR3.getChildren().clear();
 
-        Image image = new Image(String.valueOf(getClass().getClassLoader().getResource("Images/muppets.jpg")));
-        Image image2 = new Image(String.valueOf(getClass().getClassLoader().getResource("Images/bosbrand.jpg")));
-        Image image3 = new Image(String.valueOf(getClass().getClassLoader().getResource("Images/bosbrand2.jpg")));
-        Image image4 = new Image(String.valueOf(getClass().getClassLoader().getResource("Images/gijzeling.jpg")));
-        Image image5 = new Image(String.valueOf(getClass().getClassLoader().getResource("Images/gijzeling2.jpg")));
-        Image image6 = new Image(String.valueOf(getClass().getClassLoader().getResource("Images/gijzeling3.jpg")));
-        Image image7 = new Image(String.valueOf(getClass().getClassLoader().getResource("Images/belgium.jpg")));
-
-        // Dummy data for the panels
-        addPanel("Muppets nemen eindhoven over", image);
-        addPanel("bosbrand", image2);
-        addPanel("Bosbrand", image3);
-        addPanel("Suspendisse", "Suspendisse faucibus sem eget ligula fringilla, et malesuada leo ornare.");
-        addPanel("Gijzeling", image4);
-        addPanel("Gijzeling", image5);
-        addPanel("gijzeling", image6);
-        addPanel("Belgium", image7);
-        addPanel("Label 1", "Donec laoreet et nisl volutpat fermentum. Maecenas convallis lectus sit amet felis feugiat dignissim. Phasellus vulputate, neque in cursus sollicitudin, lorem mauris condimentum turpis, sit amet viverra lacus dolor in neque. Phasellus laoreet venenatis neque, in pulvinar nisi rhoncus nec. Nam congue cursus libero. ");
-
-
-        loadPanels();
+        Thread thread = new Thread(()->postLoadSources());
+        thread.start();
     }
 
     @Override
     public void backToMenu() {
         StageController.loadStage(View.mainScene, "main");
+    }
+
+    public void reloadSelectedSources(Event event) {
+        ListIterator<IPanel> listIterator = panels.listIterator();
+        while (listIterator.hasNext()) {
+            IPanel panel = listIterator.next();
+            try {
+                if (panel.isSelected())
+                    selectedSources.getChildren().add(panel.getParentNode());
+                else
+                    getNextPanel().getChildren().add(panel.getParentNode());
+
+            }catch (IllegalArgumentException ex) {
+
+            }
+
+        }
     }
 }
