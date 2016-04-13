@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.text.*?>
 <?import java.net.*?>
@@ -7,51 +8,77 @@
 <?import javafx.scene.layout.*?>
 
 <GridPane alignment="center" hgap="10" scaleShape="false" vgap="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainController">
-   <columnConstraints>
-      <ColumnConstraints />
-      <ColumnConstraints />
-      <ColumnConstraints />
-      <ColumnConstraints />
-      <ColumnConstraints />
-   </columnConstraints>
-   <rowConstraints>
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-   </rowConstraints>
    <children>
-      <Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0">
-         <children>
-            <JFXButton layoutX="578.0" layoutY="375.0" onMouseClicked="#loadFilter" prefHeight="1.0" prefWidth="278.0" styleClass="button-raised" text="Bronnen filteren" />
-            <JFXTextField alignment="CENTER" editable="false" layoutX="149.0" layoutY="32.0" maxWidth="685.0" minWidth="629.0" prefHeight="61.0" prefWidth="629.0" text="Welkom bij de centrale administratie van CIMS">
-               <font>
-                  <Font name="Calibri Bold" size="30.0" />
-               </font>
-            </JFXTextField>
-            <JFXButton fx:id="btnBeheersen" onMouseClicked="#loadOverview" disable="true" layoutX="352.0" layoutY="375.0" prefHeight="31.0" prefWidth="282.0" styleClass="button-raised" text="Incident beheersen">
-               <font>
-                  <Font size="51.0" />
-               </font>
-            </JFXButton>
-            <JFXListView fx:id="lvIncidenten" layoutX="83.0" layoutY="132.0" prefHeight="400.0" prefWidth="222.0" />
-            <Label layoutX="83.0" layoutY="93.0" text="Incidenten" />
-            <JFXButton fx:id="btnWijzigen" onMouseClicked="#loadIncidentWijzigen" disable="true" layoutX="352.0" layoutY="433.0" prefHeight="31.0" prefWidth="282.0" styleClass="button-raised" text="Incident wijzigen">
-               <font>
-                  <Font size="51.0" />
-               </font>
-            </JFXButton>
-            <JFXButton layoutX="352.0" onMouseClicked="#loadIncidentAanmaken" layoutY="492.0" prefHeight="31.0" prefWidth="282.0" styleClass="button-raised" text="Incident aanmaken">
-               <font>
-                  <Font size="51.0" />
-               </font>
-            </JFXButton>
-            <TextArea layoutX="352.0" layoutY="132.0" prefHeight="214.0" prefWidth="426.0" />
-         </children>
-      </Pane>
+      <Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0" />
+      <BorderPane prefHeight="200.0" prefWidth="200.0">
+         <top>
+            <Pane prefHeight="82.0" prefWidth="1100.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label layoutX="314.0" layoutY="20.0" text="Welkom bij de central administration">
+                     <font>
+                        <Font size="29.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+         </top>
+         <center>
+            <GridPane BorderPane.alignment="CENTER">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+                     <children>
+                        <Label layoutX="85.0" layoutY="14.0" text="Bestaande incidenten" />
+                        <JFXButton fx:id="btnBeheersen" disable="true" layoutX="84.0" layoutY="76.0" onMouseClicked="#loadOverview" prefHeight="70.0" prefWidth="282.0" styleClass="button-raised" text="Incident beheersen">
+                           <font>
+                              <Font size="51.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXButton fx:id="btnWijzigen" disable="true" layoutX="84.0" layoutY="180.0" onMouseClicked="#loadIncidentWijzigen" prefHeight="70.0" prefWidth="282.0" styleClass="button-raised" text="Incident wijzigen">
+                           <font>
+                              <Font size="51.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXButton disable="true" layoutX="84.0" layoutY="274.0" onMouseClicked="#loadFilter" prefHeight="70.0" prefWidth="278.0" styleClass="button-raised" text="Bronnen filteren" />
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
+                     <children>
+                        <Label layoutX="102.0" layoutY="14.0" text="Nieuw incidenten" />
+                        <JFXButton layoutX="83.0" layoutY="60.0" onMouseClicked="#loadIncidentAanmaken" prefHeight="70.0" prefWidth="282.0" styleClass="button-raised" text="Incident aanmaken">
+                           <font>
+                              <Font size="51.0" />
+                           </font>
+                        </JFXButton>
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <JFXListView fx:id="lvIncidenten" layoutX="24.0" layoutY="57.0" prefHeight="550.0" prefWidth="318.0" />
+                        <Label layoutX="67.0" layoutY="14.0" text="Selecteer hier een incident" />
+                     </children>
+                  </Pane>
+               </children>
+            </GridPane>
+         </center>
+      </BorderPane>
    </children>
 
    <stylesheets>
       <URL value="@style.css" />
    </stylesheets>
+   <columnConstraints>
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+   </rowConstraints>
 
 </GridPane>
