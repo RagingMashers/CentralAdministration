@@ -10,7 +10,13 @@ import java.net.URL;
 public class ApiManager {
     private static final QName SITA_SERVICE_NAME = new QName("http://cims.nl/", "SitaApi");
 
-    public ApiManager() {
+    private static ApiManager apiManager;
+
+    public synchronized static ApiManager getInstance(){
+        return apiManager == null? (apiManager = new ApiManager()): apiManager;
+    }
+
+    private ApiManager() {
         URL sitaWsdlURL = SitaApi.WSDL_LOCATION;
         SitaApi sitaapisocket = new SitaApi(sitaWsdlURL, SITA_SERVICE_NAME);
         sitaPort = sitaapisocket.getSitaApiSoap12();
