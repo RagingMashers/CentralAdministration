@@ -1,67 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.control.*?>
 <?import java.net.*?>
 <?import com.jfoenix.controls.*?>
 <?import javafx.scene.layout.*?>
 
+
 <GridPane alignment="center" hgap="10" scaleShape="false" vgap="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="IncidentController">
    <children>
-      <Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0" GridPane.rowIndex="1">
+      <Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0">
          <children>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <AnchorPane layoutY="164.0" prefHeight="438.0" prefWidth="516.0">
+                  <AnchorPane layoutY="164.0" prefHeight="532.0" prefWidth="355.0">
                      <children>
-                        <Label layoutX="14.0" layoutY="34.0" text="Titel" />
-                        <Label layoutX="14.0" layoutY="86.0" text="Slachtoffers" />
-                        <Label layoutX="13.0" layoutY="145.0" text="Coordinaten" />
-                        <Label layoutX="188.0" layoutY="145.0" text="X" />
-                        <JFXTextField fx:id="mTFCoordinaatX" layoutX="213.0" layoutY="138.0" maxWidth="90.0" minWidth="52.0" prefHeight="51.0" prefWidth="90.0" text="0" />
-                        <Label layoutX="303.0" layoutY="145.0" text="Y" />
-                        <JFXTextField fx:id="mTFCoordinaatY" layoutX="328.0" layoutY="138.0" maxWidth="90.0" minWidth="52.0" prefHeight="51.0" prefWidth="90.0" text="0" />
-                        <Label layoutX="14.0" layoutY="200.0" text="Gevaar niveau" />
-                        <JFXSlider fx:id="mSGevaarNiveau" layoutX="188.0" layoutY="203.0" max="10.0" prefHeight="25.0" prefWidth="258.0" />
-                        <Label layoutX="14.0" layoutY="256.0" text="Radius" />
-                        <JFXTextField fx:id="mTFRadius" layoutX="184.0" layoutY="246.0" maxWidth="206.0" minWidth="206.0" prefHeight="51.0" prefWidth="206.0" />
-                        <Label layoutX="390.0" layoutY="256.0" text="Meter" />
-                        <JFXTextField fx:id="mTFTitle" layoutX="188.0" layoutY="24.0" maxWidth="268.0" minWidth="206.0" prefHeight="51.0" prefWidth="268.0" />
-                        <JFXTextField fx:id="mTFSlachtoffers" layoutX="188.0" layoutY="75.0" maxWidth="268.0" minWidth="206.0" prefHeight="51.0" prefWidth="268.0" />
+                        <JFXTextField fx:id="mTFTitle" layoutX="26.0" layoutY="14.0" maxWidth="321.0" minWidth="206.0" prefHeight="40.0" prefWidth="321.0" />
+                        <JFXTextField fx:id="mTFSlachtoffers" layoutX="26.0" layoutY="95.0" maxWidth="321.0" minWidth="206.0" prefHeight="40.0" prefWidth="321.0" />
+                        <JFXTextField fx:id="mTFGewonden" layoutX="26.0" layoutY="172.0" maxWidth="321.0" minWidth="206.0" prefHeight="40.0" prefWidth="321.0" />
+                        <JFXTextField fx:id="mTFCoordinaatX" layoutX="26.0" layoutY="255.0" maxWidth="90.0" minWidth="0.0" prefHeight="40.0" prefWidth="79.0" />
+                        <JFXTextField fx:id="mTFCoordinaatY" layoutX="26.0" layoutY="334.0" maxWidth="90.0" minWidth="52.0" prefHeight="40.0" prefWidth="148.0" />
+                        <JFXSlider fx:id="mSGevaarNiveau" layoutX="26.0" layoutY="427.0" max="10.0" prefHeight="25.0" prefWidth="300.0" />
+                        <JFXTextField fx:id="mTFRadius" layoutX="26.0" layoutY="470.0" maxWidth="206.0" minWidth="206.0" prefHeight="40.0" prefWidth="206.0" />
+                        <Label layoutX="26.0" layoutY="406.0" prefHeight="21.0" prefWidth="57.0" text="Gevaar" />
                      </children>
                   </AnchorPane>
-                  <JFXButton fx:id="mBTNIncidentCreateUpdate" layoutX="784.0" layoutY="410.0" styleClass="button-raised" text="Meld incident" onAction="#createIncident"/>
-                  <JFXListView fx:id="mLVGiftigeStoffen" layoutX="464.0" layoutY="52.0" prefHeight="350.0" prefWidth="248.0" />
-                  <JFXListView fx:id="mLVGiftigeStoffenTotaal" layoutX="736.0" layoutY="52.0" prefHeight="350.0" prefWidth="248.0" />
-   
-                  <Label layoutX="464.0" layoutY="14.0" text="Selecteer stoffen" />
-                  <Label layoutX="736.0" layoutY="14.0" text="Aanwezige stoffen" />
-                  <TextArea editable="false" layoutX="26.0" layoutY="14.0" prefHeight="158.0" prefWidth="414.0" text="Vul het onderstaande formulier in om een incident aan te maken." wrapText="true" />
+                  <TextArea editable="false" layoutX="26.0" layoutY="14.0" prefHeight="83.0" prefWidth="414.0" text="Vul het onderstaande formulier in om een incident aan te maken." wrapText="true" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8eb5da" height="302.0" layoutX="451.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" width="638.0" />
+      
+                     <Label layoutX="506.0" layoutY="25.0" text="Selecteer stoffen" />
+                  <Label layoutX="922.0" layoutY="25.0" text="Aanwezige stoffen" />
+                  <JFXListView fx:id="mLVGiftigeStoffen" layoutX="461.0" layoutY="52.0" prefHeight="240.0" prefWidth="248.0" />
+                  <JFXListView fx:id="mLVGiftigeStoffenTotaal" layoutX="883.0" layoutY="52.0" prefHeight="240.0" prefWidth="248.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8eb5da" height="302.0" layoutX="451.0" layoutY="337.0" stroke="BLACK" strokeType="INSIDE" width="638.0" />
+                  <JFXListView fx:id="mLVGeselecteerdeTeams" layoutX="883.0" layoutY="380.0" prefHeight="240.0" prefWidth="248.0" />
+                  <JFXListView fx:id="mLVBeschikbareTeams" layoutX="461.0" layoutY="380.0" prefHeight="240.0" prefWidth="248.0" />
+                  <Label layoutX="913.0" layoutY="353.0" text="Aangevraagde teams" />
+                  <Label layoutX="506.0" layoutY="353.0" text="Selecteer teams" />
+                  <JFXButton fx:id="btnAddToxin" layoutX="670.0" layoutY="77.0" onAction="#btnAddToxin_Click" prefHeight="40.0" prefWidth="177.0" styleClass="button-raised" text="&gt;&gt;" />
+                  <JFXButton fx:id="btnRemoveToxin" layoutX="670.0" layoutY="216.0" onAction="#btnRemoveToxin_Click" prefHeight="40.0" prefWidth="177.0" styleClass="button-raised" text="&lt;&lt;" />
+                  <JFXButton fx:id="btnRemoveTeam" layoutX="670.0" layoutY="550.0" onAction="#btnRemoveTeam_Click" prefHeight="40.0" prefWidth="177.0" styleClass="button-raised" text="&lt;&lt;" />
+                  <JFXButton fx:id="btnAddTeam" layoutX="670.0" layoutY="411.0" onAction="#btnAddTeam_Click" prefHeight="40.0" prefWidth="177.0" styleClass="button-raised" text="&gt;&gt;" />
                </children>
             </AnchorPane>
+            <JFXButton fx:id="btnIncident" layoutX="886.0" layoutY="646.0" onAction="#btnIncident_Click" styleClass="button-raised" text="Meld incident" />
          </children>
 
       </Pane>
-      <MenuBar>
-         <menus>
-            <Menu mnemonicParsing="false"  onAction="#backToMenu" text="Navigation">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="Home" onAction="#backToMenu" />
-               </items>
-            </Menu>
-         </menus>
-      </MenuBar>
-
-
    </children>
 
    <stylesheets>
-      <URL value="@style.css" />
+      <!--<URL value="@style.css" />-->
+      <URL value="@jfoenix-components.css" />
+      <URL value="@jfoenix-main-demo.css" />
    </stylesheets>
    <columnConstraints>
       <ColumnConstraints />
    </columnConstraints>
    <rowConstraints>
-      <RowConstraints minHeight="10.0" prefHeight="30.0" />
       <RowConstraints />
    </rowConstraints>
 
