@@ -13,6 +13,7 @@ public class IntegerValidator extends ValidatorBase {
     protected void eval() {
         if(this.srcControl.get() instanceof TextInputControl) {
             this.evalTextInputField();
+
         }
     }
 
