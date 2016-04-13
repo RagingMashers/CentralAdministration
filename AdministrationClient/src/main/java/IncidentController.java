@@ -1,3 +1,6 @@
+import Validation.Validator;
+import Validation.Validators.IntegerValidator;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextField;
@@ -35,48 +38,6 @@ public class IncidentController implements IController{
      * Create an incident
      */
     public void createIncident(){
-
-        String titel = mTFTitle.getText();
-        ArrayList<String> toxics = new ArrayList<String>();
-        toxics.addAll(mLVGiftigeStoffenTotaal.getItems());
-
-        int x, y, gevaar, radius, slachtoffers;
-
-
-        if (titel.length() <= 3) {
-            MessageBox.showPopUp(Alert.AlertType.ERROR, "Te weinig karakters", "Het aantal karakters van de titel moet meer dan 3 zijn", "");
-            return;
-        }
-
-        try {
-            slachtoffers = Integer.parseInt(mTFSlachtoffers.getText());
-        }
-        catch (Exception e) {
-            MessageBox.showPopUp(Alert.AlertType.ERROR, "Verkeerd formaat", "Het aantal slachtoffers moet in cijfers beschreven worden", "");
-            return;
-        }
-
-        try {
-            x = Integer.parseInt(mTFCoordinaatX.getText());
-            y = Integer.parseInt(mTFCoordinaatY.getText());
-        }
-
-        catch (Exception e) {
-            MessageBox.showPopUp(Alert.AlertType.ERROR, "Verkeerd formaat", "Coordinaten moeten in cijfers beschreven worden", "");
-            return;
-        }
-        gevaar = (int)mSGevaarNiveau.getValue();
-
-        try {
-            radius = Integer.parseInt(mTFRadius.getText());
-        }
-
-        catch (Exception e) {
-            MessageBox.showPopUp(Alert.AlertType.ERROR, "Verkeerd formaat", "Radius moet in cijfers beschreven worden", "");
-            return;
-        }
-
-
         if (IncidentHolder.getIncident().equals(""))
         {
             MessageBox.showPopUp(Alert.AlertType.INFORMATION, "Incident aanmaken voltooid", "Het incident is aangemaakt", "");
@@ -86,8 +47,6 @@ public class IncidentController implements IController{
             MessageBox.showPopUp(Alert.AlertType.INFORMATION, "Incident wijzigen voltooid", "Het incident is gewijzigd", "");
             //Should add some code that calls the method that changes the incident data.
         }
-
-
     }
 
     @Override
@@ -111,21 +70,12 @@ public class IncidentController implements IController{
         addListenerToList(mLVBeschikbareTeams,mLVGeselecteerdeTeams);
     }
 
-    @Override
-    public void startController() {
-        if (IncidentHolder.getIncident().equals(null))
-            MessageBox.showPopUp(Alert.AlertType.INFORMATION, "Incident aanmaken", "Je gaat nu een incident aanmaken", "");
-        else {
-            MessageBox.showPopUp(Alert.AlertType.INFORMATION, "Incident wijzigen", "Je gaat nu een incident wijzigen", "");
-        }
-    }
-
     private void addValidatorsToControls(){
         setTextBoxStyles(mTFTitle,"Titel", "Dit veld mag niet leeg zijn",new RequiredFieldValidator());
         setTextBoxStyles(mTFSlachtoffers,"Hoeveelheid slachtoffers", "Dit moet een getal zijn",new IntegerValidator());
         setTextBoxStyles(mTFGewonden,"Hoeveelheid gewonden", "Dit moet een getal zijn",new IntegerValidator());
-        setTextBoxStyles(mTFCoordinaatX,"X Coördinaat", "Dit moet een getal zijn",new RequiredIntegerValidator());
-        setTextBoxStyles(mTFCoordinaatY,"Y Coördinaat", "Dit moet een getal zijn",new RequiredIntegerValidator());
+        setTextBoxStyles(mTFCoordinaatX,"X Coördinaat", "Dit moet een getal zijn",new RequiredFieldValidator());
+        setTextBoxStyles(mTFCoordinaatY,"Y Coördinaat", "Dit moet een getal zijn",new RequiredFieldValidator());
         setTextBoxStyles(mTFRadius, "Radius", "Dit moet een getal zijn",new IntegerValidator());
     }
 
@@ -192,11 +142,11 @@ public class IncidentController implements IController{
     public void startController() {
         if (IncidentHolder.getIncident().equals("")) {
             MessageBox.showPopUp(Alert.AlertType.INFORMATION, "Incident aanmaken", "Je gaat nu een incident aanmaken", "");
-            mBTNIncidentCreateUpdate.setText("Meld incident");
+            btnIncident.setText("Meld incident");
         }
         else {
             MessageBox.showPopUp(Alert.AlertType.INFORMATION, "Incident wijzigen", "Je gaat nu een incident wijzigen", "");
-            mBTNIncidentCreateUpdate.setText("Wijzig incident");
+            btnIncident.setText("Wijzig incident");
             fillInputFields(IncidentHolder.getIncident());
         }
     }
