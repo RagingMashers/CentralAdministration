@@ -1,9 +1,18 @@
 import Panels.IPanel;
 import Panels.PanelFactory;
+import SitaApi.ArrayOfTeam;
+import SitaApi.SitaApiSoap;
+import SitaApi.Team;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 
 import javafx.scene.control.DatePicker;
@@ -14,10 +23,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.ListIterator;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class OverviewController implements IController{
 
@@ -27,7 +33,7 @@ public class OverviewController implements IController{
     @FXML
     private JFXTextArea cTAInhoud;
     @FXML
-    private JFXListView<String> cLVTeams;
+    private JFXListView<Team> cLVTeams;
 
     // SOURCES TAB
     @FXML
@@ -44,31 +50,34 @@ public class OverviewController implements IController{
 
     // FIELDS
     private LinkedList<IPanel> panels = new LinkedList<IPanel>();
-
-
     private final int SPACING = 10;
+    ApiManager manager = ApiManager.getInstance();
+    SitaApiSoap port = manager.getSitaPort();
+    String token = manager.getSitaToken();
+    Team selectedTeam;
 
     /**
      * Author Frank Hartman
      * Send a message to a selected team
      */
     public void sendMessageToTeam(){
-        MessageBox.showException("Niet ondersteund", "Neem contact op met de administrator", "", new UnsupportedOperationException());
+        try {
+            port.sendMessage(token, selectedTeam.getId(), cTAInhoud.getText());
+            cTFTitel.setText("");
+            cTAInhoud.setText("Beste hulpverlener,");
+            cLVTeams.getSelectionModel().clearSelection();
+            selectedTeam = null;
+        }
+        catch(Exception ex)
+        {
+            MessageBox.showException("Er is een fout opgetreden!", "Neem contact op met de administrator", "", ex);
+        }
     }
 
     public void initialize(URL location, ResourceBundle resources) {
-        // Dummy data
-        cLVTeams.getItems().add("Alpha");
-        cLVTeams.getItems().add("Beta");
-        cLVTeams.getItems().add("Politie 1");
-        cLVTeams.getItems().add("Brandweer 4");
-
         contentHolderR1.setSpacing(SPACING);
         contentHolderR2.setSpacing(SPACING);
         contentHolderR3.setSpacing(SPACING);
-
-
-
     }
 
     /**
@@ -127,6 +136,20 @@ public class OverviewController implements IController{
 
     @Override
     public void startController() {
+        // Get all teams near the incicent (radius, long and lat are hardcoded right now)
+        ArrayOfTeam soapTeams = port.getTeamsNearIncident(token, 60.78600, 45.78000, 10);
+        List<Team> teams = soapTeams.getTeam();
+        ObservableList<Team> observableTeams = FXCollections.observableArrayList(teams);
+        cLVTeams.setItems(observableTeams);
+
+        cLVTeams.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Team>() {
+            @Override
+            public void changed(ObservableValue<? extends Team> observable, Team oldValue, Team newValue) {
+                selectedTeam = newValue;
+            }
+        });
+
+
         // Clear the vboxes
         contentHolderR1.getChildren().clear();
         contentHolderR2.getChildren().clear();
