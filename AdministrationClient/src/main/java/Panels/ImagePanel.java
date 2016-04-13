@@ -27,7 +27,7 @@ public class ImagePanel extends Panel implements IPanel {
         ImageView image = new ImageView(img);
 
         // The imageview settings
-        image.setY(20);
+        image.setY(30);
         image.fitWidthProperty().bind(parentBox.widthProperty());
         image.setPreserveRatio(true);
         image.setSmooth(true);

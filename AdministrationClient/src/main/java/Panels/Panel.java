@@ -29,7 +29,8 @@ public abstract class Panel {
 
         // Add the header to the panel
         header = new Label();
-        header.setStyle("-fx-font-weight: bold");
+        header.setStyle("-fx-font-size: 18;" + "-fx-font-weight: bold;");
+
         header.setTextFill(Color.web(HEADERCOLOR));
         header.setLayoutX(10);
         header.setMaxWidth(300);

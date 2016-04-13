@@ -19,7 +19,7 @@ public class TextPanel extends Panel implements IPanel {
         setHeaderText(headerText);
         setTextAreaText(contentTexts);
 
-        textArea.setLayoutY(20);
+        textArea.setLayoutY(30);
         textArea.setPrefWidth(parentBox.getPrefWidth());
         textArea.setEditable(false);
         textArea.setWrapText(true);

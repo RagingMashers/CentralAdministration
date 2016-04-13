@@ -126,36 +126,25 @@ public class OverviewController implements IController{
         contentHolderR2.getChildren().clear();
         contentHolderR3.getChildren().clear();
 
-        Image image = new Image(String.valueOf(getClass().getClassLoader().getResource("muppets.jpg")));
+        Image image = new Image(String.valueOf(getClass().getClassLoader().getResource("Images/muppets.jpg")));
+        Image image2 = new Image(String.valueOf(getClass().getClassLoader().getResource("Images/bosbrand.jpg")));
+        Image image3 = new Image(String.valueOf(getClass().getClassLoader().getResource("Images/bosbrand2.jpg")));
+        Image image4 = new Image(String.valueOf(getClass().getClassLoader().getResource("Images/gijzeling.jpg")));
+        Image image5 = new Image(String.valueOf(getClass().getClassLoader().getResource("Images/gijzeling2.jpg")));
+        Image image6 = new Image(String.valueOf(getClass().getClassLoader().getResource("Images/gijzeling3.jpg")));
+        Image image7 = new Image(String.valueOf(getClass().getClassLoader().getResource("Images/belgium.jpg")));
 
         // Dummy data for the panels
-        addPanel("Label 1", image);
-        addPanel("Label 2", image);
-        addPanel("Label 3", image);
-        addPanel("Label 1", "Suspendisse faucibus sem eget ligula fringilla, et malesuada leo ornare.");
-        addPanel("Label 2", image);
-        addPanel("Label 3", image);
-        addPanel("Label 1", image);
-        addPanel("Label 2", image);
+        addPanel("Muppets nemen eindhoven over", image);
+        addPanel("bosbrand", image2);
+        addPanel("Bosbrand", image3);
+        addPanel("Suspendisse", "Suspendisse faucibus sem eget ligula fringilla, et malesuada leo ornare.");
+        addPanel("Gijzeling", image4);
+        addPanel("Gijzeling", image5);
+        addPanel("gijzeling", image6);
+        addPanel("Belgium", image7);
         addPanel("Label 1", "Donec laoreet et nisl volutpat fermentum. Maecenas convallis lectus sit amet felis feugiat dignissim. Phasellus vulputate, neque in cursus sollicitudin, lorem mauris condimentum turpis, sit amet viverra lacus dolor in neque. Phasellus laoreet venenatis neque, in pulvinar nisi rhoncus nec. Nam congue cursus libero. ");
-        addPanel("Label 1", image);
-        addPanel("Label 2", image);
-        addPanel("Label 3", image);
-        addPanel("Label 1", "Suspendisse faucibus sem eget ligula fringilla, et malesuada leo ornare.");
-        addPanel("Label 2", image);
-        addPanel("Label 3", image);
-        addPanel("Label 1", image);
-        addPanel("Label 2", image);
-        addPanel("Label 1", "Donec laoreet et nisl volutpat fermentum. Maecenas convallis lectus sit amet felis feugiat dignissim. Phasellus vulputate, neque in cursus sollicitudin, lorem mauris condimentum turpis, sit amet viverra lacus dolor in neque. Phasellus laoreet venenatis neque, in pulvinar nisi rhoncus nec. Nam congue cursus libero. ");
-        addPanel("Label 1", image);
-        addPanel("Label 2", image);
-        addPanel("Label 3", image);
-        addPanel("Label 1", "Suspendisse faucibus sem eget ligula fringilla, et malesuada leo ornare.");
-        addPanel("Label 2", image);
-        addPanel("Label 3", image);
-        addPanel("Label 1", image);
-        addPanel("Label 2", image);
-        addPanel("Label 1", "Donec laoreet et nisl volutpat fermentum. Maecenas convallis lectus sit amet felis feugiat dignissim. Phasellus vulputate, neque in cursus sollicitudin, lorem mauris condimentum turpis, sit amet viverra lacus dolor in neque. Phasellus laoreet venenatis neque, in pulvinar nisi rhoncus nec. Nam congue cursus libero. ");
+
 
         loadPanels();
     }
