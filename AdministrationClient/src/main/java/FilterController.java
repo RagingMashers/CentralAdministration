@@ -11,6 +11,11 @@ public class FilterController implements IController {
     }
 
     @Override
+    public void backToMenu() {
+        StageController.loadStage(View.mainScene, "main");
+    }
+
+    @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }
