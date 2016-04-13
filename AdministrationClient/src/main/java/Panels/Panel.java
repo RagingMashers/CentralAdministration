@@ -1,7 +1,9 @@
 package Panels;
 
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -13,9 +15,11 @@ import javafx.scene.text.Font;
 public abstract class Panel {
     private Pane background;
     private Label header;
+    private boolean selected = false;
 
     // Panel settings
     private final String BACKGROUNDCOLOR = "#477cd4";
+    private final String SELECTEDCOLOR = "#ff9900";
     private final String HEADERCOLOR = "#f2f2f2";
 
 
@@ -26,6 +30,19 @@ public abstract class Panel {
         // Add the background of the panel
         background = new Pane();
         background.setStyle("-fx-background-color: " + BACKGROUNDCOLOR);
+
+        background.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                selected = !selected;
+                if (selected) {
+                    background.setStyle("-fx-background-color: " + SELECTEDCOLOR);
+                }
+                else {
+                    background.setStyle("-fx-background-color: " + BACKGROUNDCOLOR);
+                }
+            }
+        });
 
         // Add the header to the panel
         header = new Label();
@@ -86,5 +103,9 @@ public abstract class Panel {
      */
     public void setHeaderText(String text) {
         header.setText(text);
+    }
+
+    public boolean getSelected() {
+        return selected;
     }
 }

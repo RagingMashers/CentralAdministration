@@ -6,7 +6,6 @@ import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 
 import javafx.scene.control.DatePicker;
@@ -43,6 +42,7 @@ public class OverviewController implements IController{
     @FXML private VBox contentHolderR1;
     @FXML private VBox contentHolderR2;
     @FXML private VBox contentHolderR3;
+    @FXML private VBox selectedSources;
 
     @FXML private Menu menuBack;
     @FXML private DatePicker endDate;
@@ -72,6 +72,7 @@ public class OverviewController implements IController{
         contentHolderR1.setSpacing(SPACING);
         contentHolderR2.setSpacing(SPACING);
         contentHolderR3.setSpacing(SPACING);
+        selectedSources.setSpacing(SPACING);
 
 
 
@@ -194,5 +195,22 @@ public class OverviewController implements IController{
     @Override
     public void backToMenu() {
         StageController.loadStage(View.mainScene, "main");
+    }
+
+    public void reloadSelectedSources(Event event) {
+        ListIterator<IPanel> listIterator = panels.listIterator();
+        while (listIterator.hasNext()) {
+            IPanel panel = listIterator.next();
+            try {
+                if (panel.isSelected())
+                    selectedSources.getChildren().add(panel.getParentNode());
+                else
+                    getNextPanel().getChildren().add(panel.getParentNode());
+
+            }catch (IllegalArgumentException ex) {
+
+            }
+
+        }
     }
 }

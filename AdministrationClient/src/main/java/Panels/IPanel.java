@@ -8,4 +8,5 @@ import javafx.scene.Node;
 public interface IPanel {
 
     Node getParentNode();
+    boolean isSelected();
 }
