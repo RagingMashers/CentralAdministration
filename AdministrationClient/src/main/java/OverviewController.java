@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 
+import javafx.event.Event;
 import javafx.fxml.FXML;
 
 import javafx.scene.control.DatePicker;
@@ -37,6 +38,7 @@ public class OverviewController implements IController{
     @FXML private VBox contentHolderR1;
     @FXML private VBox contentHolderR2;
     @FXML private VBox contentHolderR3;
+    @FXML private VBox selectedSources;
 
     @FXML private Menu menuBack;
     @FXML private DatePicker endDate;
@@ -66,6 +68,7 @@ public class OverviewController implements IController{
         contentHolderR1.setSpacing(SPACING);
         contentHolderR2.setSpacing(SPACING);
         contentHolderR3.setSpacing(SPACING);
+        selectedSources.setSpacing(SPACING);
 
 
 
@@ -132,6 +135,10 @@ public class OverviewController implements IController{
         contentHolderR2.getChildren().clear();
         contentHolderR3.getChildren().clear();
 
+        // Clear list with panels
+        panels.clear();
+
+        // Load dummy images
         Image image = new Image(String.valueOf(getClass().getClassLoader().getResource("Images/muppets.jpg")));
         Image image2 = new Image(String.valueOf(getClass().getClassLoader().getResource("Images/bosbrand.jpg")));
         Image image3 = new Image(String.valueOf(getClass().getClassLoader().getResource("Images/bosbrand2.jpg")));
@@ -151,12 +158,28 @@ public class OverviewController implements IController{
         addPanel("Belgium", image7);
         addPanel("Label 1", "Donec laoreet et nisl volutpat fermentum. Maecenas convallis lectus sit amet felis feugiat dignissim. Phasellus vulputate, neque in cursus sollicitudin, lorem mauris condimentum turpis, sit amet viverra lacus dolor in neque. Phasellus laoreet venenatis neque, in pulvinar nisi rhoncus nec. Nam congue cursus libero. ");
 
-
         loadPanels();
     }
 
     @Override
     public void backToMenu() {
         StageController.loadStage(View.mainScene, "main");
+    }
+
+    public void reloadSelectedSources(Event event) {
+        ListIterator<IPanel> listIterator = panels.listIterator();
+        while (listIterator.hasNext()) {
+            IPanel panel = listIterator.next();
+            try {
+                if (panel.isSelected())
+                    selectedSources.getChildren().add(panel.getParentNode());
+                else
+                    getNextPanel().getChildren().add(panel.getParentNode());
+
+            }catch (IllegalArgumentException ex) {
+
+            }
+
+        }
     }
 }
