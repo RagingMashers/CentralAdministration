@@ -6,6 +6,7 @@ import com.jfoenix.controls.JFXTextField;
 
 import javafx.fxml.FXML;
 
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Menu;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -13,6 +14,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.ListIterator;
 import java.util.ResourceBundle;
@@ -37,6 +39,8 @@ public class OverviewController implements IController{
     @FXML private VBox contentHolderR3;
 
     @FXML private Menu menuBack;
+    @FXML private DatePicker endDate;
+    @FXML private DatePicker startDate;
 
     // FIELDS
     private LinkedList<IPanel> panels = new LinkedList<IPanel>();
@@ -62,6 +66,8 @@ public class OverviewController implements IController{
         contentHolderR1.setSpacing(SPACING);
         contentHolderR2.setSpacing(SPACING);
         contentHolderR3.setSpacing(SPACING);
+
+
 
     }
 
