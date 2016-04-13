@@ -1,10 +1,9 @@
 /**
  * Created by frank on 30/03/2016.
  */
-public class IncidentHolder {
+class IncidentHolder {
     private static IncidentHolder singleTon = new IncidentHolder();
     private static String incident;
-
     public IncidentHolder() {
         incident = "";
     }
