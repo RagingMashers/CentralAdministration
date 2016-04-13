@@ -32,6 +32,7 @@ public abstract class Panel {
         header.setStyle("-fx-font-weight: bold");
         header.setTextFill(Color.web(HEADERCOLOR));
         header.setLayoutX(10);
+        header.setMaxWidth(300);
 
         // Add the label to the panel
         AddNode(header);

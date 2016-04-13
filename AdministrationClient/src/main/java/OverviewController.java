@@ -13,6 +13,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
+import java.util.LinkedList;
+import java.util.ListIterator;
 import java.util.ResourceBundle;
 
 public class OverviewController implements IController{
@@ -37,6 +39,7 @@ public class OverviewController implements IController{
     @FXML private Menu menuBack;
 
     // FIELDS
+    private LinkedList<IPanel> panels = new LinkedList<IPanel>();
 
 
     private final int SPACING = 10;
@@ -70,7 +73,7 @@ public class OverviewController implements IController{
     void addPanel(String title, Image image) {
         VBox nextBox = getNextPanel();
         IPanel panel = PanelFactory.getPanel(PanelFactory.Type.image, title, image, nextBox);
-        nextBox.getChildren().add(panel.getParentNode());
+        panels.add(panel);
     }
 
     /**
@@ -81,7 +84,21 @@ public class OverviewController implements IController{
     void addPanel(String title, String text) {
         VBox nextBox = getNextPanel();
         IPanel panel = PanelFactory.getPanel(PanelFactory.Type.text, title, text, nextBox);
-        nextBox.getChildren().add(panel.getParentNode());
+        panels.add(panel);
+    }
+
+    /**
+     * Load or reload all of the panels on the screen
+     */
+    void loadPanels() {
+        contentHolderR1.getChildren().clear();
+        contentHolderR2.getChildren().clear();
+        contentHolderR3.getChildren().clear();
+
+        ListIterator<IPanel> listIterator = panels.listIterator();
+        while (listIterator.hasNext()) {
+            getNextPanel().getChildren().add(listIterator.next().getParentNode());
+        }
     }
 
     /**
@@ -140,6 +157,7 @@ public class OverviewController implements IController{
         addPanel("Label 2", image);
         addPanel("Label 1", "Donec laoreet et nisl volutpat fermentum. Maecenas convallis lectus sit amet felis feugiat dignissim. Phasellus vulputate, neque in cursus sollicitudin, lorem mauris condimentum turpis, sit amet viverra lacus dolor in neque. Phasellus laoreet venenatis neque, in pulvinar nisi rhoncus nec. Nam congue cursus libero. ");
 
+        loadPanels();
     }
 
     @Override
