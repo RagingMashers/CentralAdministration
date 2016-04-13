@@ -4,21 +4,15 @@ import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 
-import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 
 import java.net.URL;
-import java.util.Random;
 import java.util.ResourceBundle;
 
 public class OverviewController implements IController{
@@ -45,7 +39,7 @@ public class OverviewController implements IController{
     // FIELDS
 
 
-    private int spacing = 10;
+    private final int SPACING = 10;
 
     /**
      * Author Frank Hartman
@@ -56,39 +50,45 @@ public class OverviewController implements IController{
     }
 
     public void initialize(URL location, ResourceBundle resources) {
+        // Dummy data
         cLVTeams.getItems().add("Alpha");
         cLVTeams.getItems().add("Beta");
         cLVTeams.getItems().add("Politie 1");
         cLVTeams.getItems().add("Brandweer 4");
 
-        // Setting the panel settings
-        contentHolderR1.setPrefHeight(totalContent.getPrefHeight());
-        contentHolderR2.setPrefHeight(totalContent.getPrefHeight());
-        contentHolderR3.setPrefHeight(totalContent.getPrefHeight());
-
-        contentHolderR1.setSpacing(spacing);
-        contentHolderR2.setSpacing(spacing);
-        contentHolderR3.setSpacing(spacing);
-
-        Image image = new Image(String.valueOf(getClass().getClassLoader().getResource("muppets.jpg")));
-
-        // Dummy data for the panels
-        AddPanel("Label 1", image);
-        AddPanel("Label 2", image);
-        AddPanel("Label 3", image);
-        AddPanel("Label 1", image);
-        AddPanel("Label 2", image);
-        AddPanel("Label 3", image);
-        AddPanel("Label 1", image);
-        AddPanel("Label 2", image);
-        AddPanel("Label 3", image);
-
-
-
+        contentHolderR1.setSpacing(SPACING);
+        contentHolderR2.setSpacing(SPACING);
+        contentHolderR3.setSpacing(SPACING);
 
     }
 
-    void AddPanel(String title, Image image) {
+    /**
+     * Add a panel with a image to the panel
+     * @param title the title of the panel
+     * @param image the image of the panel
+     */
+    void addPanel(String title, Image image) {
+        VBox nextBox = getNextPanel();
+        IPanel panel = PanelFactory.getPanel(PanelFactory.Type.image, title, image, nextBox);
+        nextBox.getChildren().add(panel.getParentNode());
+    }
+
+    /**
+     * Add a panel with text to the panel
+     * @param title the title of the panel
+     * @param text the text of the panel
+     */
+    void addPanel(String title, String text) {
+        VBox nextBox = getNextPanel();
+        IPanel panel = PanelFactory.getPanel(PanelFactory.Type.text, title, text, nextBox);
+        nextBox.getChildren().add(panel.getParentNode());
+    }
+
+    /**
+     * Get the next vbox
+     * @return The vbox
+     */
+    VBox getNextPanel() {
         int row1Count = contentHolderR1.getChildren().toArray().length;
         VBox selectedVBox;
         if (contentHolderR2.getChildren().toArray().length < row1Count)
@@ -98,17 +98,48 @@ public class OverviewController implements IController{
         else
             selectedVBox = contentHolderR1;
 
-        IPanel panel = PanelFactory.getPanel(PanelFactory.Type.image, title, image, selectedVBox);
-        selectedVBox.getChildren().add(panel.getParentNode());
+        return selectedVBox;
     }
 
 
     @Override
     public void startController() {
-        System.out.println(scrollPane.getHmax());
-        System.out.println(scrollPane.getHeight());
-        System.out.println(scrollPane.getMaxHeight());
-        System.out.println(scrollPane.getPrefHeight());
+        // Clear the vboxes
+        contentHolderR1.getChildren().clear();
+        contentHolderR2.getChildren().clear();
+        contentHolderR3.getChildren().clear();
+
+        Image image = new Image(String.valueOf(getClass().getClassLoader().getResource("muppets.jpg")));
+
+        // Dummy data for the panels
+        addPanel("Label 1", image);
+        addPanel("Label 2", image);
+        addPanel("Label 3", image);
+        addPanel("Label 1", "Suspendisse faucibus sem eget ligula fringilla, et malesuada leo ornare.");
+        addPanel("Label 2", image);
+        addPanel("Label 3", image);
+        addPanel("Label 1", image);
+        addPanel("Label 2", image);
+        addPanel("Label 1", "Donec laoreet et nisl volutpat fermentum. Maecenas convallis lectus sit amet felis feugiat dignissim. Phasellus vulputate, neque in cursus sollicitudin, lorem mauris condimentum turpis, sit amet viverra lacus dolor in neque. Phasellus laoreet venenatis neque, in pulvinar nisi rhoncus nec. Nam congue cursus libero. ");
+        addPanel("Label 1", image);
+        addPanel("Label 2", image);
+        addPanel("Label 3", image);
+        addPanel("Label 1", "Suspendisse faucibus sem eget ligula fringilla, et malesuada leo ornare.");
+        addPanel("Label 2", image);
+        addPanel("Label 3", image);
+        addPanel("Label 1", image);
+        addPanel("Label 2", image);
+        addPanel("Label 1", "Donec laoreet et nisl volutpat fermentum. Maecenas convallis lectus sit amet felis feugiat dignissim. Phasellus vulputate, neque in cursus sollicitudin, lorem mauris condimentum turpis, sit amet viverra lacus dolor in neque. Phasellus laoreet venenatis neque, in pulvinar nisi rhoncus nec. Nam congue cursus libero. ");
+        addPanel("Label 1", image);
+        addPanel("Label 2", image);
+        addPanel("Label 3", image);
+        addPanel("Label 1", "Suspendisse faucibus sem eget ligula fringilla, et malesuada leo ornare.");
+        addPanel("Label 2", image);
+        addPanel("Label 3", image);
+        addPanel("Label 1", image);
+        addPanel("Label 2", image);
+        addPanel("Label 1", "Donec laoreet et nisl volutpat fermentum. Maecenas convallis lectus sit amet felis feugiat dignissim. Phasellus vulputate, neque in cursus sollicitudin, lorem mauris condimentum turpis, sit amet viverra lacus dolor in neque. Phasellus laoreet venenatis neque, in pulvinar nisi rhoncus nec. Nam congue cursus libero. ");
+
     }
 
     @Override

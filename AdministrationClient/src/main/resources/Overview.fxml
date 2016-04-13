@@ -49,11 +49,11 @@
                            <children>
                                <ScrollPane fx:id="scrollPane" layoutX="14.0" layoutY="14.0" prefHeight="654.0" prefWidth="1080.0" vbarPolicy="ALWAYS">
                                    <content>
-                                       <AnchorPane fx:id="totalContent" prefHeight="3000.0" prefWidth="1079.0">
+                                       <AnchorPane fx:id="totalContent" prefHeight="-1.0" prefWidth="-1.0">
                                            <children>
-                                               <VBox fx:id="contentHolderR1" prefHeight="200.0" prefWidth="360.0" />
-                                               <VBox fx:id="contentHolderR2" layoutX="359.0" prefHeight="200.0" prefWidth="360.0" />
-                                               <VBox fx:id="contentHolderR3" layoutX="719.0" prefHeight="200.0" prefWidth="360.0" />
+                                               <VBox fx:id="contentHolderR1" prefHeight="-1.0" prefWidth="360.0" />
+                                               <VBox fx:id="contentHolderR2" layoutX="359.0" prefHeight="-1.0" prefWidth="360.0" />
+                                               <VBox fx:id="contentHolderR3" layoutX="719.0" prefHeight="-1.0" prefWidth="360.0" />
                                            </children>
                                        </AnchorPane>
                                    </content>
