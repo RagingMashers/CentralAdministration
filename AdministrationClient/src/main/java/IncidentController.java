@@ -176,7 +176,7 @@ public class IncidentController implements IController{
 
     @Override
     public void startController() {
-        if (IncidentHolder.getIncident().equals("")) {
+        if (IncidentHolder.getIncident() == null || IncidentHolder.getIncident().equals("")) {
             MessageBox.showPopUp(Alert.AlertType.INFORMATION, "Incident aanmaken", "Je gaat nu een incident aanmaken", "");
             btnIncident.setText("Meld incident");
         }
