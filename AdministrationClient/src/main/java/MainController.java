@@ -45,6 +45,7 @@ public class MainController implements IController{
         lvIncidenten.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                IncidentHolder.setIncident((Incident)newValue);
                 boolean visible = newValue.equals("");
                 System.out.println(visible);
                 btnWijzigen.setDisable(visible);

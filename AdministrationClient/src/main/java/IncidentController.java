@@ -1,4 +1,7 @@
 import SitaApi.Incident;
+import SitaApi.SitaApi;
+import SitaApi.Toxication;
+import SitaApi.Incident;
 import SitaApi.Toxication;
 import Validation.Validator;
 import Validation.Validators.IntegerValidator;
@@ -41,7 +44,6 @@ public class IncidentController implements IController{
     private JFXListView<Toxication> mLVGiftigeStoffen,mLVGiftigeStoffenTotaal;
     @FXML
     private JFXButton btnIncident;
-
 
     /**
      * Author Frank Hartman & Matthijs van der Boon
@@ -196,31 +198,23 @@ public class IncidentController implements IController{
      * @param incident The values of this incident will be displayed.
      */
     private void fillInputFields(Incident incident){
-        //Needs to be updated to pass the actual values.
         mTFTitle.setText(incident.getDescription());
-        mTFSlachtoffers.setText("10");
-        mTFCoordinaatX.setText("20");
-        mTFCoordinaatY.setText("16");
-        mSGevaarNiveau.setValue(5);
-        mTFRadius.setText("105");
+        mTFSlachtoffers.setText("" + incident.getAmountVictims());
+        mTFCoordinaatX.setText("" + incident.getLongitude());
+        mTFCoordinaatY.setText("" + incident.getLatitude());
+        mSGevaarNiveau.setValue(incident.getDangerlevel());
+        mTFRadius.setText("" + incident.getRadius());
 
-//        mTFTitle.setText(incident.description);
-//        mTFSlachtoffers.setText(incident.victims;
-//        mTFCoordinaatX.setText(incident.longitude);
-//        mTFCoordinaatX.setText(incident.latitude);
-//        mSGevaarNiveau.setValue(incident.dangerLevel);
-//        mTFRadius.setText(incident.radius);
+        for(Toxication toxic : incident.getToxicElements().getToxication()){
+            if(!mLVGiftigeStoffen.getItems().contains(toxic)) {
+                mLVGiftigeStoffen.getItems().add(toxic);
+            }
+        }
 
-//        for(Toxication toxic : incident.getToxications){
-//            if(!mLVGiftigeStoffen.getItems().contains(toxic)) {
-//                mLVGiftigeStoffen.getItems().add(toxic);
-//            }
-//        }
-
-//        for(Toxication toxic : allToxications){
-//            if(!mLVGiftigeStoffen.getItems().contains(toxic) && mLVGiftigeStoffenTotaal) {
-//                mLVGiftigeStoffenTotaal.getItems().add(toxic);
-//            }
-//        }
+        for(Toxication toxic : sitaApi.getToxications("").getToxication()){
+            if(!mLVGiftigeStoffen.getItems().contains(toxic)) {
+                mLVGiftigeStoffenTotaal.getItems().add(toxic);
+            }
+        }
     }
 }

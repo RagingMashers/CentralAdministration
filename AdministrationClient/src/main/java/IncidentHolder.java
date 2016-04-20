@@ -20,10 +20,10 @@ class IncidentHolder {
 
     /**
      * Set the current active incident
-     * @param incident The incident
+     * @param selectedIncident The incident
      */
-    public static void setIncident(Incident incident) {
-        incident = incident;
+    public static void setIncident(Incident selectedIncident) {
+        incident = selectedIncident;
     }
 
     /**
