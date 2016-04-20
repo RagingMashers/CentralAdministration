@@ -132,7 +132,7 @@ public class OverviewController implements IController{
         contentHolderR3.getChildren().clear();
 
         ListIterator<IPanel> listIterator = panels.listIterator();
-        while (listIterator.hasNext()) {
+         while (listIterator.hasNext()) {
             getNextPanel().getChildren().add(listIterator.next().getParentNode());
         }
     }
@@ -160,7 +160,6 @@ public class OverviewController implements IController{
         String token = api.getSitaToken();
 
         List<Object> sources = port.getMedia(token, 1, 10).getAnyType();
-
         for (Object source :
                 sources) {
             if(!(source instanceof Media)){

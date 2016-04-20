@@ -1,3 +1,4 @@
+import SitaApi.Incident;
 import Validation.Validator;
 import Validation.Validators.IntegerValidator;
 import com.jfoenix.controls.JFXButton;
@@ -30,7 +31,7 @@ public class IncidentController implements IController{
     @FXML
     private JFXListView<String> mLVGiftigeStoffen,mLVGiftigeStoffenTotaal,mLVBeschikbareTeams,mLVGeselecteerdeTeams;
     @FXML
-    private JFXButton btnIncident,btnAddToxin,btnRemoveToxin,btnAddTeam,btnRemoveTeam;
+    private JFXButton btnIncident;
 
 
     /**
@@ -95,22 +96,6 @@ public class IncidentController implements IController{
             createIncident();
     }
 
-    public void btnAddToxin_Click(ActionEvent actionEvent){
-        System.out.println("btnAddToxin_Click");
-    }
-
-    public void btnRemoveToxin_Click(ActionEvent actionEvent){
-        System.out.println("btnRemoveToxin_Click");
-    }
-
-    public void btnAddTeam_Click(ActionEvent actionEvent){
-        System.out.println("btnAddTeam_Click");
-    }
-
-    public void btnRemoveTeam_Click(ActionEvent actionEvent){
-        System.out.println("btnRemoveTeam_Click");
-    }
-
     private void addListenerToList(JFXListView<String> listFrom, JFXListView<String> listTo){
         listFrom.getSelectionModel().selectedItemProperty().addListener(
                 new ChangeListener<String>() {
@@ -161,14 +146,14 @@ public class IncidentController implements IController{
      * This will give the user feedback about the current status of the incident.
      * @param incident The values of this incident will be displayed.
      */
-    private void fillInputFields(String incident){
+    private void fillInputFields(Incident incident){
         //Needs to be updated to pass the actual values.
-        mTFTitle.setText(incident);
+        mTFTitle.setText(incident.getDescription());
         mTFSlachtoffers.setText("10");
         mTFCoordinaatX.setText("20");
         mTFCoordinaatY.setText("16");
         mSGevaarNiveau.setValue(5);
-        mTFRadius.setText("10500");
+        mTFRadius.setText("105");
 
 //        mTFTitle.setText(incident.description);
 //        mTFSlachtoffers.setText(incident.victims;
