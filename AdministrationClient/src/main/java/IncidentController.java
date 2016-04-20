@@ -1,4 +1,5 @@
 import SitaApi.Incident;
+import SitaApi.Toxication;
 import Validation.Validator;
 import Validation.Validators.IntegerValidator;
 import com.jfoenix.controls.JFXButton;
@@ -14,22 +15,30 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ListCell;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
+import SitaApi.SitaApiSoap;
 
 /**
  * Created by frank on 30/03/2016.
  */
 public class IncidentController implements IController{
+    private SitaApiSoap sitaApi;
+    private String sitaToken;
+
     // MELDING TAB
     @FXML
     private JFXTextField mTFSlachtoffers,mTFTitle,mTFRadius,mTFCoordinaatY,mTFCoordinaatX,mTFGewonden;
     @FXML
     private JFXSlider mSGevaarNiveau;
     @FXML
-    private JFXListView<String> mLVGiftigeStoffen,mLVGiftigeStoffenTotaal,mLVBeschikbareTeams,mLVGeselecteerdeTeams;
+    private JFXListView<String> mLVBeschikbareTeams,mLVGeselecteerdeTeams;
+    @FXML
+    private JFXListView<Toxication> mLVGiftigeStoffen,mLVGiftigeStoffenTotaal;
     @FXML
     private JFXButton btnIncident;
 
@@ -41,6 +50,16 @@ public class IncidentController implements IController{
     public void createIncident(){
         if (IncidentHolder.getIncident().equals(""))
         {
+            if(!isInputValid()){
+                MessageBox.showPopUp(Alert.AlertType.ERROR,"Kan incident niet aanmaken","Er zijn nog incorrect ingevulde velden", "");
+                return;
+            }
+            if(!sitaApi.addIncident(sitaToken,Integer.valueOf(mTFSlachtoffers.getText()),Integer.valueOf(mTFGewonden.getText()),Double.valueOf(mTFCoordinaatX.getText()),Double.valueOf(mTFCoordinaatY.getText()),(int)mSGevaarNiveau.getValue(),Integer.valueOf(mTFRadius.getText()),mTFTitle.getText())){
+                MessageBox.showPopUp(Alert.AlertType.ERROR,"Kan incident niet aanmaken","Er is iets mis gegaan met het aanmaken", "");
+                return;//todo get stronger error description
+            }
+            //todo add teams and toxications
+
             MessageBox.showPopUp(Alert.AlertType.INFORMATION, "Incident aanmaken voltooid", "Het incident is aangemaakt", "");
             //Should add some code that calls the method that adds the incident data.
         }
@@ -50,13 +69,27 @@ public class IncidentController implements IController{
         }
     }
 
+    private boolean isInputValid(){
+        return mTFSlachtoffers.validate() && mTFTitle.validate() && mTFRadius.validate() && mTFCoordinaatX.validate() && mTFCoordinaatY.validate() && mTFGewonden.validate();
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        sitaApi = ApiManager.getInstance().getSitaPort();
+        sitaToken = ApiManager.getInstance().getSitaToken();
         addValidatorsToControls();
         setupListClickEvents();
-        mLVGiftigeStoffen.getItems().add("dodelijke stof");
-        mLVGiftigeStoffen.getItems().add("minder dodelijke stof");
-        mLVGiftigeStoffen.getItems().add("lucht");
+
+        List<Toxication> toxications = sitaApi.getToxications(sitaToken).getToxication();
+
+        mLVGiftigeStoffen.setCellFactory(p -> new ToxicationCell());
+        mLVGiftigeStoffenTotaal.setCellFactory(p -> new ToxicationCell());
+
+        mLVGiftigeStoffen.getItems().addAll(toxications);
+
+        //mLVGiftigeStoffen.getItems().add("dodelijke stof");
+        //mLVGiftigeStoffen.getItems().add("minder dodelijke stof");
+        //mLVGiftigeStoffen.getItems().add("lucht");
         mLVBeschikbareTeams.getItems().add("Team 1");
         mLVBeschikbareTeams.getItems().add("Team 2");
         mLVBeschikbareTeams.getItems().add("Team 3");
@@ -96,20 +129,36 @@ public class IncidentController implements IController{
             createIncident();
     }
 
-    private void addListenerToList(JFXListView<String> listFrom, JFXListView<String> listTo){
+    public void btnAddToxin_Click(ActionEvent actionEvent){
+        System.out.println("btnAddToxin_Click");
+    }
+
+    public void btnRemoveToxin_Click(ActionEvent actionEvent){
+        System.out.println("btnRemoveToxin_Click");
+    }
+
+    public void btnAddTeam_Click(ActionEvent actionEvent){
+        System.out.println("btnAddTeam_Click");
+    }
+
+    public void btnRemoveTeam_Click(ActionEvent actionEvent){
+        System.out.println("btnRemoveTeam_Click");
+    }
+
+    private <T> void addListenerToList(JFXListView<T> listFrom, JFXListView<T> listTo){
         listFrom.getSelectionModel().selectedItemProperty().addListener(
-                new ChangeListener<String>() {
+                new ChangeListener<T>() {
                     @Override
-                    public void changed(ObservableValue<? extends String> ov,
-                                        String oldValue, String newValue) {
+                    public void changed(ObservableValue<? extends T> ov,
+                                        T oldValue, T newValue) {
                         if(!listTo.getItems().contains(newValue)) {
                             listTo.getItems().add(newValue);
                         }
                     }
                 });
-        listTo.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+        listTo.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<T>() {
             @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, final String newValue) {
+            public void changed(ObservableValue<? extends T> observable, T oldValue, final T newValue) {
 
                 Platform.runLater(new Runnable() {
                     @Override
