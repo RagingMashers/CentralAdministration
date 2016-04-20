@@ -62,6 +62,7 @@ public class MainController implements IController{
 
     private void loadIncidents() {
         lvIncidenten.getItems().clear();
+        lvIncidenten.setCellFactory(p -> new IncidentCell());
 
         SitaApiSoap siteApi = ApiManager.getInstance().getSitaPort();
         String siteToken = ApiManager.getInstance().getSitaToken();
