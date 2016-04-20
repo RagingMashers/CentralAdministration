@@ -66,6 +66,16 @@ public class IncidentController implements IController{
             //Should add some code that calls the method that adds the incident data.
         }
         else {
+            int id = IncidentHolder.getIncident().getId();
+            if(!isInputValid()){
+                MessageBox.showPopUp(Alert.AlertType.ERROR,"Kan incident niet aanmaken","Er zijn nog incorrect ingevulde velden", "");
+                return;
+            }
+            if(!sitaApi.editIncident(sitaToken,id,Integer.valueOf(mTFSlachtoffers.getText()),Integer.valueOf(mTFGewonden.getText()),Double.valueOf(mTFCoordinaatX.getText()),Double.valueOf(mTFCoordinaatY.getText()),Integer.valueOf(mTFRadius.getText()),(int)mSGevaarNiveau.getValue(),mTFTitle.getText())){
+                MessageBox.showPopUp(Alert.AlertType.ERROR,"Kan incident niet aanmaken","Er is iets mis gegaan met het aanmaken", "");
+                return;//todo get stronger error description
+            }
+            //todo add teams and toxications
             MessageBox.showPopUp(Alert.AlertType.INFORMATION, "Incident wijzigen voltooid", "Het incident is gewijzigd", "");
             //Should add some code that calls the method that changes the incident data.
         }
