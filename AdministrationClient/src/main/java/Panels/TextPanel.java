@@ -55,4 +55,9 @@ public class TextPanel extends Panel implements IPanel {
     public Node getParentNode() {
         return getBackground();
     }
+
+    @Override
+    public boolean isSelected() {
+        return getSelected();
+    }
 }
