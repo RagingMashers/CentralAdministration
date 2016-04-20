@@ -50,6 +50,10 @@ public class IncidentController implements IController{
      * Create an incident
      */
     public void createIncident(){
+        if(mTFSlachtoffers.getText().isEmpty())mTFSlachtoffers.setText("0");
+        if(mTFGewonden.getText().isEmpty())mTFGewonden.setText("0");
+        if(mTFRadius.getText().isEmpty())mTFRadius.setText("0");
+
         if (IncidentHolder.getIncident() == null)
         {
             if(!isInputValid()){
@@ -210,6 +214,7 @@ public class IncidentController implements IController{
     private void fillInputFields(Incident incident){
         mTFTitle.setText(incident.getDescription());
         mTFSlachtoffers.setText("" + incident.getAmountVictims());
+        mTFGewonden.setText("" + incident.getAmountWounded());
         mTFCoordinaatX.setText("" + incident.getLongitude());
         mTFCoordinaatY.setText("" + incident.getLatitude());
         mSGevaarNiveau.setValue(incident.getDangerlevel());
