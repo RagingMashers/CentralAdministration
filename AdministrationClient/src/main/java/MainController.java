@@ -21,12 +21,12 @@ public class MainController implements IController{
     JFXListView<Incident> lvIncidenten;
 
     public void loadOverview() {
-        IncidentHolder.setIncident(lvIncidenten.getSelectionModel().getSelectedItem().getDescription());
-        StageController.loadStage(View.overviewScene, IncidentHolder.getIncident());
+        IncidentHolder.setIncident(lvIncidenten.getSelectionModel().getSelectedItem());
+        StageController.loadStage(View.overviewScene, IncidentHolder.getIncident().getDescription());
     }
 
     public void loadIncidentWijzigen() {
-        IncidentHolder.setIncident(lvIncidenten.getSelectionModel().getSelectedItem().getDescription());
+        IncidentHolder.setIncident(lvIncidenten.getSelectionModel().getSelectedItem());
         StageController.loadStage(View.incident, "Incident wijzigen");
     }
 

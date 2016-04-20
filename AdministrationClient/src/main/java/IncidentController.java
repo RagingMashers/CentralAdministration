@@ -1,3 +1,4 @@
+import SitaApi.Incident;
 import Validation.Validator;
 import Validation.Validators.IntegerValidator;
 import com.jfoenix.controls.JFXButton;
@@ -161,9 +162,9 @@ public class IncidentController implements IController{
      * This will give the user feedback about the current status of the incident.
      * @param incident The values of this incident will be displayed.
      */
-    private void fillInputFields(String incident){
+    private void fillInputFields(Incident incident){
         //Needs to be updated to pass the actual values.
-        mTFTitle.setText(incident);
+        mTFTitle.setText(incident.getDescription());
         mTFSlachtoffers.setText("10");
         mTFCoordinaatX.setText("20");
         mTFCoordinaatY.setText("16");
