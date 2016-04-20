@@ -31,7 +31,7 @@ public class IncidentController implements IController{
     @FXML
     private JFXListView<String> mLVGiftigeStoffen,mLVGiftigeStoffenTotaal,mLVBeschikbareTeams,mLVGeselecteerdeTeams;
     @FXML
-    private JFXButton btnIncident,btnAddToxin,btnRemoveToxin,btnAddTeam,btnRemoveTeam;
+    private JFXButton btnIncident;
 
 
     /**
@@ -96,22 +96,6 @@ public class IncidentController implements IController{
             createIncident();
     }
 
-    public void btnAddToxin_Click(ActionEvent actionEvent){
-        System.out.println("btnAddToxin_Click");
-    }
-
-    public void btnRemoveToxin_Click(ActionEvent actionEvent){
-        System.out.println("btnRemoveToxin_Click");
-    }
-
-    public void btnAddTeam_Click(ActionEvent actionEvent){
-        System.out.println("btnAddTeam_Click");
-    }
-
-    public void btnRemoveTeam_Click(ActionEvent actionEvent){
-        System.out.println("btnRemoveTeam_Click");
-    }
-
     private void addListenerToList(JFXListView<String> listFrom, JFXListView<String> listTo){
         listFrom.getSelectionModel().selectedItemProperty().addListener(
                 new ChangeListener<String>() {
@@ -169,7 +153,7 @@ public class IncidentController implements IController{
         mTFCoordinaatX.setText("20");
         mTFCoordinaatY.setText("16");
         mSGevaarNiveau.setValue(5);
-        mTFRadius.setText("10500");
+        mTFRadius.setText("105");
 
 //        mTFTitle.setText(incident.description);
 //        mTFSlachtoffers.setText(incident.victims;

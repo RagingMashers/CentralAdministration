@@ -86,7 +86,7 @@
    </children>
 
    <stylesheets>
-      <URL value="@style.css" />
+      <URL value="@jfoenix-components.css" />
    </stylesheets>
    <columnConstraints>
       <ColumnConstraints />
