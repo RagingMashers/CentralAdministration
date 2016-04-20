@@ -50,7 +50,11 @@ public class IncidentController implements IController{
      * Create an incident
      */
     public void createIncident(){
-        if (IncidentHolder.getIncident().equals(""))
+        if(mTFSlachtoffers.getText().isEmpty())mTFSlachtoffers.setText("0");
+        if(mTFGewonden.getText().isEmpty())mTFGewonden.setText("0");
+        if(mTFRadius.getText().isEmpty())mTFRadius.setText("0");
+
+        if (IncidentHolder.getIncident() == null)
         {
             if(!isInputValid()){
                 MessageBox.showPopUp(Alert.AlertType.ERROR,"Kan incident niet aanmaken","Er zijn nog incorrect ingevulde velden", "");
@@ -66,6 +70,16 @@ public class IncidentController implements IController{
             //Should add some code that calls the method that adds the incident data.
         }
         else {
+            int id = IncidentHolder.getIncident().getId();
+            if(!isInputValid()){
+                MessageBox.showPopUp(Alert.AlertType.ERROR,"Kan incident niet aanmaken","Er zijn nog incorrect ingevulde velden", "");
+                return;
+            }
+            if(!sitaApi.editIncident(sitaToken,id,Integer.valueOf(mTFSlachtoffers.getText()),Integer.valueOf(mTFGewonden.getText()),Double.valueOf(mTFCoordinaatX.getText()),Double.valueOf(mTFCoordinaatY.getText()),Integer.valueOf(mTFRadius.getText()),(int)mSGevaarNiveau.getValue(),mTFTitle.getText())){
+                MessageBox.showPopUp(Alert.AlertType.ERROR,"Kan incident niet aanmaken","Er is iets mis gegaan met het aanmaken", "");
+                return;//todo get stronger error description
+            }
+            //todo add teams and toxications
             MessageBox.showPopUp(Alert.AlertType.INFORMATION, "Incident wijzigen voltooid", "Het incident is gewijzigd", "");
             //Should add some code that calls the method that changes the incident data.
         }
@@ -176,7 +190,7 @@ public class IncidentController implements IController{
 
     @Override
     public void startController() {
-        if (IncidentHolder.getIncident().equals("")) {
+        if (IncidentHolder.getIncident() == null) {
             MessageBox.showPopUp(Alert.AlertType.INFORMATION, "Incident aanmaken", "Je gaat nu een incident aanmaken", "");
             btnIncident.setText("Meld incident");
         }
@@ -200,6 +214,7 @@ public class IncidentController implements IController{
     private void fillInputFields(Incident incident){
         mTFTitle.setText(incident.getDescription());
         mTFSlachtoffers.setText("" + incident.getAmountVictims());
+        mTFGewonden.setText("" + incident.getAmountWounded());
         mTFCoordinaatX.setText("" + incident.getLongitude());
         mTFCoordinaatY.setText("" + incident.getLatitude());
         mSGevaarNiveau.setValue(incident.getDangerlevel());
