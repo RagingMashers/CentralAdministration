@@ -1,6 +1,7 @@
 import Panels.IPanel;
 import Panels.PanelFactory;
 import SitaApi.Media;
+import SitaApi.MediaAccepted;
 import SitaApi.SitaApiSoap;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextArea;
@@ -9,20 +10,20 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Menu;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import sun.misc.IOUtils;
 
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.time.LocalDate;
 import java.util.*;
 
 public class OverviewController implements IController{
@@ -47,9 +48,13 @@ public class OverviewController implements IController{
     @FXML private Menu menuBack;
     @FXML private DatePicker endDate;
     @FXML private DatePicker startDate;
+    @FXML private TextField tfTextFilter;
+    @FXML private CheckBox cbAcceptedFilter;
+
+    private Map<Media, Object> mediaObjects = new HashMap<>();
 
     // FIELDS
-    private LinkedList<IPanel> panels = new LinkedList<IPanel>();
+    private LinkedList<IPanel> panels = new LinkedList<>();
 
 
     private final int SPACING = 10;
@@ -73,8 +78,8 @@ public class OverviewController implements IController{
         contentHolderR2.setSpacing(SPACING);
         contentHolderR3.setSpacing(SPACING);
 
-
-
+        startDate.setValue(LocalDate.now());
+        endDate.setValue(LocalDate.now());
     }
 
     /**
@@ -82,7 +87,7 @@ public class OverviewController implements IController{
      * @param title the title of the panel
      * @param image the image of the panel
      */
-    void addPanel(String title, Image image) {
+    private void addPanel(String title, Image image) {
         VBox nextBox = getNextPanel();
         IPanel panel = PanelFactory.getPanel(PanelFactory.Type.image, title, image, nextBox);
         panels.add(panel);
@@ -94,7 +99,7 @@ public class OverviewController implements IController{
      * @param title the title of the panel
      * @param text the text of the panel
      */
-    void addPanel(String title, String text) {
+    private void addPanel(String title, String text) {
         VBox nextBox = getNextPanel();
         IPanel panel = PanelFactory.getPanel(PanelFactory.Type.text, title, text, nextBox);
         panels.add(panel);
@@ -119,7 +124,7 @@ public class OverviewController implements IController{
      * Get the next vbox
      * @return The vbox
      */
-    VBox getNextPanel() {
+    private VBox getNextPanel() {
         int row1Count = contentHolderR1.getChildren().toArray().length;
         VBox selectedVBox;
         if (contentHolderR2.getChildren().toArray().length < row1Count)
@@ -148,12 +153,15 @@ public class OverviewController implements IController{
             Media m = (Media)source;
 
             String url = "http://localhost:15012/MediaDownload.ashx?id="+m.getId();
+
             System.out.println("Getting image :\""+url+"\"");
             if(m.getMimeType().startsWith("image")){//its an image!
                 Image img = new Image(url);
+                mediaObjects.put(m, img);
                 Platform.runLater(()->addPanel(m.getSource(),img));
             }else{
                 String result = httpGetString(url);
+                mediaObjects.put(m, result);
                 Platform.runLater(()->addPanel(m.getSource(),result));
             }
             System.out.println("Got :\""+url+"\"");
@@ -194,5 +202,29 @@ public class OverviewController implements IController{
     @Override
     public void backToMenu() {
         StageController.loadStage(View.mainScene, "main");
+    }
+
+    /**
+     * Method for applying a filter to the media.
+     */
+    public void changeFilter(){
+        contentHolderR1.getChildren().clear();
+        contentHolderR2.getChildren().clear();
+        contentHolderR3.getChildren().clear();
+
+        for(Media m : mediaObjects.keySet())
+        {
+            if(m.getDate().toGregorianCalendar().toZonedDateTime().toLocalDate().compareTo(startDate.getValue()) >= 0 &&
+                    m.getDate().toGregorianCalendar().toZonedDateTime().toLocalDate().compareTo(endDate.getValue()) <= 0 &&
+                    m.getSource().contains(tfTextFilter.getText())) {
+                if ((cbAcceptedFilter.isSelected() && m.getAccepted() == MediaAccepted.YES) || !cbAcceptedFilter.isSelected()) {
+                    if (m.getMimeType().startsWith("image")) {//its an image!
+                        Platform.runLater(() -> addPanel(m.getSource(), (Image)mediaObjects.get(m)));
+                    } else {
+                        Platform.runLater(() -> addPanel(m.getSource(), (String)mediaObjects.get(m)));
+                    }
+                }
+            }
+        }
     }
 }

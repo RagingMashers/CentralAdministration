@@ -61,14 +61,14 @@
                                </ScrollPane>
                         <AnchorPane layoutX="15.0" layoutY="8.0" prefHeight="66.0" prefWidth="1070.0">
                            <children>
-                              <DatePicker fx:id="endDate" layoutX="579.0" layoutY="34.0" minHeight="-Infinity" prefHeight="30.0" prefWidth="200.0" />
-                              <DatePicker fx:id="startDate" layoutX="579.0" layoutY="3.0" minHeight="-Infinity" prefHeight="30.0" prefWidth="200.0" />
-                              <JFXButton layoutX="878.0" layoutY="3.0" prefHeight="54.0" prefWidth="106.0" styleClass="button-raised" text="Apply" />
-                              <TextField layoutX="303.0" layoutY="1.0" minHeight="-Infinity" prefHeight="30.0" prefWidth="200.0" />
+                              <DatePicker fx:id="endDate" layoutX="579.0" layoutY="34.0" minHeight="-Infinity" prefHeight="30.0" prefWidth="200.0"/>
+                              <DatePicker fx:id="startDate" layoutX="579.0" layoutY="3.0" minHeight="-Infinity" prefHeight="30.0" prefWidth="200.0"/>
+                              <JFXButton layoutX="878.0" layoutY="3.0" prefHeight="54.0" prefWidth="106.0" styleClass="button-raised" text="Apply" onAction="#changeFilter"/>
+                              <TextField fx:id="tfTextFilter" layoutX="303.0" layoutY="1.0" minHeight="-Infinity" prefHeight="30.0" prefWidth="200.0"/>
                               <Label layoutX="521.0" layoutY="-1.0" text="Start" />
                               <Label layoutX="521.0" layoutY="31.0" text="Eind" />
                               <Label layoutX="181.0" layoutY="-1.0" text="Filter woord" />
-                              <JFXCheckBox layoutX="126.0" layoutY="-1.0" />
+                              <JFXCheckBox fx:id="cbAcceptedFilter" layoutX="126.0" layoutY="-1.0" />
                               <Label layoutX="14.0" layoutY="-1.0" text="Gevalideerd" />
                            </children>
                         </AnchorPane>
