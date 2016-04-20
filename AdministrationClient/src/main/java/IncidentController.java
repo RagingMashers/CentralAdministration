@@ -40,7 +40,7 @@ public class IncidentController implements IController{
     @FXML
     private JFXListView<Toxication> mLVGiftigeStoffen,mLVGiftigeStoffenTotaal;
     @FXML
-    private JFXButton btnIncident,btnAddToxin,btnRemoveToxin,btnAddTeam,btnRemoveTeam;
+    private JFXButton btnIncident;
 
 
     /**
@@ -202,7 +202,7 @@ public class IncidentController implements IController{
         mTFCoordinaatX.setText("20");
         mTFCoordinaatY.setText("16");
         mSGevaarNiveau.setValue(5);
-        mTFRadius.setText("10500");
+        mTFRadius.setText("105");
 
 //        mTFTitle.setText(incident.description);
 //        mTFSlachtoffers.setText(incident.victims;
