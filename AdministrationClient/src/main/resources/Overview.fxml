@@ -20,7 +20,7 @@
 
        <JFXTabPane centerShape="false" prefHeight="700.0" prefWidth="1100.0" scaleShape="false" side="BOTTOM" GridPane.rowIndex="1">
            <tabs>
-               <Tab text="Communicatie eenheden" onSelectionChanged="#reloadSelectedSources">
+               <Tab onSelectionChanged="#reloadSelectedSources" text="Communicatie eenheden">
                    <content>
                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -28,9 +28,9 @@
                            <content>
                               <VBox fx:id="selectedSources" prefWidth="350.0" />
                            </content></ScrollPane>
-                               <AnchorPane layoutY="83.0" prefHeight="512.0" prefWidth="332.0">
+                               <AnchorPane layoutY="158.0" prefHeight="479.0" prefWidth="332.0">
                                    <children>
-                                       <JFXListView fx:id="cLVTeams" layoutX="42.0" layoutY="83.0" prefHeight="418.0" prefWidth="248.0" />
+                                       <JFXListView fx:id="cLVTeams" layoutX="37.0" layoutY="58.0" prefHeight="403.0" prefWidth="248.0" />
                                        <Label layoutX="37.0" layoutY="25.0" text="Teams" />
                                    </children>
                                </AnchorPane>
@@ -45,6 +45,8 @@
                                    </children>
                                </AnchorPane>
                                <Label layoutX="40.0" layoutY="27.0" text="Selecteer eerst het team om er vervolgens een bericht naar te sturen" />
+                        <JFXSlider fx:id="radiusSlider" layoutX="42.0" layoutY="144.0" max="50.0" min="1.0" prefHeight="14.0" prefWidth="210.0" value="4.0" />
+                        <Label layoutX="42.0" layoutY="109.0" text="Kies een radius (km)" />
                            </children></AnchorPane>
                    </content>
                </Tab>
@@ -65,10 +67,10 @@
                                </ScrollPane>
                         <AnchorPane layoutX="15.0" layoutY="8.0" prefHeight="66.0" prefWidth="1070.0">
                            <children>
-                              <DatePicker fx:id="endDate" layoutX="579.0" layoutY="34.0" minHeight="-Infinity" prefHeight="30.0" prefWidth="200.0"/>
-                              <DatePicker fx:id="startDate" layoutX="579.0" layoutY="3.0" minHeight="-Infinity" prefHeight="30.0" prefWidth="200.0"/>
-                              <JFXButton layoutX="878.0" layoutY="3.0" prefHeight="54.0" prefWidth="106.0" styleClass="button-raised" text="Apply" onAction="#changeFilter"/>
-                              <TextField fx:id="tfTextFilter" layoutX="303.0" layoutY="1.0" minHeight="-Infinity" prefHeight="30.0" prefWidth="200.0"/>
+                              <DatePicker fx:id="endDate" layoutX="579.0" layoutY="34.0" minHeight="-Infinity" prefHeight="30.0" prefWidth="200.0" />
+                              <DatePicker fx:id="startDate" layoutX="579.0" layoutY="3.0" minHeight="-Infinity" prefHeight="30.0" prefWidth="200.0" />
+                              <JFXButton layoutX="878.0" layoutY="3.0" onAction="#changeFilter" prefHeight="54.0" prefWidth="106.0" styleClass="button-raised" text="Apply" />
+                              <TextField fx:id="tfTextFilter" layoutX="303.0" layoutY="1.0" minHeight="-Infinity" prefHeight="30.0" prefWidth="200.0" />
                               <Label layoutX="521.0" layoutY="-1.0" text="Start" />
                               <Label layoutX="521.0" layoutY="31.0" text="Eind" />
                               <Label layoutX="181.0" layoutY="-1.0" text="Filter woord" />

@@ -3,6 +3,7 @@ import Panels.PanelFactory;
 import SitaApi.*;
 import SitaApi.SitaApiSoap;
 import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 
@@ -42,6 +43,9 @@ public class OverviewController implements IController{
     private JFXTextArea cTAInhoud;
     @FXML
     private JFXListView<Team> cLVTeams;
+
+    @FXML
+    private JFXSlider radiusSlider;
 
     // SOURCES TAB
     @FXML
@@ -203,23 +207,29 @@ public class OverviewController implements IController{
         }
     }
 
-
-    @Override
-    public void startController() {
+    private void getTeams(){
+        cLVTeams.getItems().clear();
         // Get the selected incident.
         Incident selectedIncident = IncidentHolder.getIncident();
 
         // Get all teams near the incicent.
-        ArrayOfTeam soapTeams = port.getTeamsNearIncident(token, selectedIncident.getLongitude(), selectedIncident.getLatitude(), 10);
+        ArrayOfTeam soapTeams = port.getTeamsNearIncident(token, selectedIncident.getLongitude(), selectedIncident.getLatitude(), (int)radiusSlider.getValue());
         List<Team> teams = soapTeams.getTeam();
         ObservableList<Team> observableTeams = FXCollections.observableArrayList(teams);
-        cLVTeams.setCellFactory(p -> new TeamCell());
         cLVTeams.setItems(observableTeams);
+    }
 
+    @Override
+    public void startController() {
+        getTeams();
+        cLVTeams.setCellFactory(p -> new TeamCell());
         cLVTeams.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             selectedTeam = newValue;
         });
 
+        radiusSlider.valueChangingProperty().addListener((observable, oldValue, newValue) -> {
+            getTeams();
+        });
 
         // Clear the vboxes
         contentHolderR1.getChildren().clear();
