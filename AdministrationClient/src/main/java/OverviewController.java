@@ -211,17 +211,17 @@ public class OverviewController implements IController{
 
     @Override
     public void startController() {
-        // Get all teams near the incicent (radius, long and lat are hardcoded right now)
+        // Get the selected incident.
+        //todo:
+        // Get all teams near the incicent.
         ArrayOfTeam soapTeams = port.getTeamsNearIncident(token, 60.78600, 45.78000, 10);
         List<Team> teams = soapTeams.getTeam();
         ObservableList<Team> observableTeams = FXCollections.observableArrayList(teams);
+        cLVTeams.setCellFactory(p -> new TeamCell());
         cLVTeams.setItems(observableTeams);
 
-        cLVTeams.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Team>() {
-            @Override
-            public void changed(ObservableValue<? extends Team> observable, Team oldValue, Team newValue) {
-                selectedTeam = newValue;
-            }
+        cLVTeams.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            selectedTeam = newValue;
         });
 
 
