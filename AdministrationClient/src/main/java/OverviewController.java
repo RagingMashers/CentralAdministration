@@ -252,7 +252,6 @@ public class OverviewController implements IController{
             }catch (IllegalArgumentException ex) {
 
             }
-
         }
     }
 
