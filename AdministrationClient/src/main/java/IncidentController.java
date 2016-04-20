@@ -50,7 +50,7 @@ public class IncidentController implements IController{
      * Create an incident
      */
     public void createIncident(){
-        if (IncidentHolder.getIncident().equals(""))
+        if (IncidentHolder.getIncident() == null)
         {
             if(!isInputValid()){
                 MessageBox.showPopUp(Alert.AlertType.ERROR,"Kan incident niet aanmaken","Er zijn nog incorrect ingevulde velden", "");
@@ -186,7 +186,7 @@ public class IncidentController implements IController{
 
     @Override
     public void startController() {
-        if (IncidentHolder.getIncident() == null || IncidentHolder.getIncident().equals("")) {
+        if (IncidentHolder.getIncident() == null) {
             MessageBox.showPopUp(Alert.AlertType.INFORMATION, "Incident aanmaken", "Je gaat nu een incident aanmaken", "");
             btnIncident.setText("Meld incident");
         }
