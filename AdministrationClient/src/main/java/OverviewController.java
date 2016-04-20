@@ -1,10 +1,6 @@
 import Panels.IPanel;
 import Panels.PanelFactory;
-import SitaApi.ArrayOfTeam;
-import SitaApi.SitaApiSoap;
-import SitaApi.Team;
-import SitaApi.Media;
-import SitaApi.MediaAccepted;
+import SitaApi.*;
 import SitaApi.SitaApiSoap;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextArea;
@@ -212,9 +208,10 @@ public class OverviewController implements IController{
     @Override
     public void startController() {
         // Get the selected incident.
-        //todo:
+        Incident selectedIncident = IncidentHolder.getIncident();
+
         // Get all teams near the incicent.
-        ArrayOfTeam soapTeams = port.getTeamsNearIncident(token, 60.78600, 45.78000, 10);
+        ArrayOfTeam soapTeams = port.getTeamsNearIncident(token, selectedIncident.getLongitude(), selectedIncident.getLatitude(), 10);
         List<Team> teams = soapTeams.getTeam();
         ObservableList<Team> observableTeams = FXCollections.observableArrayList(teams);
         cLVTeams.setCellFactory(p -> new TeamCell());
