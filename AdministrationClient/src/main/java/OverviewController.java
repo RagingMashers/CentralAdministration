@@ -254,7 +254,6 @@ public class OverviewController implements IController{
                 contentHolderR3.getChildren().clear();
             }
         });
-
     }
 
     /**
@@ -292,15 +291,21 @@ public class OverviewController implements IController{
     public void changeFilter(){
         clearPanelHolders();
 
-        for(Media m : mediaObjects.keySet())
-        {
-            if(m.getDate().toGregorianCalendar().toZonedDateTime().toLocalDate().compareTo(startDate.getValue()) >= 0 &&
-                    m.getDate().toGregorianCalendar().toZonedDateTime().toLocalDate().compareTo(endDate.getValue()) <= 0 &&
-                    m.getSource().contains(tfTextFilter.getText())) {
-                if ((cbAcceptedFilter.isSelected() && m.getAccepted() == MediaAccepted.YES) || !cbAcceptedFilter.isSelected()) {
-                    getNextPanel().getChildren().add(mediaObjects.get(m).getParentNode());
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                for(Media m : mediaObjects.keySet())
+                {
+                    if(m.getDate().toGregorianCalendar().toZonedDateTime().toLocalDate().compareTo(startDate.getValue()) >= 0 &&
+                            m.getDate().toGregorianCalendar().toZonedDateTime().toLocalDate().compareTo(endDate.getValue()) <= 0 &&
+                            m.getSource().contains(tfTextFilter.getText())) {
+                        if ((cbAcceptedFilter.isSelected() && m.getAccepted() == MediaAccepted.YES) || !cbAcceptedFilter.isSelected()) {
+                            getNextPanel().getChildren().add(mediaObjects.get(m).getParentNode());
+                        }
+                    }
                 }
             }
-        }
+        });
+
     }}
 
