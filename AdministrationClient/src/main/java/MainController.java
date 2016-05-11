@@ -21,6 +21,7 @@ public class MainController implements IController{
     JFXListView<Incident> lvIncidenten;
 
     public void loadOverview() {
+        btnWijzigen.setDisable(true);
         IncidentHolder.setIncident(lvIncidenten.getSelectionModel().getSelectedItem());
         StageController.loadStage(View.overviewScene, IncidentHolder.getIncident().getDescription());
     }
@@ -35,20 +36,18 @@ public class MainController implements IController{
         StageController.loadStage(View.incident, "Incident aanmaken");
     }
 
-    public void loadFilter() {
-        StageController.loadStage(View.filter, "Bronnen filteren");
-    }
+    public void loadFilter() {StageController.loadStage(View.filter, "Bronnen filteren");}
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         lvIncidenten.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
                 IncidentHolder.setIncident((Incident)newValue);
                 boolean visible = newValue.equals("");
                 System.out.println(visible);
-                btnWijzigen.setDisable(visible);
+                if(lvIncidenten.getSelectionModel().selectedItemProperty().get() != null)
+                    btnWijzigen.setDisable(visible);
                 btnBeheersen.setDisable(visible);
             }
         });
@@ -57,6 +56,7 @@ public class MainController implements IController{
     @Override
     public void startController() {
         loadIncidents();
+        btnWijzigen.setDisable(true);
     }
 
     private void loadIncidents() {
