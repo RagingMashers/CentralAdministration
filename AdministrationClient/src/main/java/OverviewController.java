@@ -7,6 +7,7 @@ import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 
+import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -63,10 +64,10 @@ public class OverviewController implements IController{
     @FXML private TextField tfTextFilter;
     @FXML private CheckBox cbAcceptedFilter;
 
-    private Map<Media, Object> mediaObjects = new HashMap<>();
+    private Map<Media, IPanel> mediaObjects = new HashMap<>();
 
     // FIELDS
-    private LinkedList<IPanel> panels = new LinkedList<>();
+    //private LinkedList<IPanel> panels = new LinkedList<>();
 
 
     private final int SPACING = 10;
@@ -108,11 +109,16 @@ public class OverviewController implements IController{
      * @param title the title of the panel
      * @param image the image of the panel
      */
-    private void addPanel(String title, Image image) {
+    private IPanel addPanel(String title, Image image) {
         VBox nextBox = getNextPanel();
         IPanel panel = PanelFactory.getPanel(PanelFactory.Type.image, title, image, nextBox);
-        panels.add(panel);
-        getNextPanel().getChildren().add(panel.getParentNode());
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                nextBox.getChildren().add(panel.getParentNode());
+            }
+        });
+        return panel;
     }
 
     /**
@@ -120,26 +126,18 @@ public class OverviewController implements IController{
      * @param title the title of the panel
      * @param text the text of the panel
      */
-    private void addPanel(String title, String text) {
+    private IPanel addPanel(String title, String text) {
         VBox nextBox = getNextPanel();
         IPanel panel = PanelFactory.getPanel(PanelFactory.Type.text, title, text, nextBox);
-        panels.add(panel);
-        getNextPanel().getChildren().add(panel.getParentNode());
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                nextBox.getChildren().add(panel.getParentNode());
+            }
+        });
+        return panel;
     }
 
-    /**
-     * Load or reload all of the panels on the screen
-     */
-    void loadPanels() {
-        contentHolderR1.getChildren().clear();
-        contentHolderR2.getChildren().clear();
-        contentHolderR3.getChildren().clear();
-
-        ListIterator<IPanel> listIterator = panels.listIterator();
-         while (listIterator.hasNext()) {
-            getNextPanel().getChildren().add(listIterator.next().getParentNode());
-        }
-    }
 
     /**
      * Get the next vbox
@@ -177,12 +175,13 @@ public class OverviewController implements IController{
             System.out.println("Getting image :\""+url+"\"");
             if(m.getMimeType().startsWith("image")){//its an image!
                 Image img = new Image(url);
-                mediaObjects.put(m, img);
-                Platform.runLater(()->addPanel(m.getSource(),img));
+                IPanel panel = addPanel(m.getSource(), img);
+                mediaObjects.put(m, panel);
+
             }else{
                 String result = httpGetString(url);
-                mediaObjects.put(m, result);
-                Platform.runLater(()->addPanel(m.getSource(),result));
+                IPanel panel = addPanel(m.getSource(), result);
+                mediaObjects.put(m, panel);
             }
             System.out.println("Got :\""+url+"\"");
         }
@@ -231,10 +230,7 @@ public class OverviewController implements IController{
             getTeams();
         });
 
-        // Clear the vboxes
-        contentHolderR1.getChildren().clear();
-        contentHolderR2.getChildren().clear();
-        contentHolderR3.getChildren().clear();
+        clearPanelHolders();
 
         Thread thread = new Thread(()->postLoadSources());
         thread.start();
@@ -245,29 +241,56 @@ public class OverviewController implements IController{
         StageController.loadStage(View.mainScene, "main");
     }
 
-    public void reloadSelectedSources(Event event) {
-        ListIterator<IPanel> listIterator = panels.listIterator();
-        while (listIterator.hasNext()) {
-            IPanel panel = listIterator.next();
-            try {
-                if (panel.isSelected())
-                    selectedSources.getChildren().add(panel.getParentNode());
-                else
-                    getNextPanel().getChildren().add(panel.getParentNode());
-
-            }catch (IllegalArgumentException ex) {
-
+    /**
+     * Clear all of the vboxes that contains sources
+     */
+    private void clearPanelHolders() {
+        // Clear the vboxes
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                contentHolderR1.getChildren().clear();
+                contentHolderR2.getChildren().clear();
+                contentHolderR3.getChildren().clear();
             }
-        }
+        });
+
+    }
+
+    /**
+     * Reload all of the selected resources
+     * Called when the user switches tabs
+     * @param event
+     */
+    public void reloadSelectedSources(Event event) {
+
+        clearPanelHolders();
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                for (IPanel panel : mediaObjects.values()) {
+                    try {
+                        if (panel.isSelected())
+                            selectedSources.getChildren().add(panel.getParentNode());
+                        else if (!getNextPanel().getChildren().contains(panel))
+                            getNextPanel().getChildren().add(panel.getParentNode());
+
+                    }catch (IllegalArgumentException ex) {
+
+                    }
+                }
+            }
+        });
+
+
     }
 
     /**
      * Method for applying a filter to the media.
      */
     public void changeFilter(){
-        contentHolderR1.getChildren().clear();
-        contentHolderR2.getChildren().clear();
-        contentHolderR3.getChildren().clear();
+        clearPanelHolders();
 
         for(Media m : mediaObjects.keySet())
         {
@@ -275,13 +298,9 @@ public class OverviewController implements IController{
                     m.getDate().toGregorianCalendar().toZonedDateTime().toLocalDate().compareTo(endDate.getValue()) <= 0 &&
                     m.getSource().contains(tfTextFilter.getText())) {
                 if ((cbAcceptedFilter.isSelected() && m.getAccepted() == MediaAccepted.YES) || !cbAcceptedFilter.isSelected()) {
-                    if (m.getMimeType().startsWith("image")) {//its an image!
-                        Platform.runLater(() -> addPanel(m.getSource(), (Image)mediaObjects.get(m)));
-                    } else {
-                        Platform.runLater(() -> addPanel(m.getSource(), (String)mediaObjects.get(m)));
-                    }
+                    getNextPanel().getChildren().add(mediaObjects.get(m).getParentNode());
                 }
             }
         }
-    }
-}
+    }}
+

@@ -52,8 +52,6 @@ public class MainController implements IController{
                 btnBeheersen.setDisable(visible);
             }
         });
-
-
     }
 
     @Override
