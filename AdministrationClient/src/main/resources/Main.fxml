@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.text.*?>
 <?import java.net.*?>
@@ -36,23 +35,28 @@
                   <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                      <children>
                         <Label layoutX="85.0" layoutY="14.0" text="Bestaande incidenten" />
-                        <JFXButton fx:id="btnBeheersen" disable="true" layoutX="84.0" layoutY="76.0" onMouseClicked="#loadOverview" prefHeight="70.0" prefWidth="282.0" styleClass="button-raised" text="Incident beheersen">
+                        <JFXButton fx:id="btnBeheersen" disable="true" layoutX="84.0" layoutY="70.0" onMouseClicked="#loadOverview" prefHeight="70.0" prefWidth="282.0" styleClass="button-raised" text="Incident beheersen">
                            <font>
                               <Font size="51.0" />
                            </font>
                         </JFXButton>
-                        <JFXButton fx:id="btnWijzigen" disable="true" layoutX="84.0" layoutY="180.0" onMouseClicked="#loadIncidentWijzigen" prefHeight="70.0" prefWidth="282.0" styleClass="button-raised" text="Incident wijzigen">
+                        <JFXButton fx:id="btnWijzigen" disable="true" layoutX="84.0" layoutY="170.0" onMouseClicked="#loadIncidentWijzigen" prefHeight="70.0" prefWidth="282.0" styleClass="button-raised" text="Incident wijzigen">
                            <font>
                               <Font size="51.0" />
                            </font>
                         </JFXButton>
-                        <JFXButton disable="true" layoutX="84.0" layoutY="274.0" onMouseClicked="#loadFilter" prefHeight="70.0" prefWidth="278.0" styleClass="button-raised" text="Bronnen filteren" />
+                        <JFXButton disable="true" layoutX="84.0" layoutY="270.0" onMouseClicked="#loadFilter" prefHeight="70.0" prefWidth="278.0" styleClass="button-raised" text="Bronnen filteren" />
                      </children>
                   </Pane>
                   <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2">
                      <children>
                         <Label layoutX="102.0" layoutY="14.0" text="Nieuw incidenten" />
-                        <JFXButton layoutX="83.0" layoutY="60.0" onMouseClicked="#loadIncidentAanmaken" prefHeight="70.0" prefWidth="282.0" styleClass="button-raised" text="Incident aanmaken">
+                        <JFXButton layoutX="83.0" layoutY="70.0" onMouseClicked="#loadIncidentAanmaken" prefHeight="70.0" prefWidth="282.0" styleClass="button-raised" text="Incident aanmaken">
+                           <font>
+                              <Font size="51.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXButton layoutX="83.0" layoutY="170.0" onMouseClicked="#loadStappenPlanAanmaken" prefHeight="70.0" prefWidth="282.0" styleClass="button-raised" text="Aanmaken stappenplan">
                            <font>
                               <Font size="51.0" />
                            </font>

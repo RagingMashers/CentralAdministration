@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import java.net.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane alignment="center" hgap="10" scaleShape="false" vgap="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="StappenPlanController">
+   <children>
+       <MenuBar>
+           <menus>
+               <Menu fx:id="menuBack" mnemonicParsing="false" onAction="#backToMenu" text="Navigation">
+                   <items>
+                       <MenuItem mnemonicParsing="false" onAction="#backToMenu" text="Home" />
+                   </items>
+               </Menu>
+           </menus>
+       </MenuBar>
+
+      <Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0" GridPane.rowIndex="1">
+         <children>
+            <GridPane layoutY="-24.0" prefHeight="700.0" prefWidth="1100.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints maxHeight="344.0" minHeight="10.0" prefHeight="111.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="589.0" minHeight="233.0" prefHeight="589.0" />
+              </rowConstraints>
+               <children>
+                  <JFXButton prefHeight="60.0" prefWidth="302.0" styleClass="button-raised" text="Beheer taken" GridPane.columnIndex="1">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </JFXButton>
+                  <ScrollPane fitToWidth="true" prefHeight="565.0" prefWidth="550.0" vbarPolicy="ALWAYS" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="548.0">
+                           <children>
+                              <VBox fx:id="VboxTasks" prefHeight="-1.0" prefWidth="400.0" />
+                           </children>
+                        </AnchorPane>
+                    </content>
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </ScrollPane>
+
+                   <ScrollPane fitToWidth="true" prefHeight="565.0" prefWidth="550.0" vbarPolicy="ALWAYS" GridPane.rowIndex="1">
+                       <content>
+                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="548.0">
+                               <children>
+                                   <VBox fx:id="VboxStappenPlan" prefHeight="-1.0" prefWidth="400.0" />
+                               </children>
+                           </AnchorPane>
+                       </content>
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                   </ScrollPane>
+                  <JFXComboBox fx:id="CBStappenPlannen" prefHeight="45.0" prefWidth="534.0" />
+               </children>
+            </GridPane>
+         </children></Pane>
+
+
+   </children>
+
+   <stylesheets>
+      <URL value="@jfoenix-components.css" />
+   </stylesheets>
+   <columnConstraints>
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+      <RowConstraints />
+   </rowConstraints>
+
+</GridPane>

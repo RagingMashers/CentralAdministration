@@ -36,6 +36,11 @@ public class MainController implements IController{
         StageController.loadStage(View.incident, "Incident aanmaken");
     }
 
+    public void loadStappenPlanAanmaken() {
+        IncidentHolder.clearIncident();
+        StageController.loadStage(View.stappenPlan, "Stappenplan aanmaken");
+    }
+
     public void loadFilter() {StageController.loadStage(View.filter, "Bronnen filteren");}
 
     @Override
