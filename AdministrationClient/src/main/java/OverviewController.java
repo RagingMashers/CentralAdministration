@@ -2,11 +2,15 @@ import Panels.IPanel;
 import Panels.PanelFactory;
 import SitaApi.*;
 import SitaApi.SitaApiSoap;
+import Validation.Validator;
+import Validation.Validators.IntegerValidator;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 
+import com.jfoenix.validation.RequiredFieldValidator;
+import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -63,27 +67,29 @@ public class OverviewController implements IController{
     @FXML private TextField tfTextFilter;
     @FXML private CheckBox cbAcceptedFilter;
 
-    private Map<Media, Object> mediaObjects = new HashMap<>();
+    private Map<Media, IPanel> mediaObjects = new HashMap<>();
 
     // FIELDS
-    private LinkedList<IPanel> panels = new LinkedList<>();
+    //private LinkedList<IPanel> panels = new LinkedList<>();
 
 
     private final int SPACING = 10;
-    ApiManager manager = ApiManager.getInstance();
-    SitaApiSoap port = manager.getSitaPort();
-    String token = manager.getSitaToken();
-    Team selectedTeam;
+    private ApiManager manager = ApiManager.getInstance();
+    private SitaApiSoap port = manager.getSitaPort();
+    private String token = manager.getSitaToken();
+    private Team selectedTeam;
 
     /**
      * Author Frank Hartman
      * Send a message to a selected team
      */
     public void sendMessageToTeam(){
+        if(!cTFTitel.validate()) return;
+        if(!cTAInhoud.validate()) return;
         try {
             port.sendMessage(token, selectedTeam.getId(), cTAInhoud.getText());
             cTFTitel.setText("");
-            cTAInhoud.setText("Beste hulpverlener,");
+            cTAInhoud.setText("");
             cLVTeams.getSelectionModel().clearSelection();
             selectedTeam = null;
         }
@@ -101,6 +107,10 @@ public class OverviewController implements IController{
         startDate.setValue(LocalDate.now());
         endDate.setValue(LocalDate.now());
         selectedSources.setSpacing(SPACING);
+
+        Validator validator = new Validator();
+        validator.setTextBoxStyles(cTFTitel, "Titel", "Het bericht moet een titel hebben",new RequiredFieldValidator(),false);
+        validator.setTextAreaStyles(cTAInhoud, "Inhoud", "Het bericht moet wel inhoud hebben", new RequiredFieldValidator());
     }
 
     /**
@@ -108,11 +118,14 @@ public class OverviewController implements IController{
      * @param title the title of the panel
      * @param image the image of the panel
      */
-    private void addPanel(String title, Image image) {
+    private IPanel addPanel(String title, Image image) {
         VBox nextBox = getNextPanel();
         IPanel panel = PanelFactory.getPanel(PanelFactory.Type.image, title, image, nextBox);
-        panels.add(panel);
-        getNextPanel().getChildren().add(panel.getParentNode());
+        Platform.runLater(() -> {
+            assert panel != null;
+            nextBox.getChildren().add(panel.getParentNode());
+        });
+        return panel;
     }
 
     /**
@@ -120,26 +133,16 @@ public class OverviewController implements IController{
      * @param title the title of the panel
      * @param text the text of the panel
      */
-    private void addPanel(String title, String text) {
+    private IPanel addPanel(String title, String text) {
         VBox nextBox = getNextPanel();
         IPanel panel = PanelFactory.getPanel(PanelFactory.Type.text, title, text, nextBox);
-        panels.add(panel);
-        getNextPanel().getChildren().add(panel.getParentNode());
+        Platform.runLater(() -> {
+            assert panel != null;
+            nextBox.getChildren().add(panel.getParentNode());
+        });
+        return panel;
     }
 
-    /**
-     * Load or reload all of the panels on the screen
-     */
-    void loadPanels() {
-        contentHolderR1.getChildren().clear();
-        contentHolderR2.getChildren().clear();
-        contentHolderR3.getChildren().clear();
-
-        ListIterator<IPanel> listIterator = panels.listIterator();
-         while (listIterator.hasNext()) {
-            getNextPanel().getChildren().add(listIterator.next().getParentNode());
-        }
-    }
 
     /**
      * Get the next vbox
@@ -177,12 +180,13 @@ public class OverviewController implements IController{
             System.out.println("Getting image :\""+url+"\"");
             if(m.getMimeType().startsWith("image")){//its an image!
                 Image img = new Image(url);
-                mediaObjects.put(m, img);
-                Platform.runLater(()->addPanel(m.getSource(),img));
+                IPanel panel = addPanel(m.getSource(), img);
+                mediaObjects.put(m, panel);
+
             }else{
                 String result = httpGetString(url);
-                mediaObjects.put(m, result);
-                Platform.runLater(()->addPanel(m.getSource(),result));
+                IPanel panel = addPanel(m.getSource(), result);
+                mediaObjects.put(m, panel);
             }
             System.out.println("Got :\""+url+"\"");
         }
@@ -202,7 +206,7 @@ public class OverviewController implements IController{
             System.out.println(body);
             return body;
         }catch (IOException ex){
-            System.out.println(ex);
+            System.out.println(ex.toString());
             return "ERROR";
         }
     }
@@ -231,12 +235,9 @@ public class OverviewController implements IController{
             getTeams();
         });
 
-        // Clear the vboxes
-        contentHolderR1.getChildren().clear();
-        contentHolderR2.getChildren().clear();
-        contentHolderR3.getChildren().clear();
+        clearPanelHolders();
 
-        Thread thread = new Thread(()->postLoadSources());
+        Thread thread = new Thread(this::postLoadSources);
         thread.start();
     }
 
@@ -245,43 +246,60 @@ public class OverviewController implements IController{
         StageController.loadStage(View.mainScene, "main");
     }
 
+    /**
+     * Clear all of the vboxes that contains sources
+     */
+    private void clearPanelHolders() {
+        // Clear the vboxes
+        Platform.runLater(() -> {
+            contentHolderR1.getChildren().clear();
+            contentHolderR2.getChildren().clear();
+            contentHolderR3.getChildren().clear();
+        });
+    }
+
+    /**
+     * Reload all of the selected resources
+     * Called when the user switches tabs
+     * @param event The event that needs reloading
+     */
     public void reloadSelectedSources(Event event) {
-        ListIterator<IPanel> listIterator = panels.listIterator();
-        while (listIterator.hasNext()) {
-            IPanel panel = listIterator.next();
-            try {
-                if (panel.isSelected())
-                    selectedSources.getChildren().add(panel.getParentNode());
-                else
-                    getNextPanel().getChildren().add(panel.getParentNode());
 
-            }catch (IllegalArgumentException ex) {
+        clearPanelHolders();
 
+        Platform.runLater(() -> {
+            for (IPanel panel : mediaObjects.values()) {
+                try {
+                    if (panel.isSelected())
+                        selectedSources.getChildren().add(panel.getParentNode());
+                    else if (!getNextPanel().getChildren().contains(panel))
+                        getNextPanel().getChildren().add(panel.getParentNode());
+
+                }catch (IllegalArgumentException ex) {
+                    System.out.println(ex.toString());
+                }
             }
-        }
+        });
     }
 
     /**
      * Method for applying a filter to the media.
      */
     public void changeFilter(){
-        contentHolderR1.getChildren().clear();
-        contentHolderR2.getChildren().clear();
-        contentHolderR3.getChildren().clear();
+        clearPanelHolders();
 
-        for(Media m : mediaObjects.keySet())
-        {
-            if(m.getDate().toGregorianCalendar().toZonedDateTime().toLocalDate().compareTo(startDate.getValue()) >= 0 &&
-                    m.getDate().toGregorianCalendar().toZonedDateTime().toLocalDate().compareTo(endDate.getValue()) <= 0 &&
-                    m.getSource().contains(tfTextFilter.getText())) {
-                if ((cbAcceptedFilter.isSelected() && m.getAccepted() == MediaAccepted.YES) || !cbAcceptedFilter.isSelected()) {
-                    if (m.getMimeType().startsWith("image")) {//its an image!
-                        Platform.runLater(() -> addPanel(m.getSource(), (Image)mediaObjects.get(m)));
-                    } else {
-                        Platform.runLater(() -> addPanel(m.getSource(), (String)mediaObjects.get(m)));
+        Platform.runLater(() -> {
+            for(Media m : mediaObjects.keySet())
+            {
+                if(m.getDate().toGregorianCalendar().toZonedDateTime().toLocalDate().compareTo(startDate.getValue()) >= 0 &&
+                        m.getDate().toGregorianCalendar().toZonedDateTime().toLocalDate().compareTo(endDate.getValue()) <= 0 &&
+                        m.getSource().contains(tfTextFilter.getText())) {
+                    if (!cbAcceptedFilter.isSelected() || m.getAccepted() == MediaAccepted.YES) {
+                        getNextPanel().getChildren().add(mediaObjects.get(m).getParentNode());
                     }
                 }
             }
-        }
-    }
-}
+        });
+
+    }}
+
