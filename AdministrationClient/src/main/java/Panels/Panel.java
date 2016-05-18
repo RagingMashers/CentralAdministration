@@ -15,6 +15,8 @@ import javafx.scene.text.Font;
 public abstract class Panel {
     private Pane background;
     private Label header;
+    private int id;
+
     private boolean selected = false;
 
     // Panel settings
@@ -107,5 +109,13 @@ public abstract class Panel {
 
     public boolean getSelected() {
         return selected;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

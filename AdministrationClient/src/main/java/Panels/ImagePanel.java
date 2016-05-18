@@ -19,9 +19,10 @@ public class ImagePanel extends Panel implements IPanel {
      * @param headerText the text that will be displayed at the header
      * @param parentBox the vbox where the panel belongs to
      */
-    public ImagePanel(Image img,String headerText, VBox parentBox) {
+    public ImagePanel(Image img,String headerText, VBox parentBox, int id) {
         // Set the header text
         setHeaderText(headerText);
+        setId(id);
 
         // Create the image view
         ImageView image = new ImageView(img);

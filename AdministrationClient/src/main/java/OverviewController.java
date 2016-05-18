@@ -121,9 +121,9 @@ public class OverviewController implements IController{
      * @param title the title of the panel
      * @param image the image of the panel
      */
-    private IPanel addPanel(String title, Image image) {
+    private IPanel addPanel(String title, Image image, int id) {
         VBox nextBox = getNextPanel();
-        IPanel panel = PanelFactory.getPanel(PanelFactory.Type.image, title, image, nextBox);
+        IPanel panel = PanelFactory.getPanel(PanelFactory.Type.image, title, image, nextBox, id);
         Platform.runLater(() -> {
             assert panel != null;
             nextBox.getChildren().add(panel.getParentNode());
@@ -136,9 +136,9 @@ public class OverviewController implements IController{
      * @param title the title of the panel
      * @param text the text of the panel
      */
-    private IPanel addPanel(String title, String text) {
+    private IPanel addPanel(String title, String text, int id) {
         VBox nextBox = getNextPanel();
-        IPanel panel = PanelFactory.getPanel(PanelFactory.Type.text, title, text, nextBox);
+        IPanel panel = PanelFactory.getPanel(PanelFactory.Type.text, title, text, nextBox, id);
         Platform.runLater(() -> {
             assert panel != null;
             nextBox.getChildren().add(panel.getParentNode());
@@ -183,12 +183,12 @@ public class OverviewController implements IController{
             System.out.println("Getting image :\""+url+"\"");
             if(m.getMimeType().startsWith("image")){//its an image!
                 Image img = new Image(url);
-                IPanel panel = addPanel(m.getSource(), img);
+                IPanel panel = addPanel(m.getSource(), img, m.getId());
                 mediaObjects.put(m, panel);
 
             }else{
                 String result = httpGetString(url);
-                IPanel panel = addPanel(m.getSource(), result);
+                IPanel panel = addPanel(m.getSource(), result, m.getId());
                 mediaObjects.put(m, panel);
             }
             System.out.println("Got :\""+url+"\"");

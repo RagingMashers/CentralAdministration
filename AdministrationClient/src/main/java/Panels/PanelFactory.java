@@ -18,10 +18,10 @@ public class PanelFactory {
      * @param parentBox the vbox where the panel belongs to
      * @return the panel
      */
-    public static IPanel getPanel(Type type, String headerText, Image image, VBox parentBox) {
+    public static IPanel getPanel(Type type, String headerText, Image image, VBox parentBox, int id) {
         switch (type) {
             case image:
-                return new ImagePanel(image, headerText, parentBox);
+                return new ImagePanel(image, headerText, parentBox, id);
             default:
                 return null;
         }
@@ -33,10 +33,10 @@ public class PanelFactory {
      * @param headerText the header text of the panel
      * @return the panel
      */
-    public static IPanel getPanel(Type type, String headerText, String contentText, VBox parentBox) {
+    public static IPanel getPanel(Type type, String headerText, String contentText, VBox parentBox, int id) {
         switch (type) {
             case text:
-                return new TextPanel(headerText, contentText, parentBox);
+                return new TextPanel(headerText, contentText, parentBox, id);
             default:
                 return null;
         }

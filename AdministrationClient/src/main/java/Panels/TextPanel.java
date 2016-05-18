@@ -14,10 +14,11 @@ public class TextPanel extends Panel implements IPanel {
      * Constructor of a text panel
      * @param headerText the header text of this panel
      */
-    public TextPanel(String headerText, String contentTexts, VBox parentBox) {
+    public TextPanel(String headerText, String contentTexts, VBox parentBox, int id) {
         // Set the header text
         setHeaderText(headerText);
         setTextAreaText(contentTexts);
+        setId(id);
 
         textArea.setLayoutY(30);
         textArea.setPrefWidth(parentBox.getPrefWidth());
