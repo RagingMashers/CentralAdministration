@@ -85,17 +85,21 @@ public class OverviewController implements IController{
     public void sendMessageToTeam(){
         if(!cTFTitel.validate()) return;
         if(!cTAInhoud.validate()) return;
-        try {
-            port.sendMessage(token, selectedTeam.getId(), cTAInhoud.getText());
-            cTFTitel.setText("");
-            cTAInhoud.setText("");
-            cLVTeams.getSelectionModel().clearSelection();
-            selectedTeam = null;
+        if(selectedTeam == null) {
+            MessageBox.showException("Er is een fout opgetreden!", "Selecteer een team om je bericht naar te versturen.", "", null);
+            return;
         }
-        catch(Exception ex)
-        {
-            MessageBox.showException("Er is een fout opgetreden!", "Neem contact op met de administrator", "", ex);
-        }
+
+        //TODO: title wordt niks mee gedaan
+        //TODO: controleren welke api methode gebruikt moet worden sendMessage / sendMessageWithMedia
+        port.sendMessage(token, selectedTeam.getId(), cTAInhoud.getText());
+        // Clear titel and text.
+        cTFTitel.setText("");
+        cTAInhoud.setText("");
+
+        // Clear selection of the team.
+        cLVTeams.getSelectionModel().clearSelection();
+        selectedTeam = null;
     }
 
     public void initialize(URL location, ResourceBundle resources) {
