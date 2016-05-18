@@ -1,72 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import java.net.*?>
 <?import com.jfoenix.controls.*?>
 <?import javafx.scene.layout.*?>
 
 <GridPane alignment="center" hgap="10" scaleShape="false" vgap="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="OverviewController">
-   <children>
        <MenuBar>
-           <menus>
                <Menu fx:id="menuBack" mnemonicParsing="false" onAction="#backToMenu" text="Navigation">
-                   <items>
-                       <MenuItem mnemonicParsing="false" onAction="#backToMenu" text="Home" />
-                   </items>
+                   <MenuItem mnemonicParsing="false" onAction="#backToMenu" text="Home" />
                </Menu>
-           </menus>
        </MenuBar>
 
        <JFXTabPane centerShape="false" prefHeight="700.0" prefWidth="1100.0" scaleShape="false" side="BOTTOM" GridPane.rowIndex="1">
-           <tabs>
                <Tab onSelectionChanged="#reloadSelectedSources" text="Communicatie eenheden">
-                   <content>
-                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                               <ScrollPane layoutX="736.0" layoutY="37.0" prefHeight="606.0" prefWidth="350.0">
-                           <content>
-                              <VBox fx:id="selectedSources" prefWidth="350.0" />
-                           </content></ScrollPane>
-                               <AnchorPane layoutY="158.0" prefHeight="479.0" prefWidth="332.0">
-                                   <children>
-                                       <JFXListView fx:id="cLVTeams" layoutX="37.0" layoutY="58.0" prefHeight="403.0" prefWidth="248.0" />
-                                       <Label layoutX="37.0" layoutY="25.0" text="Teams" />
-                                   </children>
-                               </AnchorPane>
-                               <AnchorPane layoutX="296.0" layoutY="95.0" prefHeight="443.0" prefWidth="448.0">
-                                   <children>
-                                       <Label layoutX="21.0" layoutY="14.0" text="Versturen van bericht" />
-                                       <Label layoutX="21.0" layoutY="62.0" text="Titel" />
-                                       <Label layoutX="21.0" layoutY="127.0" text="Inhoud" />
-                                       <JFXTextArea fx:id="cTAInhoud" layoutX="21.0" layoutY="182.0" maxWidth="467.0" minWidth="387.0" prefHeight="250.0" prefWidth="413.0" text="Beste hulpverlener,&#10;" wrapText="true" />
-                                       <JFXButton layoutX="127.0" layoutY="444.0" onMouseClicked="#sendMessageToTeam" prefHeight="45.0" prefWidth="372.0" styleClass="button-raised" text="Verstuur" />
-                                       <JFXTextField fx:id="cTFTitel" layoutX="92.0" layoutY="52.0" maxWidth="342.0" minWidth="342.0" prefHeight="51.0" prefWidth="342.0" />
-                                   </children>
-                               </AnchorPane>
-                               <Label layoutX="40.0" layoutY="27.0" text="Selecteer eerst het team om er vervolgens een bericht naar te sturen" />
-                        <JFXSlider fx:id="radiusSlider" layoutX="42.0" layoutY="144.0" max="50.0" min="1.0" prefHeight="14.0" prefWidth="210.0" value="4.0" />
-                        <Label layoutX="42.0" layoutY="109.0" text="Kies een radius (km)" />
-                           </children></AnchorPane>
-                   </content>
+                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <ScrollPane layoutX="736.0" layoutY="37.0" prefHeight="606.0" prefWidth="350.0">
+                          <VBox fx:id="selectedSources" prefWidth="350.0" />
+                       </ScrollPane>
+                           <AnchorPane layoutY="158.0" prefHeight="479.0" prefWidth="332.0">
+                                   <JFXListView fx:id="cLVTeams" layoutX="37.0" layoutY="58.0" prefHeight="403.0" prefWidth="248.0" />
+                                   <Label layoutX="37.0" layoutY="25.0" text="Teams" />
+                           </AnchorPane>
+                           <AnchorPane layoutX="296.0" layoutY="95.0" prefHeight="443.0" prefWidth="448.0">
+                                   <Label layoutX="21.0" layoutY="14.0" text="Versturen van bericht" />
+                                   <JFXTextArea fx:id="cTAInhoud" layoutX="14.0" layoutY="142.0" maxWidth="467.0" minWidth="387.0" prefHeight="250.0" prefWidth="413.0" wrapText="true" />
+                                   <JFXButton layoutX="127.0" layoutY="444.0" onMouseClicked="#sendMessageToTeam" prefHeight="45.0" prefWidth="372.0" styleClass="button-raised" text="Verstuur" />
+                                   <JFXTextField fx:id="cTFTitel" layoutX="13.0" layoutY="57.0" maxWidth="342.0" minWidth="52.0" prefHeight="40.0" prefWidth="342.0" />
+                           </AnchorPane>
+                           <Label layoutX="40.0" layoutY="27.0" text="Selecteer eerst het team om er vervolgens een bericht naar te sturen" />
+                    <JFXSlider fx:id="radiusSlider" layoutX="42.0" layoutY="144.0" max="50.0" min="1.0" prefHeight="14.0" prefWidth="210.0" value="4.0" />
+                    <Label layoutX="42.0" layoutY="109.0" text="Kies een radius (km)" />
+                   </AnchorPane>
                </Tab>
                <Tab text="Bronnen">
-                   <content>
                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
                                <ScrollPane fx:id="scrollPane" layoutX="14.0" layoutY="78.0" prefHeight="590.0" prefWidth="1070.0" vbarPolicy="ALWAYS">
-                                   <content>
                                        <AnchorPane fx:id="totalContent" prefHeight="-1.0" prefWidth="-1.0">
-                                           <children>
                                                <VBox fx:id="contentHolderR1" prefHeight="-1.0" prefWidth="350.0" />
                                                <VBox fx:id="contentHolderR2" layoutX="359.0" prefHeight="-1.0" prefWidth="350.0" />
                                                <VBox fx:id="contentHolderR3" layoutX="718.0" prefHeight="-1.0" prefWidth="350.0" />
-                                           </children>
                                        </AnchorPane>
-                                   </content>
                                </ScrollPane>
                         <AnchorPane layoutX="15.0" layoutY="8.0" prefHeight="66.0" prefWidth="1070.0">
-                           <children>
                               <DatePicker fx:id="endDate" layoutX="579.0" layoutY="34.0" minHeight="-Infinity" prefHeight="30.0" prefWidth="200.0" />
                               <DatePicker fx:id="startDate" layoutX="579.0" layoutY="3.0" minHeight="-Infinity" prefHeight="30.0" prefWidth="200.0" />
                               <JFXButton layoutX="878.0" layoutY="3.0" onAction="#changeFilter" prefHeight="54.0" prefWidth="106.0" styleClass="button-raised" text="Apply" />
@@ -76,19 +51,13 @@
                               <Label layoutX="181.0" layoutY="-1.0" text="Filter woord" />
                               <JFXCheckBox fx:id="cbAcceptedFilter" layoutX="126.0" layoutY="-1.0" />
                               <Label layoutX="14.0" layoutY="-1.0" text="Gevalideerd" />
-                           </children>
-                        </AnchorPane>
-                           </children></AnchorPane>
-                   </content>
+                        </AnchorPane></AnchorPane>
                </Tab>
-           </tabs>
        </JFXTabPane>
 
-
-   </children>
-
    <stylesheets>
-      <URL value="@jfoenix-components.css" />
+       <URL value="@jfoenix-components.css" />
+       <URL value="@jfoenix-main-demo.css" />
    </stylesheets>
    <columnConstraints>
       <ColumnConstraints />

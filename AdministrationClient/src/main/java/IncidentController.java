@@ -28,6 +28,7 @@ import SitaApi.SitaApiSoap;
 
 /**
  * Created by frank on 30/03/2016.
+ * Edited by Matthijs on 18/05/2016
  */
 public class IncidentController implements IController{
     private SitaApiSoap sitaApi;
@@ -49,7 +50,7 @@ public class IncidentController implements IController{
      * Author Frank Hartman & Matthijs van der Boon
      * Create an incident
      */
-    public void createIncident(){
+    private void createIncident(){
         if(mTFSlachtoffers.getText().isEmpty())mTFSlachtoffers.setText("0");
         if(mTFGewonden.getText().isEmpty())mTFGewonden.setText("0");
         if(mTFRadius.getText().isEmpty())mTFRadius.setText("0");
@@ -121,22 +122,13 @@ public class IncidentController implements IController{
     }
 
     private void addValidatorsToControls(){
-        setTextBoxStyles(mTFTitle,"Titel", "Dit veld mag niet leeg zijn",new RequiredFieldValidator());
-        setTextBoxStyles(mTFSlachtoffers,"Hoeveelheid slachtoffers", "Dit moet een getal zijn",new IntegerValidator());
-        setTextBoxStyles(mTFGewonden,"Hoeveelheid gewonden", "Dit moet een getal zijn",new IntegerValidator());
-        setTextBoxStyles(mTFCoordinaatX,"X Coördinaat", "Dit moet een getal zijn",new RequiredFieldValidator());
-        setTextBoxStyles(mTFCoordinaatY,"Y Coördinaat", "Dit moet een getal zijn",new RequiredFieldValidator());
-        setTextBoxStyles(mTFRadius, "Radius", "Dit moet een getal zijn",new IntegerValidator());
-    }
-
-    private void setTextBoxStyles(JFXTextField jfxTextField, String fieldName, String errorText, ValidatorBase validatorBase){
         Validator validator = new Validator();
-        jfxTextField.setStyle("-fx-label-float:true;");
-        jfxTextField.setPromptText(fieldName);
-        jfxTextField.getValidators().add(validator.validatorForTextbox(errorText,validatorBase));
-        jfxTextField.focusedProperty().addListener((o,oldVal,newVal)->{
-            if(!newVal)jfxTextField.validate();
-        });
+        validator.setTextBoxStyles(mTFTitle,"Titel", "Dit veld mag niet leeg zijn",new RequiredFieldValidator(),true);
+        validator.setTextBoxStyles(mTFSlachtoffers,"Hoeveelheid slachtoffers", "Dit moet een getal zijn",new IntegerValidator(),true);
+        validator.setTextBoxStyles(mTFGewonden,"Hoeveelheid gewonden", "Dit moet een getal zijn",new IntegerValidator(),true);
+        validator.setTextBoxStyles(mTFCoordinaatX,"X Coördinaat", "Dit moet een getal zijn",new RequiredFieldValidator(),true);
+        validator.setTextBoxStyles(mTFCoordinaatY,"Y Coördinaat", "Dit moet een getal zijn",new RequiredFieldValidator(),true);
+        validator.setTextBoxStyles(mTFRadius, "Radius", "Dit moet een getal zijn",new IntegerValidator(),true);
     }
 
     public void btnIncident_Click(ActionEvent actionEvent) {
@@ -163,28 +155,18 @@ public class IncidentController implements IController{
 
     private <T> void addListenerToList(JFXListView<T> listFrom, JFXListView<T> listTo){
         listFrom.getSelectionModel().selectedItemProperty().addListener(
-                new ChangeListener<T>() {
-                    @Override
-                    public void changed(ObservableValue<? extends T> ov,
-                                        T oldValue, T newValue) {
-                        if(!listTo.getItems().contains(newValue)) {
-                            listTo.getItems().add(newValue);
-                        }
+                (ov, oldValue, newValue) -> {
+                    if(!listTo.getItems().contains(newValue)) {
+                        listTo.getItems().add(newValue);
                     }
                 });
-        listTo.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<T>() {
-            @Override
-            public void changed(ObservableValue<? extends T> observable, T oldValue, final T newValue) {
+        listTo.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        listTo.getSelectionModel().clearSelection();
-                        listTo.getItems().remove(newValue);
-                    }
-                });
+            Platform.runLater(() -> {
+                listTo.getSelectionModel().clearSelection();
+                listTo.getItems().remove(newValue);
+            });
 
-            }
         });
     }
 

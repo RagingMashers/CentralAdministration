@@ -2,11 +2,14 @@ import Panels.IPanel;
 import Panels.PanelFactory;
 import SitaApi.*;
 import SitaApi.SitaApiSoap;
+import Validation.Validator;
+import Validation.Validators.IntegerValidator;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 
+import com.jfoenix.validation.RequiredFieldValidator;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -71,20 +74,22 @@ public class OverviewController implements IController{
 
 
     private final int SPACING = 10;
-    ApiManager manager = ApiManager.getInstance();
-    SitaApiSoap port = manager.getSitaPort();
-    String token = manager.getSitaToken();
-    Team selectedTeam;
+    private ApiManager manager = ApiManager.getInstance();
+    private SitaApiSoap port = manager.getSitaPort();
+    private String token = manager.getSitaToken();
+    private Team selectedTeam;
 
     /**
      * Author Frank Hartman
      * Send a message to a selected team
      */
     public void sendMessageToTeam(){
+        if(!cTFTitel.validate()) return;
+        if(!cTAInhoud.validate()) return;
         try {
             port.sendMessage(token, selectedTeam.getId(), cTAInhoud.getText());
             cTFTitel.setText("");
-            cTAInhoud.setText("Beste hulpverlener,");
+            cTAInhoud.setText("");
             cLVTeams.getSelectionModel().clearSelection();
             selectedTeam = null;
         }
@@ -102,6 +107,10 @@ public class OverviewController implements IController{
         startDate.setValue(LocalDate.now());
         endDate.setValue(LocalDate.now());
         selectedSources.setSpacing(SPACING);
+
+        Validator validator = new Validator();
+        validator.setTextBoxStyles(cTFTitel, "Titel", "Het bericht moet een titel hebben",new RequiredFieldValidator(),false);
+        validator.setTextAreaStyles(cTAInhoud, "Inhoud", "Het bericht moet wel inhoud hebben", new RequiredFieldValidator());
     }
 
     /**
@@ -112,11 +121,9 @@ public class OverviewController implements IController{
     private IPanel addPanel(String title, Image image) {
         VBox nextBox = getNextPanel();
         IPanel panel = PanelFactory.getPanel(PanelFactory.Type.image, title, image, nextBox);
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                nextBox.getChildren().add(panel.getParentNode());
-            }
+        Platform.runLater(() -> {
+            assert panel != null;
+            nextBox.getChildren().add(panel.getParentNode());
         });
         return panel;
     }
@@ -129,11 +136,9 @@ public class OverviewController implements IController{
     private IPanel addPanel(String title, String text) {
         VBox nextBox = getNextPanel();
         IPanel panel = PanelFactory.getPanel(PanelFactory.Type.text, title, text, nextBox);
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                nextBox.getChildren().add(panel.getParentNode());
-            }
+        Platform.runLater(() -> {
+            assert panel != null;
+            nextBox.getChildren().add(panel.getParentNode());
         });
         return panel;
     }
@@ -201,7 +206,7 @@ public class OverviewController implements IController{
             System.out.println(body);
             return body;
         }catch (IOException ex){
-            System.out.println(ex);
+            System.out.println(ex.toString());
             return "ERROR";
         }
     }
@@ -232,7 +237,7 @@ public class OverviewController implements IController{
 
         clearPanelHolders();
 
-        Thread thread = new Thread(()->postLoadSources());
+        Thread thread = new Thread(this::postLoadSources);
         thread.start();
     }
 
@@ -246,43 +251,35 @@ public class OverviewController implements IController{
      */
     private void clearPanelHolders() {
         // Clear the vboxes
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                contentHolderR1.getChildren().clear();
-                contentHolderR2.getChildren().clear();
-                contentHolderR3.getChildren().clear();
-            }
+        Platform.runLater(() -> {
+            contentHolderR1.getChildren().clear();
+            contentHolderR2.getChildren().clear();
+            contentHolderR3.getChildren().clear();
         });
     }
 
     /**
      * Reload all of the selected resources
      * Called when the user switches tabs
-     * @param event
+     * @param event The event that needs reloading
      */
     public void reloadSelectedSources(Event event) {
 
         clearPanelHolders();
 
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                for (IPanel panel : mediaObjects.values()) {
-                    try {
-                        if (panel.isSelected())
-                            selectedSources.getChildren().add(panel.getParentNode());
-                        else if (!getNextPanel().getChildren().contains(panel))
-                            getNextPanel().getChildren().add(panel.getParentNode());
+        Platform.runLater(() -> {
+            for (IPanel panel : mediaObjects.values()) {
+                try {
+                    if (panel.isSelected())
+                        selectedSources.getChildren().add(panel.getParentNode());
+                    else if (!getNextPanel().getChildren().contains(panel))
+                        getNextPanel().getChildren().add(panel.getParentNode());
 
-                    }catch (IllegalArgumentException ex) {
-
-                    }
+                }catch (IllegalArgumentException ex) {
+                    System.out.println(ex.toString());
                 }
             }
         });
-
-
     }
 
     /**
@@ -291,17 +288,14 @@ public class OverviewController implements IController{
     public void changeFilter(){
         clearPanelHolders();
 
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                for(Media m : mediaObjects.keySet())
-                {
-                    if(m.getDate().toGregorianCalendar().toZonedDateTime().toLocalDate().compareTo(startDate.getValue()) >= 0 &&
-                            m.getDate().toGregorianCalendar().toZonedDateTime().toLocalDate().compareTo(endDate.getValue()) <= 0 &&
-                            m.getSource().contains(tfTextFilter.getText())) {
-                        if ((cbAcceptedFilter.isSelected() && m.getAccepted() == MediaAccepted.YES) || !cbAcceptedFilter.isSelected()) {
-                            getNextPanel().getChildren().add(mediaObjects.get(m).getParentNode());
-                        }
+        Platform.runLater(() -> {
+            for(Media m : mediaObjects.keySet())
+            {
+                if(m.getDate().toGregorianCalendar().toZonedDateTime().toLocalDate().compareTo(startDate.getValue()) >= 0 &&
+                        m.getDate().toGregorianCalendar().toZonedDateTime().toLocalDate().compareTo(endDate.getValue()) <= 0 &&
+                        m.getSource().contains(tfTextFilter.getText())) {
+                    if (!cbAcceptedFilter.isSelected() || m.getAccepted() == MediaAccepted.YES) {
+                        getNextPanel().getChildren().add(mediaObjects.get(m).getParentNode());
                     }
                 }
             }
