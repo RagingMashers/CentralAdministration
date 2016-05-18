@@ -18,9 +18,8 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
  *         &lt;element name="token" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="teamId" type="{http://www.w3.org/2001/XMLSchema}int"/&gt;
- *         &lt;element name="description" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="mediaIds" type="{http://cims.nl/}ArrayOfInt" minOccurs="0"/&gt;
+ *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="taskIds" type="{http://cims.nl/}ArrayOfInt" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -32,17 +31,15 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
     "token",
-    "teamId",
-    "description",
-    "mediaIds"
+    "name",
+    "taskIds"
 })
-@XmlRootElement(name = "SendMessageWithMedia")
-public class SendMessageWithMedia {
+@XmlRootElement(name = "AddActionPlan")
+public class AddActionPlan {
 
     protected String token;
-    protected int teamId;
-    protected String description;
-    protected ArrayOfInt mediaIds;
+    protected String name;
+    protected ArrayOfInt taskIds;
 
     /**
      * Gets the value of the token property.
@@ -69,67 +66,51 @@ public class SendMessageWithMedia {
     }
 
     /**
-     * Gets the value of the teamId property.
-     * 
-     */
-    public int getTeamId() {
-        return teamId;
-    }
-
-    /**
-     * Sets the value of the teamId property.
-     * 
-     */
-    public void setTeamId(int value) {
-        this.teamId = value;
-    }
-
-    /**
-     * Gets the value of the description property.
+     * Gets the value of the name property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getDescription() {
-        return description;
+    public String getName() {
+        return name;
     }
 
     /**
-     * Sets the value of the description property.
+     * Sets the value of the name property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setDescription(String value) {
-        this.description = value;
+    public void setName(String value) {
+        this.name = value;
     }
 
     /**
-     * Gets the value of the mediaIds property.
+     * Gets the value of the taskIds property.
      * 
      * @return
      *     possible object is
      *     {@link ArrayOfInt }
      *     
      */
-    public ArrayOfInt getMediaIds() {
-        return mediaIds;
+    public ArrayOfInt getTaskIds() {
+        return taskIds;
     }
 
     /**
-     * Sets the value of the mediaIds property.
+     * Sets the value of the taskIds property.
      * 
      * @param value
      *     allowed object is
      *     {@link ArrayOfInt }
      *     
      */
-    public void setMediaIds(ArrayOfInt value) {
-        this.mediaIds = value;
+    public void setTaskIds(ArrayOfInt value) {
+        this.taskIds = value;
     }
 
 }

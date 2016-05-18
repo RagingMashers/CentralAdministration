@@ -238,6 +238,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ArrayOfInt }
+     * 
+     */
+    public ArrayOfInt createArrayOfInt() {
+        return new ArrayOfInt();
+    }
+
+    /**
      * Create an instance of {@link SendMessageWithMediaResponse }
      * 
      */
@@ -267,6 +275,118 @@ public class ObjectFactory {
      */
     public ArrayOfTeam createArrayOfTeam() {
         return new ArrayOfTeam();
+    }
+
+    /**
+     * Create an instance of {@link GetActionPlans }
+     * 
+     */
+    public GetActionPlans createGetActionPlans() {
+        return new GetActionPlans();
+    }
+
+    /**
+     * Create an instance of {@link GetActionPlansResponse }
+     * 
+     */
+    public GetActionPlansResponse createGetActionPlansResponse() {
+        return new GetActionPlansResponse();
+    }
+
+    /**
+     * Create an instance of {@link ArrayOfActionPlan }
+     * 
+     */
+    public ArrayOfActionPlan createArrayOfActionPlan() {
+        return new ArrayOfActionPlan();
+    }
+
+    /**
+     * Create an instance of {@link GetTasks }
+     * 
+     */
+    public GetTasks createGetTasks() {
+        return new GetTasks();
+    }
+
+    /**
+     * Create an instance of {@link GetTasksResponse }
+     * 
+     */
+    public GetTasksResponse createGetTasksResponse() {
+        return new GetTasksResponse();
+    }
+
+    /**
+     * Create an instance of {@link ArrayOfTask }
+     * 
+     */
+    public ArrayOfTask createArrayOfTask() {
+        return new ArrayOfTask();
+    }
+
+    /**
+     * Create an instance of {@link GetTasksFromActionPlan }
+     * 
+     */
+    public GetTasksFromActionPlan createGetTasksFromActionPlan() {
+        return new GetTasksFromActionPlan();
+    }
+
+    /**
+     * Create an instance of {@link GetTasksFromActionPlanResponse }
+     * 
+     */
+    public GetTasksFromActionPlanResponse createGetTasksFromActionPlanResponse() {
+        return new GetTasksFromActionPlanResponse();
+    }
+
+    /**
+     * Create an instance of {@link AddTask }
+     * 
+     */
+    public AddTask createAddTask() {
+        return new AddTask();
+    }
+
+    /**
+     * Create an instance of {@link AddTaskResponse }
+     * 
+     */
+    public AddTaskResponse createAddTaskResponse() {
+        return new AddTaskResponse();
+    }
+
+    /**
+     * Create an instance of {@link AddActionPlan }
+     * 
+     */
+    public AddActionPlan createAddActionPlan() {
+        return new AddActionPlan();
+    }
+
+    /**
+     * Create an instance of {@link AddActionPlanResponse }
+     * 
+     */
+    public AddActionPlanResponse createAddActionPlanResponse() {
+        return new AddActionPlanResponse();
+    }
+
+    /**
+     * Create an instance of {@link EditActionPlan }
+     * 
+     */
+    public EditActionPlan createEditActionPlan() {
+        return new EditActionPlan();
+    }
+
+    /**
+     * Create an instance of {@link EditActionPlanResponse }
+     * 
+     */
+    public EditActionPlanResponse createEditActionPlanResponse() {
+        return new EditActionPlanResponse();
     }
 
     /**
@@ -363,6 +483,22 @@ public class ObjectFactory {
      */
     public Media createMedia() {
         return new Media();
+    }
+
+    /**
+     * Create an instance of {@link ActionPlan }
+     * 
+     */
+    public ActionPlan createActionPlan() {
+        return new ActionPlan();
+    }
+
+    /**
+     * Create an instance of {@link Task }
+     * 
+     */
+    public Task createTask() {
+        return new Task();
     }
 
 }

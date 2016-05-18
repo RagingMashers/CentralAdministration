@@ -18,9 +18,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
  *         &lt;element name="token" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="teamId" type="{http://www.w3.org/2001/XMLSchema}int"/&gt;
  *         &lt;element name="description" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="mediaIds" type="{http://cims.nl/}ArrayOfInt" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -32,17 +30,13 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
     "token",
-    "teamId",
-    "description",
-    "mediaIds"
+    "description"
 })
-@XmlRootElement(name = "SendMessageWithMedia")
-public class SendMessageWithMedia {
+@XmlRootElement(name = "AddTask")
+public class AddTask {
 
     protected String token;
-    protected int teamId;
     protected String description;
-    protected ArrayOfInt mediaIds;
 
     /**
      * Gets the value of the token property.
@@ -69,22 +63,6 @@ public class SendMessageWithMedia {
     }
 
     /**
-     * Gets the value of the teamId property.
-     * 
-     */
-    public int getTeamId() {
-        return teamId;
-    }
-
-    /**
-     * Sets the value of the teamId property.
-     * 
-     */
-    public void setTeamId(int value) {
-        this.teamId = value;
-    }
-
-    /**
      * Gets the value of the description property.
      * 
      * @return
@@ -106,30 +84,6 @@ public class SendMessageWithMedia {
      */
     public void setDescription(String value) {
         this.description = value;
-    }
-
-    /**
-     * Gets the value of the mediaIds property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link ArrayOfInt }
-     *     
-     */
-    public ArrayOfInt getMediaIds() {
-        return mediaIds;
-    }
-
-    /**
-     * Sets the value of the mediaIds property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link ArrayOfInt }
-     *     
-     */
-    public void setMediaIds(ArrayOfInt value) {
-        this.mediaIds = value;
     }
 
 }
