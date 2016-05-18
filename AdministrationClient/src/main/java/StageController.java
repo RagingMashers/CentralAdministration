@@ -14,7 +14,7 @@ import java.util.logging.Logger;
  * All of the views that are available for loading
  */
 
-enum View{mainScene, overviewScene, incident, filter}
+enum View{mainScene, overviewScene, incident, filter, stappenPlan}
 
 
 public class StageController {
@@ -24,11 +24,13 @@ public class StageController {
     private static Scene overview;
     private static Scene incident;
     private static Scene filter;
+    private static Scene stappenPlan;
 
     private static MainController mainController;
     private static OverviewController overviewController;
     private static IncidentController incidentController;
     private static FilterController filterController;
+    private static StappenPlanController stappenPlanController;
     private static Stage primaryStage;
 
 
@@ -57,6 +59,10 @@ public class StageController {
             fxmlLoader = new FXMLLoader(getClass().getResource("Filter.fxml"));
             filter = new Scene((Parent)fxmlLoader.load());
             filterController = fxmlLoader.getController();
+
+            fxmlLoader = new FXMLLoader(getClass().getResource("StappenPlan.fxml"));
+            stappenPlan = new Scene((Parent)fxmlLoader.load());
+            stappenPlanController = fxmlLoader.getController();
 
             log.log(Level.INFO, "Loaded all of the FXML files into the StageController");
 
@@ -118,6 +124,10 @@ public class StageController {
             case filter:
                 root = filter;
                 filterController.startController();
+                break;
+            case stappenPlan:
+                root = stappenPlan;
+                stappenPlanController.startController();
             default:
                 break;
         }
