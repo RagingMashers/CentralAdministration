@@ -94,6 +94,8 @@ public class IncidentController implements IController{
     public void initialize(URL location, ResourceBundle resources) {
         sitaApi = ApiManager.getInstance().getSitaPort();
         sitaToken = ApiManager.getInstance().getSitaToken();
+
+        removeValidatorsFromControls();
         addValidatorsToControls();
         setupListClickEvents();
 
@@ -129,6 +131,15 @@ public class IncidentController implements IController{
         validator.setTextBoxStyles(mTFCoordinaatX,"X Coördinaat", "Dit moet een getal zijn",new RequiredFieldValidator(),true);
         validator.setTextBoxStyles(mTFCoordinaatY,"Y Coördinaat", "Dit moet een getal zijn",new RequiredFieldValidator(),true);
         validator.setTextBoxStyles(mTFRadius, "Radius", "Dit moet een getal zijn",new IntegerValidator(),true);
+    }
+
+    private void removeValidatorsFromControls(){
+        mTFTitle.getValidators().clear();
+        mTFSlachtoffers.getValidators().clear();
+        mTFGewonden.getValidators().clear();
+        mTFCoordinaatX.getValidators().clear();
+        mTFCoordinaatY.getValidators().clear();
+        mTFRadius.getValidators().clear();
     }
 
     public void btnIncident_Click(ActionEvent actionEvent) {
@@ -179,7 +190,11 @@ public class IncidentController implements IController{
         else {
             MessageBox.showPopUp(Alert.AlertType.INFORMATION, "Incident wijzigen", "Je gaat nu een incident wijzigen", "");
             btnIncident.setText("Wijzig incident");
+
             fillInputFields(IncidentHolder.getIncident());
+            removeValidatorsFromControls();
+            addValidatorsToControls();
+            setupListClickEvents();
         }
     }
 
@@ -194,24 +209,35 @@ public class IncidentController implements IController{
      * @param incident The values of this incident will be displayed.
      */
     private void fillInputFields(Incident incident){
-        mTFTitle.setText(incident.getDescription());
-        mTFSlachtoffers.setText("" + incident.getAmountVictims());
-        mTFGewonden.setText("" + incident.getAmountWounded());
-        mTFCoordinaatX.setText("" + incident.getLongitude());
-        mTFCoordinaatY.setText("" + incident.getLatitude());
-        mSGevaarNiveau.setValue(incident.getDangerlevel());
-        mTFRadius.setText("" + incident.getRadius());
+        Platform.runLater(() -> {
+            mTFTitle.setText(incident.getDescription());
+            mTFSlachtoffers.setText("" + incident.getAmountVictims());
+            mTFGewonden.setText("" + incident.getAmountWounded());
+            mTFCoordinaatX.setText("" + incident.getLongitude());
+            mTFCoordinaatY.setText("" + incident.getLatitude());
+            mSGevaarNiveau.setValue(incident.getDangerlevel());
+            mTFRadius.setText("" + incident.getRadius());
 
-        for(Toxication toxic : incident.getToxicElements().getToxication()){
-            if(!mLVGiftigeStoffen.getItems().contains(toxic)) {
-                mLVGiftigeStoffen.getItems().add(toxic);
-            }
-        }
+            mTFTitle.requestFocus();
+            mTFSlachtoffers.requestFocus();
+            mTFGewonden.requestFocus();
+            mTFCoordinaatX.requestFocus();
+            mTFCoordinaatY.requestFocus();
+            mTFRadius.requestFocus();
+            mTFTitle.requestFocus();
 
-        for(Toxication toxic : sitaApi.getToxications("").getToxication()){
-            if(!mLVGiftigeStoffen.getItems().contains(toxic)) {
-                mLVGiftigeStoffenTotaal.getItems().add(toxic);
+            mTFCoordinaatX.focusedProperty().notify();
+            for(Toxication toxic : incident.getToxicElements().getToxication()){
+                if(!mLVGiftigeStoffen.getItems().contains(toxic)) {
+                    mLVGiftigeStoffen.getItems().add(toxic);
+                }
             }
-        }
+
+            for(Toxication toxic : sitaApi.getToxications("").getToxication()){
+                if(!mLVGiftigeStoffen.getItems().contains(toxic)) {
+                    mLVGiftigeStoffenTotaal.getItems().add(toxic);
+                }
+            }
+        });
     }
 }
