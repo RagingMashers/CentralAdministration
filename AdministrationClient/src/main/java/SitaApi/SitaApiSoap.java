@@ -33,7 +33,7 @@ public interface SitaApiSoap {
     @RequestWrapper(localName = "GetTeamsNearIncident", targetNamespace = "http://cims.nl/", className = "SitaApi.GetTeamsNearIncident")
     @ResponseWrapper(localName = "GetTeamsNearIncidentResponse", targetNamespace = "http://cims.nl/", className = "SitaApi.GetTeamsNearIncidentResponse")
     @WebResult(name = "GetTeamsNearIncidentResult", targetNamespace = "http://cims.nl/")
-    public SitaApi.ArrayOfTeam getTeamsNearIncident(
+    public ArrayOfTeam getTeamsNearIncident(
         @WebParam(name = "token", targetNamespace = "http://cims.nl/")
         java.lang.String token,
         @WebParam(name = "longitude", targetNamespace = "http://cims.nl/")
@@ -59,7 +59,7 @@ public interface SitaApiSoap {
     @RequestWrapper(localName = "GetTasksFromActionPlan", targetNamespace = "http://cims.nl/", className = "SitaApi.GetTasksFromActionPlan")
     @ResponseWrapper(localName = "GetTasksFromActionPlanResponse", targetNamespace = "http://cims.nl/", className = "SitaApi.GetTasksFromActionPlanResponse")
     @WebResult(name = "GetTasksFromActionPlanResult", targetNamespace = "http://cims.nl/")
-    public SitaApi.ArrayOfTask getTasksFromActionPlan(
+    public ArrayOfTask getTasksFromActionPlan(
         @WebParam(name = "token", targetNamespace = "http://cims.nl/")
         java.lang.String token,
         @WebParam(name = "actionPlanId", targetNamespace = "http://cims.nl/")
@@ -95,14 +95,14 @@ public interface SitaApiSoap {
         @WebParam(name = "name", targetNamespace = "http://cims.nl/")
         java.lang.String name,
         @WebParam(name = "taskIds", targetNamespace = "http://cims.nl/")
-        SitaApi.ArrayOfInt taskIds
+        ArrayOfInt taskIds
     );
 
     @WebMethod(operationName = "GetMedia", action = "http://cims.nl/GetMedia")
     @RequestWrapper(localName = "GetMedia", targetNamespace = "http://cims.nl/", className = "SitaApi.GetMedia")
     @ResponseWrapper(localName = "GetMediaResponse", targetNamespace = "http://cims.nl/", className = "SitaApi.GetMediaResponse")
     @WebResult(name = "GetMediaResult", targetNamespace = "http://cims.nl/")
-    public SitaApi.ArrayOfAnyType getMedia(
+    public ArrayOfAnyType getMedia(
         @WebParam(name = "token", targetNamespace = "http://cims.nl/")
         java.lang.String token,
         @WebParam(name = "start", targetNamespace = "http://cims.nl/")
@@ -126,7 +126,7 @@ public interface SitaApiSoap {
     @RequestWrapper(localName = "GetMediaOfIncident", targetNamespace = "http://cims.nl/", className = "SitaApi.GetMediaOfIncident")
     @ResponseWrapper(localName = "GetMediaOfIncidentResponse", targetNamespace = "http://cims.nl/", className = "SitaApi.GetMediaOfIncidentResponse")
     @WebResult(name = "GetMediaOfIncidentResult", targetNamespace = "http://cims.nl/")
-    public SitaApi.ArrayOfAnyType getMediaOfIncident(
+    public ArrayOfAnyType getMediaOfIncident(
         @WebParam(name = "token", targetNamespace = "http://cims.nl/")
         java.lang.String token,
         @WebParam(name = "incident", targetNamespace = "http://cims.nl/")
@@ -172,14 +172,14 @@ public interface SitaApiSoap {
         @WebParam(name = "description", targetNamespace = "http://cims.nl/")
         java.lang.String description,
         @WebParam(name = "mediaIds", targetNamespace = "http://cims.nl/")
-        SitaApi.ArrayOfInt mediaIds
+        ArrayOfInt mediaIds
     );
 
     @WebMethod(operationName = "GetActionPlans", action = "http://cims.nl/GetActionPlans")
     @RequestWrapper(localName = "GetActionPlans", targetNamespace = "http://cims.nl/", className = "SitaApi.GetActionPlans")
     @ResponseWrapper(localName = "GetActionPlansResponse", targetNamespace = "http://cims.nl/", className = "SitaApi.GetActionPlansResponse")
     @WebResult(name = "GetActionPlansResult", targetNamespace = "http://cims.nl/")
-    public SitaApi.ArrayOfActionPlan getActionPlans(
+    public ArrayOfActionPlan getActionPlans(
         @WebParam(name = "token", targetNamespace = "http://cims.nl/")
         java.lang.String token
     );
@@ -194,7 +194,7 @@ public interface SitaApiSoap {
     @RequestWrapper(localName = "GetToxications", targetNamespace = "http://cims.nl/", className = "SitaApi.GetToxications")
     @ResponseWrapper(localName = "GetToxicationsResponse", targetNamespace = "http://cims.nl/", className = "SitaApi.GetToxicationsResponse")
     @WebResult(name = "GetToxicationsResult", targetNamespace = "http://cims.nl/")
-    public SitaApi.ArrayOfToxication getToxications(
+    public ArrayOfToxication getToxications(
         @WebParam(name = "token", targetNamespace = "http://cims.nl/")
         java.lang.String token
     );
@@ -203,7 +203,7 @@ public interface SitaApiSoap {
     @RequestWrapper(localName = "GetTasks", targetNamespace = "http://cims.nl/", className = "SitaApi.GetTasks")
     @ResponseWrapper(localName = "GetTasksResponse", targetNamespace = "http://cims.nl/", className = "SitaApi.GetTasksResponse")
     @WebResult(name = "GetTasksResult", targetNamespace = "http://cims.nl/")
-    public SitaApi.ArrayOfTask getTasks(
+    public ArrayOfTask getTasks(
         @WebParam(name = "token", targetNamespace = "http://cims.nl/")
         java.lang.String token
     );
@@ -218,7 +218,7 @@ public interface SitaApiSoap {
         @WebParam(name = "name", targetNamespace = "http://cims.nl/")
         java.lang.String name,
         @WebParam(name = "taskIds", targetNamespace = "http://cims.nl/")
-        SitaApi.ArrayOfInt taskIds
+        ArrayOfInt taskIds
     );
 
     @WebMethod(operationName = "SendMessage", action = "http://cims.nl/SendMessage")
@@ -263,7 +263,7 @@ public interface SitaApiSoap {
     @RequestWrapper(localName = "GetIncidents", targetNamespace = "http://cims.nl/", className = "SitaApi.GetIncidents")
     @ResponseWrapper(localName = "GetIncidentsResponse", targetNamespace = "http://cims.nl/", className = "SitaApi.GetIncidentsResponse")
     @WebResult(name = "GetIncidentsResult", targetNamespace = "http://cims.nl/")
-    public SitaApi.ArrayOfIncident getIncidents(
+    public ArrayOfIncident getIncidents(
         @WebParam(name = "token", targetNamespace = "http://cims.nl/")
         java.lang.String token,
         @WebParam(name = "start", targetNamespace = "http://cims.nl/")

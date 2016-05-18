@@ -8,7 +8,6 @@ import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
-
 import com.jfoenix.validation.RequiredFieldValidator;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;

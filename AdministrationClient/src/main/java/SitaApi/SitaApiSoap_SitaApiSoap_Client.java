@@ -64,7 +64,7 @@ public final class SitaApiSoap_SitaApiSoap_Client {
         double _getTeamsNearIncident_longitude = 0.0;
         double _getTeamsNearIncident_latitude = 0.0;
         int _getTeamsNearIncident_radius = 0;
-        SitaApi.ArrayOfTeam _getTeamsNearIncident__return = port.getTeamsNearIncident(_getTeamsNearIncident_token, _getTeamsNearIncident_longitude, _getTeamsNearIncident_latitude, _getTeamsNearIncident_radius);
+        ArrayOfTeam _getTeamsNearIncident__return = port.getTeamsNearIncident(_getTeamsNearIncident_token, _getTeamsNearIncident_longitude, _getTeamsNearIncident_latitude, _getTeamsNearIncident_radius);
         System.out.println("getTeamsNearIncident.result=" + _getTeamsNearIncident__return);
 
 
@@ -82,7 +82,7 @@ public final class SitaApiSoap_SitaApiSoap_Client {
         System.out.println("Invoking getTasksFromActionPlan...");
         java.lang.String _getTasksFromActionPlan_token = "";
         int _getTasksFromActionPlan_actionPlanId = 0;
-        SitaApi.ArrayOfTask _getTasksFromActionPlan__return = port.getTasksFromActionPlan(_getTasksFromActionPlan_token, _getTasksFromActionPlan_actionPlanId);
+        ArrayOfTask _getTasksFromActionPlan__return = port.getTasksFromActionPlan(_getTasksFromActionPlan_token, _getTasksFromActionPlan_actionPlanId);
         System.out.println("getTasksFromActionPlan.result=" + _getTasksFromActionPlan__return);
 
 
@@ -104,7 +104,7 @@ public final class SitaApiSoap_SitaApiSoap_Client {
         System.out.println("Invoking editActionPlan...");
         java.lang.String _editActionPlan_token = "";
         java.lang.String _editActionPlan_name = "";
-        SitaApi.ArrayOfInt _editActionPlan_taskIds = null;
+        ArrayOfInt _editActionPlan_taskIds = null;
         boolean _editActionPlan__return = port.editActionPlan(_editActionPlan_token, _editActionPlan_name, _editActionPlan_taskIds);
         System.out.println("editActionPlan.result=" + _editActionPlan__return);
 
@@ -115,7 +115,7 @@ public final class SitaApiSoap_SitaApiSoap_Client {
         java.lang.String _getMedia_token = "";
         int _getMedia_start = 0;
         int _getMedia_limit = 0;
-        SitaApi.ArrayOfAnyType _getMedia__return = port.getMedia(_getMedia_token, _getMedia_start, _getMedia_limit);
+        ArrayOfAnyType _getMedia__return = port.getMedia(_getMedia_token, _getMedia_start, _getMedia_limit);
         System.out.println("getMedia.result=" + _getMedia__return);
 
 
@@ -135,7 +135,7 @@ public final class SitaApiSoap_SitaApiSoap_Client {
         int _getMediaOfIncident_incident = 0;
         int _getMediaOfIncident_start = 0;
         int _getMediaOfIncident_limit = 0;
-        SitaApi.ArrayOfAnyType _getMediaOfIncident__return = port.getMediaOfIncident(_getMediaOfIncident_token, _getMediaOfIncident_incident, _getMediaOfIncident_start, _getMediaOfIncident_limit);
+        ArrayOfAnyType _getMediaOfIncident__return = port.getMediaOfIncident(_getMediaOfIncident_token, _getMediaOfIncident_incident, _getMediaOfIncident_start, _getMediaOfIncident_limit);
         System.out.println("getMediaOfIncident.result=" + _getMediaOfIncident__return);
 
 
@@ -160,7 +160,7 @@ public final class SitaApiSoap_SitaApiSoap_Client {
         java.lang.String _sendMessageWithMedia_token = "";
         int _sendMessageWithMedia_teamId = 0;
         java.lang.String _sendMessageWithMedia_description = "";
-        SitaApi.ArrayOfInt _sendMessageWithMedia_mediaIds = null;
+        ArrayOfInt _sendMessageWithMedia_mediaIds = null;
         boolean _sendMessageWithMedia__return = port.sendMessageWithMedia(_sendMessageWithMedia_token, _sendMessageWithMedia_teamId, _sendMessageWithMedia_description, _sendMessageWithMedia_mediaIds);
         System.out.println("sendMessageWithMedia.result=" + _sendMessageWithMedia__return);
 
@@ -169,7 +169,7 @@ public final class SitaApiSoap_SitaApiSoap_Client {
         {
         System.out.println("Invoking getActionPlans...");
         java.lang.String _getActionPlans_token = "";
-        SitaApi.ArrayOfActionPlan _getActionPlans__return = port.getActionPlans(_getActionPlans_token);
+        ArrayOfActionPlan _getActionPlans__return = port.getActionPlans(_getActionPlans_token);
         System.out.println("getActionPlans.result=" + _getActionPlans__return);
 
 
@@ -184,7 +184,7 @@ public final class SitaApiSoap_SitaApiSoap_Client {
         {
         System.out.println("Invoking getToxications...");
         java.lang.String _getToxications_token = "";
-        SitaApi.ArrayOfToxication _getToxications__return = port.getToxications(_getToxications_token);
+        ArrayOfToxication _getToxications__return = port.getToxications(_getToxications_token);
         System.out.println("getToxications.result=" + _getToxications__return);
 
 
@@ -192,7 +192,7 @@ public final class SitaApiSoap_SitaApiSoap_Client {
         {
         System.out.println("Invoking getTasks...");
         java.lang.String _getTasks_token = "";
-        SitaApi.ArrayOfTask _getTasks__return = port.getTasks(_getTasks_token);
+        ArrayOfTask _getTasks__return = port.getTasks(_getTasks_token);
         System.out.println("getTasks.result=" + _getTasks__return);
 
 
@@ -201,7 +201,7 @@ public final class SitaApiSoap_SitaApiSoap_Client {
         System.out.println("Invoking addActionPlan...");
         java.lang.String _addActionPlan_token = "";
         java.lang.String _addActionPlan_name = "";
-        SitaApi.ArrayOfInt _addActionPlan_taskIds = null;
+        ArrayOfInt _addActionPlan_taskIds = null;
         boolean _addActionPlan__return = port.addActionPlan(_addActionPlan_token, _addActionPlan_name, _addActionPlan_taskIds);
         System.out.println("addActionPlan.result=" + _addActionPlan__return);
 
@@ -238,7 +238,7 @@ public final class SitaApiSoap_SitaApiSoap_Client {
         java.lang.String _getIncidents_token = "";
         int _getIncidents_start = 0;
         int _getIncidents_limit = 0;
-        SitaApi.ArrayOfIncident _getIncidents__return = port.getIncidents(_getIncidents_token, _getIncidents_start, _getIncidents_limit);
+        ArrayOfIncident _getIncidents__return = port.getIncidents(_getIncidents_token, _getIncidents_start, _getIncidents_limit);
         System.out.println("getIncidents.result=" + _getIncidents__return);
 
 
