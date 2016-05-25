@@ -20,6 +20,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="token" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="teamId" type="{http://www.w3.org/2001/XMLSchema}int"/&gt;
  *         &lt;element name="description" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="title" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="mediaIds" type="{http://cims.nl/}ArrayOfInt" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
@@ -34,6 +35,7 @@ import javax.xml.bind.annotation.XmlType;
     "token",
     "teamId",
     "description",
+    "title",
     "mediaIds"
 })
 @XmlRootElement(name = "SendMessageWithMedia")
@@ -42,6 +44,7 @@ public class SendMessageWithMedia {
     protected String token;
     protected int teamId;
     protected String description;
+    protected String title;
     protected ArrayOfInt mediaIds;
 
     /**
@@ -106,6 +109,30 @@ public class SendMessageWithMedia {
      */
     public void setDescription(String value) {
         this.description = value;
+    }
+
+    /**
+     * Gets the value of the title property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getTitle() {
+        return title;
+    }
+
+    /**
+     * Sets the value of the title property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setTitle(String value) {
+        this.title = value;
     }
 
     /**

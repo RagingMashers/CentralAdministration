@@ -90,9 +90,8 @@ public class OverviewController implements IController{
             return;
         }
 
-        //TODO: title wordt niks mee gedaan
         //TODO: controleren welke api methode gebruikt moet worden sendMessage / sendMessageWithMedia
-        port.sendMessage(token, selectedTeam.getId(), cTAInhoud.getText());
+        port.sendMessage(token, selectedTeam.getId(), cTAInhoud.getText(), cTFTitel.getText());
         // Clear titel and text.
         cTFTitel.setText("");
         cTAInhoud.setText("");
