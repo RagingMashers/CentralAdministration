@@ -49,6 +49,9 @@ public class MainController implements IController{
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
                 IncidentHolder.setIncident((Incident)newValue);
+
+                if (newValue == null)
+                    return;
                 boolean visible = newValue.equals("");
                 System.out.println(visible);
                 if(lvIncidenten.getSelectionModel().selectedItemProperty().get() != null){
@@ -63,17 +66,20 @@ public class MainController implements IController{
     public void startController() {
         loadIncidents();
         btnWijzigen.setDisable(true);
+        btnBeheersen.setDisable(true);
     }
 
     private void loadIncidents() {
-        lvIncidenten.getItems().clear();
         lvIncidenten.setCellFactory(p -> new IncidentCell());
 
         SitaApiSoap siteApi = ApiManager.getInstance().getSitaPort();
         String siteToken = ApiManager.getInstance().getSitaToken();
 
         final List<Incident> incident = siteApi.getIncidents(siteToken, 0, 10).getIncident();
-        Platform.runLater(() -> lvIncidenten.getItems().setAll(incident));
+        Platform.runLater(() -> {
+            lvIncidenten.getItems().clear();
+            lvIncidenten.getItems().setAll(incident);
+        });
     }
 
     @Override
