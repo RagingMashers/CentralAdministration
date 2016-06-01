@@ -12,9 +12,9 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
+import java.util.*;
+
 import java.net.URL;
-import java.util.HashMap;
-import java.util.ResourceBundle;
 
 /**
  * Created by frank on 18/05/2016.
@@ -30,9 +30,9 @@ public class StappenPlanController implements IController {
     public TextField tfNewActionPlan;
 
     private ObservableList<Node> tasksPanes = FXCollections.observableArrayList();
-    private HashMap<Node, ComboBox> taskWithBoxes = new HashMap<>();
+    private HashMap<TaskPane, ComboBox> taskWithBoxes = new HashMap<>();
     private ObservableList<Task> tasks = FXCollections.observableArrayList();
-    private ObservableList<ActionPlan> actionplans = FXCollections.observableArrayList();
+    private List<ActionPlan> actionplans;
 
     @Override
     public void startController() {
@@ -40,9 +40,18 @@ public class StappenPlanController implements IController {
         String siteToken = ApiManager.getInstance().getSitaToken();
 
         CBStappenPlannen.getItems().clear();
+
+        actionplans = new LinkedList<>();
         actionplans.addAll(siteApi.getActionPlans(siteToken).getActionPlan());
         tasks.addAll(siteApi.getTasks(siteToken).getTask());
         CBStappenPlannen.getItems().addAll(actionplans);
+
+        TaskPane newTaskPane = new TaskPane(this);
+        ComboBox comboBox = newTaskPane.getComboxBox();
+        comboBox.getItems().addAll(tasks);
+
+        tasksPanes.add(0, newTaskPane);
+        taskWithBoxes.put(newTaskPane, newTaskPane.getComboxBox());
     }
 
     @Override
@@ -53,8 +62,6 @@ public class StappenPlanController implements IController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Bindings.bindContentBidirectional(tasksPanes, VboxStappenPlan.getChildren());
-
-        tasksPanes.add(createTask());
     }
 
     /**
@@ -77,7 +84,7 @@ public class StappenPlanController implements IController {
      * @param task create the new task after this task
      */
     public void insertTask(TaskPane task) {
-        int i = tasks.indexOf(task);
+        int i = tasksPanes.indexOf(task);
 
         Platform.runLater(new Runnable() {
             @Override
@@ -92,11 +99,8 @@ public class StappenPlanController implements IController {
      * Reload the comboboxes of all the tasks
      */
     private void reloadTasks() {
-        for (ComboBox c: taskWithBoxes.values()
-             ) {
-            c.getItems().clear();
-
-            c.getItems().add("banaantjes");
+        for (TaskPane pane: taskWithBoxes.keySet()) {
+            reloadTask(pane);
         }
     }
 
@@ -106,9 +110,12 @@ public class StappenPlanController implements IController {
      */
     private void reloadTask(TaskPane task) {
         ComboBox comboBox = task.getComboxBox();
+        Task currentTask = (Task)comboBox.getValue();
         comboBox.getItems().clear();
 
-        comboBox.getItems().add("appeltjes");
+        comboBox.getItems().clear();
+        comboBox.getItems().addAll(tasks);
+        comboBox.setValue(currentTask);
     }
 
     /**
@@ -125,21 +132,54 @@ public class StappenPlanController implements IController {
 
 
     public void onClickCreateTask() {
-        tfNewTask.clear();
-        System.out.println("Creating a task");
+        if(!tfNewTask.getText().isEmpty()) {
+            SitaApiSoap siteApi = ApiManager.getInstance().getSitaPort();
+            String siteToken = ApiManager.getInstance().getSitaToken();
+
+            siteApi.addTask(siteToken, tfNewTask.getText());
+            tfNewTask.clear();
+            System.out.println("Creating a task");
+
+            tasks.clear();
+            tasks.addAll(siteApi.getTasks(siteToken).getTask());
+
+            reloadTasks();
+        }
     }
 
     public void onClickCreateActionplan() {
-        tfNewActionPlan.clear();
-        System.out.println("Creating a actionplan");
+        if(!tfNewActionPlan.getText().isEmpty()) {
+            SitaApiSoap siteApi = ApiManager.getInstance().getSitaPort();
+            String siteToken = ApiManager.getInstance().getSitaToken();
+
+            siteApi.addActionPlan(siteToken, tfNewActionPlan.getText(), null);
+            tfNewActionPlan.clear();
+            System.out.println("Creating a actionplan");
+            actionplans.clear();
+            actionplans.addAll(siteApi.getActionPlans(siteToken).getActionPlan());
+            CBStappenPlannen.getItems().clear();
+            CBStappenPlannen.getItems().addAll(actionplans);
+            CBStappenPlannen.setValue(actionplans.get(actionplans.size() - 1));
+            CBStappenPlannen.getItems().sorted();
+        }
     }
 
 
     public void ActionPlanSelected(){
-        System.out.println("wtf");
-        for(Task task : tasks){
-            System.out.println(task.getDescription());
-            insertTask(new TaskPane(this));
+        List<Task> actionPlanTasks = ((ActionPlan)CBStappenPlannen.getValue()).getTasks(). getTask();
+        if(!actionPlanTasks.isEmpty()){
+            tasksPanes.clear();
+            int count = 0;
+            for(Task task : actionPlanTasks){
+                TaskPane newTaskPane = new TaskPane(this);
+                ComboBox comboBox = newTaskPane.getComboxBox();
+                comboBox.getItems().addAll(tasks);
+                comboBox.setValue(task);
+
+                tasksPanes.add(count, newTaskPane);
+                taskWithBoxes.put(newTaskPane, newTaskPane.getComboxBox());
+                count++;
+            }
         }
 
     }
