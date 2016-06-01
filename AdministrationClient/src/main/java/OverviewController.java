@@ -14,10 +14,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -31,21 +33,14 @@ import java.time.LocalDate;
 public class OverviewController implements IController{
 
     // COMMUNICATION WITH TEAM TAB
-    @FXML
-    private JFXTextField cTFTitel;
-    @FXML
-    private JFXTextArea cTAInhoud;
-    @FXML
-    private JFXListView<Team> cLVTeams;
-
-    @FXML
-    private JFXSlider radiusSlider;
+    @FXML private JFXTextField cTFTitel;
+    @FXML private JFXTextArea cTAInhoud;
+    @FXML private JFXListView<Team> cLVTeams;
+    @FXML private JFXSlider radiusSlider;
 
     // SOURCES TAB
-    @FXML
-    private ScrollPane scrollPane;
-    @FXML
-    private AnchorPane totalContent;
+    @FXML private ScrollPane scrollPane;
+    @FXML private AnchorPane totalContent;
     @FXML private VBox contentHolderR1;
     @FXML private VBox contentHolderR2;
     @FXML private VBox contentHolderR3;
@@ -57,18 +52,14 @@ public class OverviewController implements IController{
     @FXML private TextField tfTextFilter;
     @FXML private CheckBox cbAcceptedFilter;
 
-    private Map<Media, IPanel> mediaObjects = new HashMap<>();
-    private List<IPanel> selectedMedia = new ArrayList<>();
-
     // FIELDS
-    //private LinkedList<IPanel> panels = new LinkedList<>();
-
-
     private final int SPACING = 10;
     private ApiManager manager = ApiManager.getInstance();
     private SitaApiSoap port = manager.getSitaPort();
     private String token = manager.getSitaToken();
     private Team selectedTeam;
+    private Map<Media, IPanel> mediaObjects = new HashMap<>();
+    private List<IPanel> selectedMedia = new ArrayList<>();
 
     public void initialize(URL location, ResourceBundle resources) {
         contentHolderR1.setSpacing(SPACING);
@@ -89,10 +80,14 @@ public class OverviewController implements IController{
      * The message can contain 0, 1 or more media objects.
      */
     public void sendMessageToTeam(){
-        if(!cTFTitel.validate()) return;
-        if(!cTAInhoud.validate()) return;
+        boolean succes = true;
+        if(!cTAInhoud.validate()) succes = false;
+        if(!cTFTitel.validate()) succes = false;
+        if(!succes) return;
+
         if(selectedTeam == null) {
-            MessageBox.showException("Er is een fout opgetreden!", "Selecteer een team om je bericht naar te versturen.", "", null);
+            // TODO: this is a hot fix. Create a red label.
+            MessageBox.showException("Er is een fout opgetreden!", "Selecteer een team om je bericht naar te versturen.", "", new Exception(""));
             return;
         }
 
@@ -210,7 +205,6 @@ public class OverviewController implements IController{
             java.util.Scanner s = new java.util.Scanner(in,encoding).useDelimiter("\\A");
             String body = s.hasNext() ? s.next() : "";
 
-            System.out.println(body);
             return body;
         }catch (IOException ex){
             System.out.println(ex.toString());
@@ -241,6 +235,8 @@ public class OverviewController implements IController{
         radiusSlider.valueChangingProperty().addListener((observable, oldValue, newValue) -> {
             getTeams();
         });
+
+        radiusSlider.setOnMouseClicked(event -> getTeams());
 
         clearPanelHolders();
 
@@ -309,5 +305,6 @@ public class OverviewController implements IController{
             }
         });
 
-    }}
+    }
+}
 
