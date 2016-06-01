@@ -51,9 +51,10 @@ public class MainController implements IController{
                 IncidentHolder.setIncident((Incident)newValue);
                 boolean visible = newValue.equals("");
                 System.out.println(visible);
-                if(lvIncidenten.getSelectionModel().selectedItemProperty().get() != null)
+                if(lvIncidenten.getSelectionModel().selectedItemProperty().get() != null){
                     btnWijzigen.setDisable(visible);
-                btnBeheersen.setDisable(visible);
+                    btnBeheersen.setDisable(visible);
+                }
             }
         });
     }
@@ -72,12 +73,7 @@ public class MainController implements IController{
         String siteToken = ApiManager.getInstance().getSitaToken();
 
         final List<Incident> incident = siteApi.getIncidents(siteToken, 0, 10).getIncident();
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                lvIncidenten.getItems().setAll(incident);
-            }
-        });
+        Platform.runLater(() -> lvIncidenten.getItems().setAll(incident));
     }
 
     @Override

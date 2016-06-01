@@ -10,8 +10,6 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         StageController.setStage(primaryStage);
         StageController.loadStage(View.mainScene, "Administratie");
-
-        MessageBox.showPopUp(Alert.AlertType.INFORMATION, "Welkom", "Deze versie van het centraal administratie systeem is nog in ontwikkeling", "Raging Mashers");
     }
 
 
