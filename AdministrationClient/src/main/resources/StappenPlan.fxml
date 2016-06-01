@@ -62,7 +62,7 @@
                         <Insets left="10.0" />
                      </padding>
                    </ScrollPane>
-                  <JFXComboBox fx:id="CBStappenPlannen" prefHeight="45.0" prefWidth="534.0" />
+                  <JFXComboBox fx:id="CBStappenPlannen" prefHeight="45.0" prefWidth="534.0" onAction="#ActionPlanSelected"/>
                </children>
             </GridPane>
          </children></Pane>

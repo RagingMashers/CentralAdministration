@@ -1,3 +1,5 @@
+import SitaApi.ActionPlan;
+import SitaApi.Task;
 import SitaApi.SitaApiSoap;
 import com.jfoenix.controls.JFXComboBox;
 import javafx.application.Platform;
@@ -20,7 +22,9 @@ public class StappenPlanController implements IController {
     @FXML
     public JFXComboBox CBStappenPlannen;
 
-    private ObservableList<Node> tasks = FXCollections.observableArrayList();
+    private ObservableList<Node> taskPanes = FXCollections.observableArrayList();
+    private ObservableList<ActionPlan> actionplans = FXCollections.observableArrayList();
+    private ObservableList<Task> tasks  = FXCollections.observableArrayList();
 
     @Override
     public void startController() {
@@ -28,8 +32,9 @@ public class StappenPlanController implements IController {
         String siteToken = ApiManager.getInstance().getSitaToken();
 
         CBStappenPlannen.getItems().clear();
-        // Dummie data
-        CBStappenPlannen.getItems().addAll(siteApi.getActionPlans(siteToken).getActionPlan());
+        actionplans.addAll(siteApi.getActionPlans(siteToken).getActionPlan());
+        tasks.addAll(siteApi.getTasks(siteToken).getTask());
+        CBStappenPlannen.getItems().addAll(actionplans);
     }
 
     @Override
@@ -39,15 +44,15 @@ public class StappenPlanController implements IController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Bindings.bindContentBidirectional(tasks, VboxStappenPlan.getChildren());
+        Bindings.bindContentBidirectional(taskPanes, VboxStappenPlan.getChildren());
         addTask();
     }
 
     public void removeTask(TaskPane task) {
         try {
             // Make sure there is always at least one task
-            tasks.get(1);
-            tasks.remove(task);
+            taskPanes.get(1);
+            taskPanes.remove(task);
         }
         catch (Exception e) {
             System.out.println("Index out of range");
@@ -56,13 +61,13 @@ public class StappenPlanController implements IController {
     }
 
     public void insertTask(TaskPane task) {
-        int i = tasks.indexOf(task);
+        int i = taskPanes.indexOf(task);
         TaskPane newTask = new TaskPane(this);
 
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                tasks.add(i + 1, newTask);
+                taskPanes.add(i + 1, newTask);
             }
         });
 
@@ -70,9 +75,18 @@ public class StappenPlanController implements IController {
 
     private void addTask() {
         TaskPane task = new TaskPane(this);
-        tasks.add(task);
+        taskPanes.add(task);
     }
 
+
+    public void ActionPlanSelected(){
+        System.out.println("wtf");
+        for(Task task : tasks){
+            System.out.println(task.getDescription());
+            insertTask(new TaskPane(this));
+        }
+
+    }
 }
 
 
