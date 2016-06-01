@@ -3,7 +3,6 @@ import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.layout.VBox;
@@ -42,7 +41,7 @@ public class StappenPlanController implements IController {
         addTask();
     }
 
-    public void removeTask(Task task) {
+    public void removeTask(TaskPane task) {
         try {
             // Make sure there is always at least one task
             tasks.get(1);
@@ -54,9 +53,9 @@ public class StappenPlanController implements IController {
 
     }
 
-    public void insertTask(Task task) {
+    public void insertTask(TaskPane task) {
         int i = tasks.indexOf(task);
-        Task newTask = new Task(this);
+        TaskPane newTask = new TaskPane(this);
 
         Platform.runLater(new Runnable() {
             @Override
@@ -68,7 +67,7 @@ public class StappenPlanController implements IController {
     }
 
     private void addTask() {
-        Task task = new Task(this);
+        TaskPane task = new TaskPane(this);
         tasks.add(task);
     }
 
