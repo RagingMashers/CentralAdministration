@@ -1,41 +1,32 @@
 import Panels.IPanel;
+import Panels.ImagePanel;
+import Panels.Panel;
 import Panels.PanelFactory;
 import SitaApi.*;
 import SitaApi.SitaApiSoap;
 import Validation.Validator;
-import Validation.Validators.IntegerValidator;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RequiredFieldValidator;
-import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.application.Platform;
-import javafx.event.Event;
 import javafx.fxml.FXML;
-
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import sun.misc.IOUtils;
-
-import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringWriter;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
 import java.net.URLConnection;
 import java.time.LocalDate;
-import java.util.*;
 
 public class OverviewController implements IController{
 
@@ -67,6 +58,7 @@ public class OverviewController implements IController{
     @FXML private CheckBox cbAcceptedFilter;
 
     private Map<Media, IPanel> mediaObjects = new HashMap<>();
+    private List<IPanel> selectedMedia = new ArrayList<>();
 
     // FIELDS
     //private LinkedList<IPanel> panels = new LinkedList<>();
@@ -77,29 +69,6 @@ public class OverviewController implements IController{
     private SitaApiSoap port = manager.getSitaPort();
     private String token = manager.getSitaToken();
     private Team selectedTeam;
-
-    /**
-     * Author Frank Hartman
-     * Send a message to a selected team
-     */
-    public void sendMessageToTeam(){
-        if(!cTFTitel.validate()) return;
-        if(!cTAInhoud.validate()) return;
-        if(selectedTeam == null) {
-            MessageBox.showException("Er is een fout opgetreden!", "Selecteer een team om je bericht naar te versturen.", "", null);
-            return;
-        }
-
-        //TODO: controleren welke api methode gebruikt moet worden sendMessage / sendMessageWithMedia
-        port.sendMessage(token, selectedTeam.getId(), cTAInhoud.getText(), cTFTitel.getText());
-        // Clear titel and text.
-        cTFTitel.setText("");
-        cTAInhoud.setText("");
-
-        // Clear selection of the team.
-        cLVTeams.getSelectionModel().clearSelection();
-        selectedTeam = null;
-    }
 
     public void initialize(URL location, ResourceBundle resources) {
         contentHolderR1.setSpacing(SPACING);
@@ -113,6 +82,46 @@ public class OverviewController implements IController{
         Validator validator = new Validator();
         validator.setTextBoxStyles(cTFTitel, "Titel", "Het bericht moet een titel hebben",new RequiredFieldValidator(),false);
         validator.setTextAreaStyles(cTAInhoud, "Inhoud", "Het bericht moet wel inhoud hebben", new RequiredFieldValidator());
+    }
+
+    /**
+     * Send a message to a selected team.
+     * The message can contain 0, 1 or more media objects.
+     */
+    public void sendMessageToTeam(){
+        if(!cTFTitel.validate()) return;
+        if(!cTAInhoud.validate()) return;
+        if(selectedTeam == null) {
+            MessageBox.showException("Er is een fout opgetreden!", "Selecteer een team om je bericht naar te versturen.", "", null);
+            return;
+        }
+
+        try{
+            if(selectedSources.getChildren().size() > 0){
+                ArrayOfInt media = new ArrayOfInt();
+                for(IPanel panel : selectedMedia){
+                    media.getInt().add(panel.getId());
+                    panel.setSelectedValue(false); // Deselect the sources after sending the message.
+                }
+                port.sendMessageWithMedia(token, selectedTeam.getId(), cTAInhoud.getText(), cTFTitel.getText(), media);
+            }
+            else{
+                port.sendMessage(token, selectedTeam.getId(), cTAInhoud.getText(), cTFTitel.getText());
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            MessageBox.showException("Er is een fout opgetreden!", "Raadpleeg een administrator indien de fout zich blijft voordoen.", "", e);
+        }
+        finally {
+            // Clear User interface
+            cTFTitel.setText("");
+            cTAInhoud.setText("");
+            cLVTeams.getSelectionModel().clearSelection();
+            selectedTeam = null;
+            selectedMedia = new ArrayList<>(); // Empty the list with selected IPanels.
+            reloadSelectedSources(); // Reload the selected sources after sending the message.
+        }
     }
 
     /**
@@ -164,10 +173,6 @@ public class OverviewController implements IController{
     }
 
     private void postLoadSources(){
-        ApiManager api = ApiManager.getInstance();
-        SitaApiSoap port = api.getSitaPort();
-        String token = api.getSitaToken();
-
         List<Object> sources = port.getMedia(token, 1, 10).getAnyType();
         for (Object source :
                 sources) {
@@ -263,17 +268,18 @@ public class OverviewController implements IController{
     /**
      * Reload all of the selected resources
      * Called when the user switches tabs
-     * @param event The event that needs reloading
      */
-    public void reloadSelectedSources(Event event) {
+    public void reloadSelectedSources() {
 
         clearPanelHolders();
 
         Platform.runLater(() -> {
             for (IPanel panel : mediaObjects.values()) {
                 try {
-                    if (panel.isSelected())
+                    if (panel.isSelected()) {
+                        selectedMedia.add(panel);
                         selectedSources.getChildren().add(panel.getParentNode());
+                    }
                     else if (!getNextPanel().getChildren().contains(panel))
                         getNextPanel().getChildren().add(panel.getParentNode());
 

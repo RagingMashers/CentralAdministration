@@ -67,4 +67,11 @@ public class ImagePanel extends Panel implements IPanel {
     public boolean isSelected() {
         return getSelected();
     }
+
+    @Override
+    public void setSelectedValue(boolean value) {
+        setSelected(value);
+    }
+
+
 }

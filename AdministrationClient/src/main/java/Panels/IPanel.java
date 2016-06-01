@@ -9,4 +9,6 @@ public interface IPanel {
 
     Node getParentNode();
     boolean isSelected();
+    int getId();
+    void setSelectedValue(boolean value);
 }

@@ -111,6 +111,10 @@ public abstract class Panel {
         return selected;
     }
 
+    public void setSelected(boolean value){
+        this.selected = value;
+    }
+
     public int getId() {
         return id;
     }
