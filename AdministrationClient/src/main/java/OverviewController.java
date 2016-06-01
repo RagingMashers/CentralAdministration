@@ -55,6 +55,11 @@ public class OverviewController implements IController{
     @FXML private CheckBox cbAcceptedFilter;
 
     // INBOX TAB
+    @FXML private JFXListView lvMessages;
+    @FXML private Label lbAfzender;
+    @FXML private Label lbTitel;
+    @FXML private JFXTextArea taBericht;
+    @FXML private ScrollPane scrollPaneInbox;
 
 
     // FIELDS
