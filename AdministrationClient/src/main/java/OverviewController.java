@@ -54,6 +54,9 @@ public class OverviewController implements IController{
     @FXML private TextField tfTextFilter;
     @FXML private CheckBox cbAcceptedFilter;
 
+    // INBOX TAB
+
+
     // FIELDS
     private final int SPACING = 10;
     private ApiManager manager = ApiManager.getInstance();
