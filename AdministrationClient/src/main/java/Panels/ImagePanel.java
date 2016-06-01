@@ -7,6 +7,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
+import javax.xml.datatype.XMLGregorianCalendar;
+import java.util.GregorianCalendar;
+
 /**
  * Created by frank on 06/04/2016.
  */
@@ -19,9 +22,10 @@ public class ImagePanel extends Panel implements IPanel {
      * @param headerText the text that will be displayed at the header
      * @param parentBox the vbox where the panel belongs to
      */
-    public ImagePanel(Image img,String headerText, VBox parentBox, int id) {
+    public ImagePanel(Image img, String headerText, VBox parentBox, int id, XMLGregorianCalendar date) {
         // Set the header text
         setHeaderText(headerText);
+        getDate().setText(date.getDay() + "-" + date.getMonth() + "-" +date.getYear());
         setId(id);
 
         // Create the image view

@@ -3,6 +3,9 @@ package Panels;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 
+import javax.xml.datatype.XMLGregorianCalendar;
+import java.util.GregorianCalendar;
+
 /**
  * Created by frank on 06/04/2016.
  */
@@ -18,10 +21,10 @@ public class PanelFactory {
      * @param parentBox the vbox where the panel belongs to
      * @return the panel
      */
-    public static IPanel getPanel(Type type, String headerText, Image image, VBox parentBox, int id) {
+    public static IPanel getPanel(Type type, String headerText, Image image, VBox parentBox, int id, XMLGregorianCalendar date) {
         switch (type) {
             case image:
-                return new ImagePanel(image, headerText, parentBox, id);
+                return new ImagePanel(image, headerText, parentBox, id, date);
             default:
                 return null;
         }
@@ -33,10 +36,10 @@ public class PanelFactory {
      * @param headerText the header text of the panel
      * @return the panel
      */
-    public static IPanel getPanel(Type type, String headerText, String contentText, VBox parentBox, int id) {
+    public static IPanel getPanel(Type type, String headerText, String contentText, VBox parentBox, int id, XMLGregorianCalendar date) {
         switch (type) {
             case text:
-                return new TextPanel(headerText, contentText, parentBox, id);
+                return new TextPanel(headerText, contentText, parentBox, id, date);
             default:
                 return null;
         }
