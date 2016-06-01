@@ -1,3 +1,4 @@
+import SitaApi.SitaApiSoap;
 import com.jfoenix.controls.JFXComboBox;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
@@ -23,11 +24,12 @@ public class StappenPlanController implements IController {
 
     @Override
     public void startController() {
+        SitaApiSoap siteApi = ApiManager.getInstance().getSitaPort();
+        String siteToken = ApiManager.getInstance().getSitaToken();
+
         CBStappenPlannen.getItems().clear();
         // Dummie data
-        CBStappenPlannen.getItems().add("Plan A");
-        CBStappenPlannen.getItems().add("Plan B");
-        CBStappenPlannen.getItems().add("Plan C");
+        CBStappenPlannen.getItems().addAll(siteApi.getActionPlans(siteToken).getActionPlan());
     }
 
     @Override
