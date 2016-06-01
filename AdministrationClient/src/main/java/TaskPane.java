@@ -2,23 +2,22 @@ import com.jfoenix.controls.JFXComboBox;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.layout.Pane;
 
 /**
  * Created by frank on 18/05/2016.
  */
-public class Task extends Pane {
+public class TaskPane extends Pane {
 
     private final int tasksHeight = 40;
     private final JFXComboBox comboBox = new JFXComboBox();
 
-    public Task(StappenPlanController controller){
+    public TaskPane(StappenPlanController controller){
         // Create the buttons
         Button plus = createButton(450, tasksHeight, 30, "+");
         Button min = createButton(490, tasksHeight, 30, "-");
 
-        Task task = this;
+        TaskPane task = this;
         plus.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {

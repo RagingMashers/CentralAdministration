@@ -15,6 +15,7 @@ import javafx.scene.text.Font;
 public abstract class Panel {
     private Pane background;
     private Label header;
+    private Label date;
     private int id;
 
     private boolean selected = false;
@@ -48,14 +49,19 @@ public abstract class Panel {
 
         // Add the header to the panel
         header = new Label();
+        date = new Label();
         header.setStyle("-fx-font-size: 18;" + "-fx-font-weight: bold;");
+        date.setStyle("-fx-font-size: 18;" + "-fx-font-weight: bold;");
 
         header.setTextFill(Color.web(HEADERCOLOR));
+        date.setTextFill(Color.web(HEADERCOLOR));
         header.setLayoutX(10);
+        date.setLayoutX(250);
         header.setMaxWidth(300);
 
         // Add the label to the panel
         AddNode(header);
+        AddNode(date);
 
     }
 
@@ -106,6 +112,9 @@ public abstract class Panel {
     public void setHeaderText(String text) {
         header.setText(text);
     }
+
+    public Label getDate() {return date;}
+
 
     public boolean getSelected() {
         return selected;

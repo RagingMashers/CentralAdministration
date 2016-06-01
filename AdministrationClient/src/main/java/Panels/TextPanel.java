@@ -4,6 +4,9 @@ import javafx.scene.Node;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 
+import javax.xml.datatype.XMLGregorianCalendar;
+import java.util.GregorianCalendar;
+
 /**
  * Created by frank on 06/04/2016.
  */
@@ -14,9 +17,10 @@ public class TextPanel extends Panel implements IPanel {
      * Constructor of a text panel
      * @param headerText the header text of this panel
      */
-    public TextPanel(String headerText, String contentTexts, VBox parentBox, int id) {
+    public TextPanel(String headerText, String contentTexts, VBox parentBox, int id, XMLGregorianCalendar date) {
         // Set the header text
         setHeaderText(headerText);
+        getDate().setText(date.getDay() + "-" + date.getMonth() + "-" +date.getYear());
         setTextAreaText(contentTexts);
         setId(id);
 

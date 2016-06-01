@@ -23,6 +23,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+
+import javax.xml.datatype.XMLGregorianCalendar;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -124,9 +126,9 @@ public class OverviewController implements IController{
      * @param title the title of the panel
      * @param image the image of the panel
      */
-    private IPanel addPanel(String title, Image image, int id) {
+    private IPanel addPanel(String title, Image image, int id, XMLGregorianCalendar date) {
         VBox nextBox = getNextPanel();
-        IPanel panel = PanelFactory.getPanel(PanelFactory.Type.image, title, image, nextBox, id);
+        IPanel panel = PanelFactory.getPanel(PanelFactory.Type.image, title, image, nextBox, id, date);
         Platform.runLater(() -> {
             assert panel != null;
             nextBox.getChildren().add(panel.getParentNode());
@@ -139,9 +141,9 @@ public class OverviewController implements IController{
      * @param title the title of the panel
      * @param text the text of the panel
      */
-    private IPanel addPanel(String title, String text, int id) {
+    private IPanel addPanel(String title, String text, int id, XMLGregorianCalendar date) {
         VBox nextBox = getNextPanel();
-        IPanel panel = PanelFactory.getPanel(PanelFactory.Type.text, title, text, nextBox, id);
+        IPanel panel = PanelFactory.getPanel(PanelFactory.Type.text, title, text, nextBox, id, date);
         Platform.runLater(() -> {
             assert panel != null;
             nextBox.getChildren().add(panel.getParentNode());
@@ -182,12 +184,12 @@ public class OverviewController implements IController{
             System.out.println("Getting image :\""+url+"\"");
             if(m.getMimeType().startsWith("image")){//its an image!
                 Image img = new Image(url);
-                IPanel panel = addPanel(m.getSource(), img, m.getId());
+                IPanel panel = addPanel(m.getSource(), img, m.getId(), m.getDate());
                 mediaObjects.put(m, panel);
 
             }else{
                 String result = httpGetString(url);
-                IPanel panel = addPanel(m.getSource(), result, m.getId());
+                IPanel panel = addPanel(m.getSource(), result, m.getId(), m.getDate());
                 mediaObjects.put(m, panel);
             }
             System.out.println("Got :\""+url+"\"");
