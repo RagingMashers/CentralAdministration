@@ -134,6 +134,10 @@ public class StappenPlanController implements IController {
         System.out.println("Creating a actionplan");
     }
 
+    public void onClickSaveActionplan() {
+        System.out.println("Saving the changes in the actionplan");
+    }
+
 
     public void ActionPlanSelected(){
         System.out.println("wtf");

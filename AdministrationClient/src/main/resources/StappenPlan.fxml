@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
-<?import javafx.scene.text.*?>
 <?import com.jfoenix.controls.*?>
-<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import java.net.*?>
 <?import javafx.scene.layout.*?>
@@ -49,12 +47,17 @@
                   <JFXComboBox fx:id="CBStappenPlannen" onAction="#ActionPlanSelected" prefHeight="45.0" prefWidth="534.0" />
                   <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
-                        <TextField layoutX="25.0" layoutY="42.0" fx:id="tfNewActionPlan" prefHeight="45.0" prefWidth="261.0" />
+                        <TextField fx:id="tfNewActionPlan" layoutX="25.0" layoutY="42.0" prefHeight="45.0" prefWidth="261.0" />
                         <JFXButton layoutX="320.0" layoutY="42.0" onAction="#onClickCreateActionplan" prefHeight="45.0" styleClass="button-raised" text="Maak aan" />
                         <JFXButton layoutX="320.0" layoutY="152.0" onAction="#onClickCreateTask" prefHeight="45.0" styleClass="button-raised" text="Maak aan" />
-                        <TextField layoutX="25.0" layoutY="152.0" fx:id="tfNewTask" prefHeight="45.0" prefWidth="261.0" />
+                        <TextField fx:id="tfNewTask" layoutX="25.0" layoutY="152.0" prefHeight="45.0" prefWidth="261.0" />
                         <Label layoutX="25.0" text="Maak een nieuw stappenplan aan" />
                         <Label layoutX="25.0" layoutY="112.0" text="Maak een nieuwe taak aan" />
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+                     <children>
+                        <JFXButton layoutX="25.0" layoutY="36.0" prefHeight="45.0" onAction="#onClickSaveActionplan" styleClass="button-raised" text="Wijzigen opslaan" />
                      </children>
                   </Pane>
                </children>
