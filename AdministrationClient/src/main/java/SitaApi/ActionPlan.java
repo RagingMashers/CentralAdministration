@@ -107,4 +107,8 @@ public class ActionPlan {
         this.tasks = value;
     }
 
+    @Override
+    public String toString(){
+        return name;
+    }
 }
