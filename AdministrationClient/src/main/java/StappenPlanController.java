@@ -164,6 +164,10 @@ public class StappenPlanController implements IController {
         }
     }
 
+    public void onClickSaveActionplan() {
+        System.out.println("Saving the changes in the actionplan");
+    }
+
 
     public void ActionPlanSelected(){
         List<Task> actionPlanTasks = ((ActionPlan)CBStappenPlannen.getValue()).getTasks(). getTask();
