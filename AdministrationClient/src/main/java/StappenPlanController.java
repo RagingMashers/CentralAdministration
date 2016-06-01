@@ -1,4 +1,5 @@
 import SitaApi.ActionPlan;
+import SitaApi.ArrayOfInt;
 import SitaApi.Task;
 import SitaApi.SitaApiSoap;
 import com.jfoenix.controls.JFXComboBox;
@@ -12,6 +13,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
+import javax.swing.*;
 import java.util.*;
 
 import java.net.URL;
@@ -32,7 +34,7 @@ public class StappenPlanController implements IController {
     private ObservableList<Node> tasksPanes = FXCollections.observableArrayList();
     private HashMap<TaskPane, ComboBox> taskWithBoxes = new HashMap<>();
     private ObservableList<Task> tasks = FXCollections.observableArrayList();
-    private List<ActionPlan> actionplans;
+    private ObservableList<ActionPlan> actionplans = FXCollections.observableArrayList();
 
     @Override
     public void startController() {
@@ -41,7 +43,6 @@ public class StappenPlanController implements IController {
 
         CBStappenPlannen.getItems().clear();
 
-        actionplans = new LinkedList<>();
         actionplans.addAll(siteApi.getActionPlans(siteToken).getActionPlan());
         tasks.addAll(siteApi.getTasks(siteToken).getTask());
         CBStappenPlannen.getItems().addAll(actionplans);
@@ -56,6 +57,10 @@ public class StappenPlanController implements IController {
 
     @Override
     public void backToMenu() {
+        tasksPanes.clear();
+        taskWithBoxes.clear();
+        tasks.clear();
+
         StageController.loadStage(View.mainScene, "main");
     }
 
@@ -165,27 +170,51 @@ public class StappenPlanController implements IController {
     }
 
     public void onClickSaveActionplan() {
-        System.out.println("Saving the changes in the actionplan");
+        if(CBStappenPlannen.getValue() != null) {
+            SitaApiSoap siteApi = ApiManager.getInstance().getSitaPort();
+            String siteToken = ApiManager.getInstance().getSitaToken();
+
+            ArrayOfInt taskIds = new ArrayOfInt();
+            for(Node node : tasksPanes){
+                taskIds.getInt().add(((Task)((TaskPane)node).getComboxBox().getValue()).getId());
+            }
+
+
+            siteApi.editActionPlan(siteToken, ((ActionPlan)CBStappenPlannen.getValue()).getName(), taskIds);
+            System.out.println("Saving the changes in the actionplan");
+        }
     }
 
 
     public void ActionPlanSelected(){
-        List<Task> actionPlanTasks = ((ActionPlan)CBStappenPlannen.getValue()).getTasks(). getTask();
-        if(!actionPlanTasks.isEmpty()){
-            tasksPanes.clear();
-            int count = 0;
-            for(Task task : actionPlanTasks){
+        if(CBStappenPlannen.getValue() != null) {
+            List<Task> actionPlanTasks = ((ActionPlan) CBStappenPlannen.getValue()).getTasks().getTask();
+            if (!actionPlanTasks.isEmpty()) {
+                tasksPanes.clear();
+                int count = 0;
+                for (Task task : actionPlanTasks) {
+                    TaskPane newTaskPane = new TaskPane(this);
+                    ComboBox comboBox = newTaskPane.getComboxBox();
+                    comboBox.getItems().addAll(tasks);
+                    comboBox.setValue(task);
+
+                    tasksPanes.add(count, newTaskPane);
+                    taskWithBoxes.put(newTaskPane, newTaskPane.getComboxBox());
+                    count++;
+                }
+            }
+            else
+            {
+                tasksPanes.clear();
+
                 TaskPane newTaskPane = new TaskPane(this);
                 ComboBox comboBox = newTaskPane.getComboxBox();
                 comboBox.getItems().addAll(tasks);
-                comboBox.setValue(task);
 
-                tasksPanes.add(count, newTaskPane);
+                tasksPanes.add(0, newTaskPane);
                 taskWithBoxes.put(newTaskPane, newTaskPane.getComboxBox());
-                count++;
             }
         }
-
     }
 }
 
