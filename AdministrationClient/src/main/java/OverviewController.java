@@ -1,9 +1,6 @@
 import Panels.IPanel;
-import Panels.ImagePanel;
-import Panels.Panel;
 import Panels.PanelFactory;
 import SitaApi.*;
-import SitaApi.SitaApiSoap;
 import Validation.Validator;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXSlider;
@@ -12,16 +9,11 @@ import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RequiredFieldValidator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.Event;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 import javax.xml.datatype.XMLGregorianCalendar;

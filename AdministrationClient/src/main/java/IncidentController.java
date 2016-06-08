@@ -1,8 +1,5 @@
-import SitaApi.Incident;
-import SitaApi.SitaApi;
-import SitaApi.Toxication;
-import SitaApi.Incident;
-import SitaApi.Toxication;
+import SitaApi.SitaApiSoap;
+import SitaApi.*;
 import Validation.Validator;
 import Validation.Validators.IntegerValidator;
 import com.jfoenix.controls.JFXButton;
@@ -10,21 +7,14 @@ import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RequiredFieldValidator;
-import com.jfoenix.validation.base.ValidatorBase;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ListCell;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import SitaApi.SitaApiSoap;
 
 /**
  * Created by frank on 30/03/2016.

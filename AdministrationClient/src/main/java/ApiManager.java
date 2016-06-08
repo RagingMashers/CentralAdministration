@@ -1,6 +1,5 @@
-import SitaApi.SitaApi;
 import SitaApi.SitaApiSoap;
-
+import SitaApi.SitaApi;
 import javax.xml.namespace.QName;
 import java.net.URL;
 

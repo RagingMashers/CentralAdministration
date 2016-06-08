@@ -10,16 +10,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for ArrayOfTask complex type.
+ * <p>Java class for ArrayOfMessage complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="ArrayOfTask"&gt;
+ * &lt;complexType name="ArrayOfMessage"&gt;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="Task" type="{http://cims.nl/}Task" maxOccurs="unbounded" minOccurs="0"/&gt;
+ *         &lt;element name="Message" type="{http://cims.nl/}Message" maxOccurs="unbounded" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -29,41 +29,41 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ArrayOfTask", propOrder = {
-    "task"
+@XmlType(name = "ArrayOfMessage", propOrder = {
+    "message"
 })
-public class ArrayOfTask {
+public class ArrayOfMessage {
 
-    @XmlElement(name = "Task", nillable = true)
-    protected List<Task> task;
+    @XmlElement(name = "Message", nillable = true)
+    protected List<Message> message;
 
     /**
-     * Gets the value of the task property.
+     * Gets the value of the message property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the task property.
+     * This is why there is not a <CODE>set</CODE> method for the message property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getTask().add(newItem);
+     *    getMessage().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Task }
+     * {@link Message }
      * 
      * 
      */
-    public List<Task> getTask() {
-        if (task == null) {
-            task = new ArrayList<Task>();
+    public List<Message> getMessage() {
+        if (message == null) {
+            message = new ArrayList<Message>();
         }
-        return this.task;
+        return this.message;
     }
 
 }
