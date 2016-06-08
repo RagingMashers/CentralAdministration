@@ -179,8 +179,14 @@ public class StappenPlanController implements IController {
                 taskIds.getInt().add(((Task)((TaskPane)node).getComboxBox().getValue()).getId());
             }
 
-
             siteApi.editActionPlan(siteToken, ((ActionPlan)CBStappenPlannen.getValue()).getName(), taskIds);
+            actionplans.clear();
+            actionplans.addAll(siteApi.getActionPlans(siteToken).getActionPlan());
+            CBStappenPlannen.getItems().clear();
+            CBStappenPlannen.getItems().addAll(actionplans);
+            CBStappenPlannen.setValue(actionplans.get(actionplans.size() - 1));
+            CBStappenPlannen.getItems().sorted();
+
             System.out.println("Saving the changes in the actionplan");
         }
     }
