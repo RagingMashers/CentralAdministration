@@ -232,7 +232,10 @@ public class OverviewController implements IController{
         Incident selectedIncident = IncidentHolder.getIncident();
 
         // Get all messages that belong to this incident.
-        //ArrayOfMessage soapMessages = port.getMessagesOfIncident();
+        ArrayOfMessage soapMessages = port.getMessagesOfIncident(selectedIncident.getId(), DirectionType.E);
+        List<Message> messages = soapMessages.getMessage();
+        ObservableList<Message> observableMessages = FXCollections.observableArrayList(messages);
+        lvMessages.setItems(observableMessages);
     }
 
     @Override
@@ -243,7 +246,8 @@ public class OverviewController implements IController{
             selectedTeam = newValue;
         });
 
-
+        getMessages();
+        lvMessages.setCellFactory(p -> new MessageCell());
 
         radiusSlider.valueChangingProperty().addListener((observable, oldValue, newValue) -> {
             getTeams();

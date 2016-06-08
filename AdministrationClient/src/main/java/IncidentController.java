@@ -1,3 +1,6 @@
+import SitaApi.Incident;
+import SitaApi.SitaApiSoap;
+import SitaApi.Toxication;
 import Validation.Validator;
 import Validation.Validators.IntegerValidator;
 import com.jfoenix.controls.JFXButton;
