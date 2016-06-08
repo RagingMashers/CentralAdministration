@@ -1,4 +1,3 @@
-import SitaApi.Incident;
 import javafx.scene.control.ListCell;
 
 /**

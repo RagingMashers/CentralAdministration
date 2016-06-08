@@ -232,7 +232,7 @@ public class OverviewController implements IController{
         Incident selectedIncident = IncidentHolder.getIncident();
 
         // Get all messages that belong to this incident.
-    //    ArrayOfMessage soapMessages =
+        //ArrayOfMessage soapMessages = port.getMessagesOfIncident();
     }
 
     @Override

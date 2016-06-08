@@ -1,5 +1,3 @@
-import SitaApi.Incident;
-import SitaApi.SitaApiSoap;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import javafx.application.Platform;

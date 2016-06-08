@@ -23,6 +23,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="Description" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="Title" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="DirectionOfMessage" type="{http://cims.nl/}DirectionType"/&gt;
+ *         &lt;element name="Incident" type="{http://www.w3.org/2001/XMLSchema}int"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -37,7 +38,8 @@ import javax.xml.bind.annotation.XmlType;
     "team",
     "description",
     "title",
-    "directionOfMessage"
+    "directionOfMessage",
+    "incident"
 })
 public class Message {
 
@@ -52,6 +54,8 @@ public class Message {
     @XmlElement(name = "DirectionOfMessage", required = true)
     @XmlSchemaType(name = "string")
     protected DirectionType directionOfMessage;
+    @XmlElement(name = "Incident")
+    protected int incident;
 
     /**
      * Gets the value of the id property.
@@ -155,6 +159,22 @@ public class Message {
      */
     public void setDirectionOfMessage(DirectionType value) {
         this.directionOfMessage = value;
+    }
+
+    /**
+     * Gets the value of the incident property.
+     * 
+     */
+    public int getIncident() {
+        return incident;
+    }
+
+    /**
+     * Sets the value of the incident property.
+     * 
+     */
+    public void setIncident(int value) {
+        this.incident = value;
     }
 
 }
