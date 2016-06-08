@@ -47,7 +47,7 @@ public class OverviewController implements IController{
     @FXML private CheckBox cbAcceptedFilter;
 
     // INBOX TAB
-    @FXML private JFXListView lvMessages;
+    @FXML private JFXListView<Message> lvMessages;
     @FXML private Label lbAfzender;
     @FXML private Label lbTitel;
     @FXML private JFXTextArea taBericht;
@@ -226,6 +226,15 @@ public class OverviewController implements IController{
         cLVTeams.setItems(observableTeams);
     }
 
+    private void getMessages(){
+        lvMessages.getItems().clear();
+        // Get the selected incident.
+        Incident selectedIncident = IncidentHolder.getIncident();
+
+        // Get all messages that belong to this incident.
+    //    ArrayOfMessage soapMessages =
+    }
+
     @Override
     public void startController() {
         getTeams();
@@ -233,6 +242,8 @@ public class OverviewController implements IController{
         cLVTeams.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             selectedTeam = newValue;
         });
+
+
 
         radiusSlider.valueChangingProperty().addListener((observable, oldValue, newValue) -> {
             getTeams();
