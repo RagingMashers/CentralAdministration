@@ -290,8 +290,10 @@ public class OverviewController implements IController{
             for (IPanel panel : mediaObjects.values()) {
                 try {
                     if (panel.isSelected()) {
-                        selectedMedia.add(panel);
-                        selectedSources.getChildren().add(panel.getParentNode());
+                        if(!selectedMedia.contains(panel)) {
+                            selectedMedia.add(panel);
+                            selectedSources.getChildren().add(panel.getParentNode());
+                        }
                     }
                     else if (!getNextPanel().getChildren().contains(panel))
                         getNextPanel().getChildren().add(panel.getParentNode());

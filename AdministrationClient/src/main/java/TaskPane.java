@@ -1,7 +1,10 @@
+import SitaApi.Task;
 import com.jfoenix.controls.JFXComboBox;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.layout.Pane;
 
 /**
@@ -50,5 +53,9 @@ public class TaskPane extends Pane {
         button.setPrefWidth(prefWidth);
         button.setText(text);
         return button;
+    }
+
+    public ComboBox getComboxBox() {
+        return comboBox;
     }
 }

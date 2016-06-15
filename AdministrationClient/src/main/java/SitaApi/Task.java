@@ -79,4 +79,9 @@ public class Task {
         this.description = value;
     }
 
+
+    @Override
+    public String toString(){
+        return description;
+    }
 }
