@@ -64,11 +64,11 @@ public class IncidentController implements IController{
         else {
             int id = IncidentHolder.getIncident().getId();
             if(!isInputValid()){
-                MessageBox.showPopUp(Alert.AlertType.ERROR,"Kan incident niet aanmaken","Er zijn nog incorrect ingevulde velden", "");
+                MessageBox.showPopUp(Alert.AlertType.ERROR,"Kan incident niet wijzigen","Er zijn nog incorrect ingevulde velden", "");
                 return;
             }
-            if(!sitaApi.editIncident(sitaToken,id,Integer.valueOf(mTFSlachtoffers.getText()),Integer.valueOf(mTFGewonden.getText()),Double.valueOf(mTFCoordinaatX.getText()),Double.valueOf(mTFCoordinaatY.getText()),Integer.valueOf(mTFRadius.getText()),(int)mSGevaarNiveau.getValue(),mTFTitle.getText())){
-                MessageBox.showPopUp(Alert.AlertType.ERROR,"Kan incident niet aanmaken","Er is iets mis gegaan met het aanmaken", "");
+            if(!sitaApi.editIncident(sitaToken,id,Integer.valueOf(mTFSlachtoffers.getText()),Integer.valueOf(mTFGewonden.getText()),Double.valueOf(mTFCoordinaatX.getText()),Double.valueOf(mTFCoordinaatY.getText()),(int)mSGevaarNiveau.getValue(),Integer.valueOf(mTFRadius.getText()),mTFTitle.getText())){
+                MessageBox.showPopUp(Alert.AlertType.ERROR,"Kan incident niet wijzigen","Er is iets mis gegaan met het wijzigen", "");
                 return;//todo get stronger error description
             }
             //todo add teams and toxications
@@ -119,8 +119,8 @@ public class IncidentController implements IController{
         validator.setTextBoxStyles(mTFTitle,"Titel", "Dit veld mag niet leeg zijn",new RequiredFieldValidator(),true);
         validator.setTextBoxStyles(mTFSlachtoffers,"Hoeveelheid slachtoffers", "Dit moet een getal zijn",new IntegerValidator(),true);
         validator.setTextBoxStyles(mTFGewonden,"Hoeveelheid gewonden", "Dit moet een getal zijn",new IntegerValidator(),true);
-        validator.setTextBoxStyles(mTFCoordinaatX,"X Coördinaat", "Dit moet een getal zijn",new RequiredFieldValidator(),true);
-        validator.setTextBoxStyles(mTFCoordinaatY,"Y Coördinaat", "Dit moet een getal zijn",new RequiredFieldValidator(),true);
+        validator.setTextBoxStyles(mTFCoordinaatX,"X Coordinaat", "Dit moet een getal zijn",new RequiredFieldValidator(),true);
+        validator.setTextBoxStyles(mTFCoordinaatY,"Y Coordinaat", "Dit moet een getal zijn",new RequiredFieldValidator(),true);
         validator.setTextBoxStyles(mTFRadius, "Radius", "Dit moet een getal zijn",new IntegerValidator(),true);
     }
 
@@ -217,7 +217,7 @@ public class IncidentController implements IController{
             mTFRadius.requestFocus();
             mTFTitle.requestFocus();
 
-            mTFCoordinaatX.focusedProperty().notify();
+            //mTFCoordinaatX.focusedProperty().notify();
             for(Toxication toxic : incident.getToxicElements().getToxication()){
                 if(!mLVGiftigeStoffen.getItems().contains(toxic)) {
                     mLVGiftigeStoffen.getItems().add(toxic);
