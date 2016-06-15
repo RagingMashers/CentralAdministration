@@ -7,6 +7,8 @@ import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RequiredFieldValidator;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.application.Platform;
@@ -62,6 +64,7 @@ public class OverviewController implements IController{
     private Team selectedTeam;
     private Map<Media, IPanel> mediaObjects = new HashMap<>();
     private List<IPanel> selectedMedia = new ArrayList<>();
+    private ObservableList<Message> observableMessages = FXCollections.observableArrayList();
 
     public void initialize(URL location, ResourceBundle resources) {
         contentHolderR1.setSpacing(SPACING);
@@ -226,37 +229,44 @@ public class OverviewController implements IController{
         cLVTeams.setItems(observableTeams);
     }
 
-    private void getMessages(){
+    public void getMessages(){
         lvMessages.getItems().clear();
+
         // Get the selected incident.
         Incident selectedIncident = IncidentHolder.getIncident();
 
         // Get all messages that belong to this incident.
         ArrayOfMessage soapMessages = port.getMessagesOfIncident(selectedIncident.getId(), DirectionType.E);
         List<Message> messages = soapMessages.getMessage();
-        ObservableList<Message> observableMessages = FXCollections.observableArrayList(messages);
-        lvMessages.setItems(observableMessages);
+        observableMessages.addAll(0, messages);
     }
 
     @Override
     public void startController() {
+        // COMMUNICATION WITH TEAM TAB
         getTeams();
         cLVTeams.setCellFactory(p -> new TeamCell());
         cLVTeams.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             selectedTeam = newValue;
         });
-
-        getMessages();
-        lvMessages.setCellFactory(p -> new MessageCell());
-
         radiusSlider.valueChangingProperty().addListener((observable, oldValue, newValue) -> {
             getTeams();
         });
-
         radiusSlider.setOnMouseClicked(event -> getTeams());
 
-        clearPanelHolders();
+        // INBOX TAB
+        lvMessages.setItems(observableMessages);
+        lvMessages.setCellFactory(p -> new MessageCell());
+        lvMessages.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                lbAfzender.setText(String.valueOf("TEAM ID: " + newValue.getTeam()));
+                lbTitel.setText(newValue.getTitle());
+                taBericht.setText(newValue.getDescription());
+            }
+        });
+        this.getMessages();
 
+        clearPanelHolders();
         Thread thread = new Thread(this::postLoadSources);
         thread.start();
     }
