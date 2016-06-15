@@ -11,7 +11,7 @@
    <children>
       <MenuBar>
          <menus>
-            <Menu fx:id="menuBack" mnemonicParsing="false" onAction="#backToMenu" text="Navigation">
+            <Menu fx:id="menuBack" mnemonicParsing="false" onAction="#backToMenu" text="Navigatie">
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#backToMenu" text="Home" />
                </items>

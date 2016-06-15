@@ -275,7 +275,10 @@
 
 .combo-box-popup .list-view .jfx-list-cell .jfx-rippler {
 	-fx-rippler-fill: #5264AE;
+	-fx-focused-text-base-color: #1111AA;
 }
+
+
 
  
 /*.combo-box .combo-box-button-container{
