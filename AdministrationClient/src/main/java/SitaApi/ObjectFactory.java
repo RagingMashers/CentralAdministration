@@ -254,6 +254,30 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link GetMessagesOfIncident }
+     * 
+     */
+    public GetMessagesOfIncident createGetMessagesOfIncident() {
+        return new GetMessagesOfIncident();
+    }
+
+    /**
+     * Create an instance of {@link GetMessagesOfIncidentResponse }
+     * 
+     */
+    public GetMessagesOfIncidentResponse createGetMessagesOfIncidentResponse() {
+        return new GetMessagesOfIncidentResponse();
+    }
+
+    /**
+     * Create an instance of {@link ArrayOfMessage }
+     * 
+     */
+    public ArrayOfMessage createArrayOfMessage() {
+        return new ArrayOfMessage();
+    }
+
+    /**
      * Create an instance of {@link GetTeamsNearIncident }
      * 
      */
@@ -483,6 +507,14 @@ public class ObjectFactory {
      */
     public Media createMedia() {
         return new Media();
+    }
+
+    /**
+     * Create an instance of {@link Message }
+     * 
+     */
+    public Message createMessage() {
+        return new Message();
     }
 
     /**

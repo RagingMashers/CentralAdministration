@@ -1,59 +1,109 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import java.net.*?>
 <?import com.jfoenix.controls.*?>
 <?import javafx.scene.layout.*?>
 
 <GridPane alignment="center" hgap="10" scaleShape="false" vgap="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="OverviewController">
-       <MenuBar>
-               <Menu fx:id="menuBack" mnemonicParsing="false" onAction="#backToMenu" text="Navigation">
-                   <MenuItem mnemonicParsing="false" onAction="#backToMenu" text="Home" />
-               </Menu>
-       </MenuBar>
-
-       <JFXTabPane centerShape="false" prefHeight="700.0" prefWidth="1100.0" scaleShape="false" side="BOTTOM" GridPane.rowIndex="1">
-               <Tab onSelectionChanged="#reloadSelectedSources" text="Communicatie eenheden">
-                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <ScrollPane layoutX="736.0" layoutY="37.0" prefHeight="606.0" prefWidth="350.0">
-                          <VBox fx:id="selectedSources" prefWidth="350.0" />
-                       </ScrollPane>
-                           <AnchorPane layoutY="158.0" prefHeight="479.0" prefWidth="332.0">
-                                   <JFXListView fx:id="cLVTeams" layoutX="37.0" layoutY="58.0" prefHeight="403.0" prefWidth="248.0" />
-                                   <Label layoutX="37.0" layoutY="25.0" text="Teams" />
-                           </AnchorPane>
-                           <AnchorPane layoutX="296.0" layoutY="95.0" prefHeight="443.0" prefWidth="448.0">
-                                   <Label layoutX="21.0" layoutY="14.0" text="Versturen van bericht" />
-                                   <JFXTextArea fx:id="cTAInhoud" layoutX="14.0" layoutY="142.0" maxWidth="467.0" minWidth="387.0" prefHeight="250.0" prefWidth="413.0" wrapText="true" />
-                                   <JFXButton layoutX="127.0" layoutY="444.0" onMouseClicked="#sendMessageToTeam" prefHeight="45.0" prefWidth="372.0" styleClass="button-raised" text="Verstuur" />
-                                   <JFXTextField fx:id="cTFTitel" layoutX="13.0" layoutY="57.0" maxWidth="342.0" minWidth="52.0" prefHeight="40.0" prefWidth="342.0" />
-                           </AnchorPane>
-                           <Label layoutX="40.0" layoutY="27.0" text="Selecteer eerst het team om er vervolgens een bericht naar te sturen" />
-                    <JFXSlider fx:id="radiusSlider" layoutX="42.0" layoutY="144.0" max="50.0" min="1.0" prefHeight="14.0" prefWidth="210.0" value="4.0" />
-                    <Label layoutX="42.0" layoutY="109.0" text="Kies een radius (km)" />
-                   </AnchorPane>
-               </Tab>
-               <Tab text="Bronnen">
-                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                               <ScrollPane fx:id="scrollPane" layoutX="14.0" layoutY="78.0" prefHeight="590.0" prefWidth="1070.0" vbarPolicy="ALWAYS">
-                                       <AnchorPane fx:id="totalContent" prefHeight="-1.0" prefWidth="-1.0">
-                                               <VBox fx:id="contentHolderR1" prefHeight="-1.0" prefWidth="350.0" />
-                                               <VBox fx:id="contentHolderR2" layoutX="359.0" prefHeight="-1.0" prefWidth="350.0" />
-                                               <VBox fx:id="contentHolderR3" layoutX="718.0" prefHeight="-1.0" prefWidth="350.0" />
-                                       </AnchorPane>
-                               </ScrollPane>
-                        <AnchorPane layoutX="15.0" layoutY="8.0" prefHeight="66.0" prefWidth="1070.0">
-                              <DatePicker fx:id="endDate" layoutX="579.0" layoutY="34.0" minHeight="-Infinity" prefHeight="30.0" prefWidth="200.0" />
-                              <DatePicker fx:id="startDate" layoutX="579.0" layoutY="3.0" minHeight="-Infinity" prefHeight="30.0" prefWidth="200.0" />
-                              <JFXButton layoutX="878.0" layoutY="3.0" onAction="#changeFilter" prefHeight="54.0" prefWidth="106.0" styleClass="button-raised" text="Apply" />
-                              <TextField fx:id="tfTextFilter" layoutX="303.0" layoutY="1.0" minHeight="-Infinity" prefHeight="30.0" prefWidth="200.0" />
-                              <Label layoutX="521.0" layoutY="-1.0" text="Start" />
-                              <Label layoutX="521.0" layoutY="31.0" text="Eind" />
-                              <Label layoutX="181.0" layoutY="-1.0" text="Filter woord" />
-                              <JFXCheckBox fx:id="cbAcceptedFilter" layoutX="126.0" layoutY="-1.0" />
-                              <Label layoutX="14.0" layoutY="-1.0" text="Gevalideerd" />
-                        </AnchorPane></AnchorPane>
-               </Tab>
-       </JFXTabPane>
+   <children>
+          <MenuBar>
+             <menus>
+                     <Menu fx:id="menuBack" mnemonicParsing="false" onAction="#backToMenu" text="Navigation">
+                        <items>
+                            <MenuItem mnemonicParsing="false" onAction="#backToMenu" text="Home" />
+                        </items>
+                     </Menu>
+             </menus>
+          </MenuBar>
+   
+          <JFXTabPane centerShape="false" prefHeight="700.0" prefWidth="1100.0" scaleShape="false" side="BOTTOM" GridPane.rowIndex="1">
+      <tabs>
+                     <Tab onSelectionChanged="#reloadSelectedSources" text="Communicatie eenheden">
+                        <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                               <children>
+                                   <ScrollPane layoutX="736.0" layoutY="37.0" prefHeight="606.0" prefWidth="350.0">
+                                      <content>
+                                         <VBox fx:id="selectedSources" prefWidth="350.0" />
+                                      </content>
+                                   </ScrollPane>
+                                   <AnchorPane layoutY="158.0" prefHeight="479.0" prefWidth="332.0">
+                                      <children>
+                                          <JFXListView fx:id="cLVTeams" layoutX="37.0" layoutY="58.0" prefHeight="403.0" prefWidth="248.0" />
+                                          <Label layoutX="37.0" layoutY="25.0" text="Teams" />
+                                      </children>
+                                   </AnchorPane>
+                                   <AnchorPane layoutX="296.0" layoutY="95.0" prefHeight="443.0" prefWidth="448.0">
+                                      <children>
+                                          <Label layoutX="21.0" layoutY="14.0" text="Versturen van bericht" />
+                                          <JFXTextArea fx:id="cTAInhoud" layoutX="14.0" layoutY="142.0" maxWidth="467.0" minWidth="387.0" prefHeight="250.0" prefWidth="413.0" wrapText="true" />
+                                          <JFXButton layoutX="127.0" layoutY="444.0" onMouseClicked="#sendMessageToTeam" prefHeight="45.0" prefWidth="372.0" styleClass="button-raised" text="Verstuur" />
+                                          <JFXTextField fx:id="cTFTitel" layoutX="13.0" layoutY="57.0" maxWidth="342.0" minWidth="52.0" prefHeight="40.0" prefWidth="342.0" />
+                                      </children>
+                                   </AnchorPane>
+                                   <Label layoutX="40.0" layoutY="27.0" text="Selecteer eerst het team om er vervolgens een bericht naar te sturen" />
+                                   <JFXSlider fx:id="radiusSlider" layoutX="42.0" layoutY="144.0" max="50.0" min="1.0" prefHeight="14.0" prefWidth="210.0" value="4.0" />
+                                   <Label layoutX="42.0" layoutY="109.0" text="Kies een radius (km)" />
+                               </children>
+                            </AnchorPane>
+                        </content>
+                     </Tab>
+                     <Tab text="Bronnen">
+                        <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                               <children>
+                                   <ScrollPane fx:id="scrollPane" layoutX="14.0" layoutY="78.0" prefHeight="590.0" prefWidth="1070.0" vbarPolicy="ALWAYS">
+                                      <content>
+                                          <AnchorPane fx:id="totalContent" prefHeight="-1.0" prefWidth="-1.0">
+                                             <children>
+                                                 <VBox fx:id="contentHolderR1" prefHeight="-1.0" prefWidth="350.0" />
+                                                 <VBox fx:id="contentHolderR2" layoutX="359.0" prefHeight="-1.0" prefWidth="350.0" />
+                                                 <VBox fx:id="contentHolderR3" layoutX="718.0" prefHeight="-1.0" prefWidth="350.0" />
+                                             </children>
+                                          </AnchorPane>
+                                      </content>
+                                   </ScrollPane>
+                                    <AnchorPane layoutX="15.0" layoutY="8.0" prefHeight="66.0" prefWidth="1070.0">
+                                       <children>
+                                           <DatePicker fx:id="endDate" layoutX="579.0" layoutY="34.0" minHeight="-Infinity" prefHeight="30.0" prefWidth="200.0" />
+                                           <DatePicker fx:id="startDate" layoutX="579.0" layoutY="3.0" minHeight="-Infinity" prefHeight="30.0" prefWidth="200.0" />
+                                           <JFXButton layoutX="878.0" layoutY="3.0" onAction="#changeFilter" prefHeight="54.0" prefWidth="106.0" styleClass="button-raised" text="Apply" />
+                                           <TextField fx:id="tfTextFilter" layoutX="303.0" layoutY="1.0" minHeight="-Infinity" prefHeight="30.0" prefWidth="200.0" />
+                                           <Label layoutX="521.0" layoutY="-1.0" text="Start" />
+                                           <Label layoutX="521.0" layoutY="31.0" text="Eind" />
+                                           <Label layoutX="181.0" layoutY="-1.0" text="Filter woord" />
+                                           <JFXCheckBox fx:id="cbAcceptedFilter" layoutX="126.0" layoutY="-1.0" />
+                                           <Label layoutX="14.0" layoutY="-1.0" text="Gevalideerd" />
+                                       </children>
+                                    </AnchorPane>
+                               </children>
+                            </AnchorPane>
+                        </content>
+                     </Tab>
+                     <Tab text="Inbox">
+                        <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <JFXListView fx:id="lvMessages" layoutX="51.0" layoutY="50.0" prefHeight="523.0" prefWidth="305.0" styleClass="mylistview" />
+                        <AnchorPane layoutX="313.0" layoutY="49.0" prefHeight="526.0" prefWidth="376.0" style="-fx-background-color: lightgrey;">
+                           <children>
+                              <Label layoutX="30.0" layoutY="43.0" style="-fx-font-weight: bold;" text="Afzender:" />
+                              <Label fx:id="lbAfzender" layoutX="111.0" layoutY="43.0" prefHeight="17.0" prefWidth="188.0" />
+                              <Label layoutX="30.0" layoutY="94.0" style="-fx-font-weight: bold;" text="Titel:" />
+                              <Label fx:id="lbTitel" layoutX="78.0" layoutY="94.0" prefHeight="17.0" prefWidth="276.0" />
+                              <Label layoutX="36.0" layoutY="204.0" style="-fx-font-weight: bold;" text="Bericht:" />
+                              <JFXTextArea fx:id="taBericht" editable="false" layoutX="33.0" layoutY="245.0" maxWidth="320.0" minWidth="300.0" prefHeight="253.0" prefWidth="320.0" />
+                           </children>
+                        </AnchorPane>
+                        <ScrollPane fx:id="scrollPaneInbox" layoutX="717.0" layoutY="48.0" prefHeight="528.0" prefWidth="350.0" />
+                     </children></AnchorPane>
+                        </content>
+                     </Tab>
+      </tabs>
+          </JFXTabPane>
+   </children>
 
    <stylesheets>
        <URL value="@jfoenix-components.css" />
