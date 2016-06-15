@@ -10,7 +10,7 @@
    <children>
           <MenuBar>
              <menus>
-                     <Menu fx:id="menuBack" mnemonicParsing="false" onAction="#backToMenu" text="Navigation">
+                     <Menu fx:id="menuBack" mnemonicParsing="false" onAction="#backToMenu" text="Navigatie">
                         <items>
                             <MenuItem mnemonicParsing="false" onAction="#backToMenu" text="Home" />
                         </items>
@@ -69,7 +69,7 @@
                                        <children>
                                            <DatePicker fx:id="endDate" layoutX="579.0" layoutY="34.0" minHeight="-Infinity" prefHeight="30.0" prefWidth="200.0" />
                                            <DatePicker fx:id="startDate" layoutX="579.0" layoutY="3.0" minHeight="-Infinity" prefHeight="30.0" prefWidth="200.0" />
-                                           <JFXButton layoutX="878.0" layoutY="3.0" onAction="#changeFilter" prefHeight="54.0" prefWidth="106.0" styleClass="button-raised" text="Apply" />
+                                           <JFXButton layoutX="878.0" layoutY="3.0" onAction="#changeFilter" prefHeight="54.0" prefWidth="106.0" styleClass="button-raised" text="Toepassen" />
                                            <TextField fx:id="tfTextFilter" layoutX="303.0" layoutY="1.0" minHeight="-Infinity" prefHeight="30.0" prefWidth="200.0" />
                                            <Label layoutX="521.0" layoutY="-1.0" text="Start" />
                                            <Label layoutX="521.0" layoutY="31.0" text="Eind" />

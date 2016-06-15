@@ -119,8 +119,8 @@ public class IncidentController implements IController{
         validator.setTextBoxStyles(mTFTitle,"Titel", "Dit veld mag niet leeg zijn",new RequiredFieldValidator(),true);
         validator.setTextBoxStyles(mTFSlachtoffers,"Hoeveelheid slachtoffers", "Dit moet een getal zijn",new IntegerValidator(),true);
         validator.setTextBoxStyles(mTFGewonden,"Hoeveelheid gewonden", "Dit moet een getal zijn",new IntegerValidator(),true);
-        validator.setTextBoxStyles(mTFCoordinaatX,"X Coördinaat", "Dit moet een getal zijn",new RequiredFieldValidator(),true);
-        validator.setTextBoxStyles(mTFCoordinaatY,"Y Coördinaat", "Dit moet een getal zijn",new RequiredFieldValidator(),true);
+        validator.setTextBoxStyles(mTFCoordinaatX,"X Coï¿½rdinaat", "Dit moet een getal zijn",new RequiredFieldValidator(),true);
+        validator.setTextBoxStyles(mTFCoordinaatY,"Y Coï¿½rdinaat", "Dit moet een getal zijn",new RequiredFieldValidator(),true);
         validator.setTextBoxStyles(mTFRadius, "Radius", "Dit moet een getal zijn",new IntegerValidator(),true);
     }
 
@@ -217,7 +217,13 @@ public class IncidentController implements IController{
             mTFRadius.requestFocus();
             mTFTitle.requestFocus();
 
-            mTFCoordinaatX.focusedProperty().notify();
+            try {
+                mTFCoordinaatX.focusedProperty().notify();
+            }
+            catch (Exception e) {
+
+            }
+
             for(Toxication toxic : incident.getToxicElements().getToxication()){
                 if(!mLVGiftigeStoffen.getItems().contains(toxic)) {
                     mLVGiftigeStoffen.getItems().add(toxic);
