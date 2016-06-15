@@ -74,7 +74,7 @@ public class MainController implements IController{
         SitaApiSoap siteApi = ApiManager.getInstance().getSitaPort();
         String siteToken = ApiManager.getInstance().getSitaToken();
 
-        final List<Incident> incident = siteApi.getIncidents(siteToken, 0, 10).getIncident();
+        final List<Incident> incident = siteApi.getIncidents(siteToken, 0, 20).getIncident();
         Platform.runLater(() -> {
             lvIncidenten.getItems().clear();
             lvIncidenten.getItems().setAll(incident);
