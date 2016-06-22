@@ -217,7 +217,7 @@ public class IncidentController implements IController{
             mTFRadius.requestFocus();
             mTFTitle.requestFocus();
 
-            //mTFCoordinaatX.focusedProperty().notify();
+            mTFCoordinaatX.focusedProperty().notify();
             for(Toxication toxic : incident.getToxicElements().getToxication()){
                 if(!mLVGiftigeStoffen.getItems().contains(toxic)) {
                     mLVGiftigeStoffen.getItems().add(toxic);
